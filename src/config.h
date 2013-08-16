@@ -14,3 +14,10 @@
 #define COM_UART
 // Define buffer ring size
 #define COM_UART_BUFFER_RING_SIZE 64
+
+/**
+ * Utilities
+ */
+
+// Debug
+#define UTILS_DEBUG
