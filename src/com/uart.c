@@ -117,13 +117,13 @@ void uart_send(uint8_t data) {
     UCSR0A &= ~(1 << TXC0);
 }
 
-void uart_send_string(uint8_t *data) {
+void uart_send_string(char *data) {
     while (*data) {
         uart_send(*data++);
     }
 }
 
-void uart_send_string_p(const uint8_t *pdata) {
+void uart_send_string_p(const char *pdata) {
     char c;
     while ((c = pgm_read_byte(pdata++))) {
         uart_send(c);
