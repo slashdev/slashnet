@@ -56,7 +56,7 @@ void uart_init(uart_config_t *config) {
     // Set UCSR0B register
     // Receive enable/disable
     if (config->enable_rx) {
-        OCSR0B |= (1 << RXEN0);
+        UCSR0B |= (1 << RXEN0);
     } else {
         UCSR0B &= ~(1 << RXEN0);
     }
@@ -87,11 +87,11 @@ void uart_set_default_config(uart_config_t *config) {
 ISR(USART0_UDRE_vect) {
     if (com_uart_tx_buffer_ring.head == com_uart_tx_buffer_ring.tail) {
         // Buffer empty, disable interrupt
-        OCSR0B &= ~(1 << UDRIE0);
+        UCSR0B &= ~(1 << UDRIE0);
     } else {
         // Get data to send
         uint8_t value = com_uart_tx_buffer_ring.buffer[com_uart_tx_buffer_ring.tail];
-        com_uart_tx_buffer_ring = (com_uart_tx_buffer_ring.tail + 1) % COM_UART_BUFFER_RING_SIZE;
+        com_uart_tx_buffer_ring.tail = (com_uart_tx_buffer_ring.tail + 1) % COM_UART_BUFFER_RING_SIZE;
         // Send next byte
         UDR0 = value;
     }
@@ -112,21 +112,21 @@ void uart_send(uint8_t data) {
     com_uart_tx_buffer_ring.head = index;
     
     // Set data registry empty bit
-    OCSR0B |= (1 << UDRIE0);
+    UCSR0B |= (1 << UDRIE0);
     // Clear the transmit complete bit
     UCSR0A &= ~(1 << TXC0);
 }
 
 void uart_send_string(uint8_t *data) {
     while (*data) {
-        uart_write(*data++);
+        uart_send(*data++);
     }
 }
 
 void uart_send_string_p(const uint8_t *pdata) {
     char c;
     while ((c = pgm_read_byte(pdata++))) {
-        uart_write(c);
+        uart_send(c);
     }
 }
 
