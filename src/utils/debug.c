@@ -11,7 +11,7 @@
 
 void debug_init(void) {
     // Get default uart config
-    com_uart_config_t config;
+    uart_config_t config;
     uart_set_default_config(&config);
     
     // Enable double speed
@@ -28,11 +28,11 @@ void debug_init(void) {
 }
 
 void debug_string(char *string) {
-    uart_send_array(string);
+    uart_send_string(string);
 }
 
 void debug_string_p(const char *pstring) {
-    uart_send_array_p(pstring);
+    uart_send_string_p(pstring);
 }
 
 void debug_number_(uint16_t value, uint8_t base) {
@@ -60,7 +60,7 @@ void debug_number_(uint16_t value, uint8_t base) {
     } while (value);
     
     // Send string
-    uart_send_string(str);
+    uart_send_array(str);
 }
 
 void debug_number(uint16_t value) {
