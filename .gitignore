@@ -12,6 +12,9 @@ Icon
 .Spotlight-V100
 .Trashes
 
+# Xcode
+*.xcworkspace
+
 
 
 # C
