@@ -17,10 +17,12 @@ OUTPUT_ELF   = EthShield.elf
 OUTPUT_LSS   = EthShield.lss
 
 C_SRCS = \
+com/uart.c \
 EthShield.c
 
 
 OBJECTS    = \
+com/uart.o \
 EthShield.o 
 
 # Tune the lines below only if you know what you are doing:
