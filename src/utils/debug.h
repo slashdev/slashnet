@@ -18,8 +18,8 @@
 #define COM_UART
 #endif // COM_UART
 
-// Include all needed parts
 #include <inttypes.h>
+#include <util/delay.h>
 #include "../com/uart.h"
 
 extern void debug_init(void);
