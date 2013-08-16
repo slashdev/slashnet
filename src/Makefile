@@ -18,11 +18,13 @@ OUTPUT_LSS   = EthShield.lss
 
 C_SRCS = \
 com/uart.c \
+utils/debug.c \
 EthShield.c
 
 
 OBJECTS    = \
 com/uart.o \
+utils/debug.o \
 EthShield.o 
 
 # Tune the lines below only if you know what you are doing:
