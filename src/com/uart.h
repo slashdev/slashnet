@@ -46,7 +46,7 @@ typedef struct uart_config {
  * @param baudrate Baudrate you want to use
  * @param doublespeed 1 for double speed, 0 for normal speed
  */
-void uart_init(uint16_t baudrate, uint8_t doublespeed);
+extern void uart_init(uint16_t baudrate, uint8_t doublespeed);
 
 /**
  * @brief Set default config for UART
@@ -57,23 +57,23 @@ void uart_init(uint16_t baudrate, uint8_t doublespeed);
  * - Enable receive: yes
  * - Enable transmit: yes
  */
-void uart_set_default_config(uart_config_t *config);
+extern void uart_set_default_config(uart_config_t *config);
 
 /**
  * @brief Send a byte
  * @param data Byte to send
  */
-void uart_send(uint8_t data);
+extern void uart_send(uint8_t data);
 /**
  * @brief Send an array (or string)
  * @param data Array (or string) to send
  */
-void uart_send_array(uint8_t *data);
+extern void uart_send_array(uint8_t *data);
 /**
  * @brief Send an array (or string) from progmem
  * @param pdata Array (or string) to send
  */
-void uart_send_array_p(const uint8_t *data);
+extern void uart_send_array_p(const uint8_t *data);
 
 #endif // COM_UART
 #endif // COM_UART_H
