@@ -46,7 +46,7 @@ typedef struct uart_config {
  * @param baudrate Baudrate you want to use
  * @param doublespeed 1 for double speed, 0 for normal speed
  */
-extern void uart_init(uint16_t baudrate, uint8_t doublespeed);
+extern void uart_init(uart_config_t *config);
 
 /**
  * @brief Set default config for UART
