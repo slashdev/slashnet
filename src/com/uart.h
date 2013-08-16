@@ -68,12 +68,12 @@ extern void uart_send(uint8_t data);
  * @brief Send an array (or string)
  * @param data Array (or string) to send
  */
-extern void uart_send_array(uint8_t *data);
+extern void uart_send_string(uint8_t *data);
 /**
  * @brief Send an array (or string) from progmem
  * @param pdata Array (or string) to send
  */
-extern void uart_send_array_p(const uint8_t *data);
+extern void uart_send_string_p(const uint8_t *data);
 
 #endif // COM_UART
 #endif // COM_UART_H
