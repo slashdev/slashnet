@@ -60,7 +60,7 @@ void debug_number_(uint16_t value, uint8_t base) {
     } while (value);
     
     // Send string
-    uart_send_array(str);
+    uart_send_string(str);
 }
 
 void debug_number(uint16_t value) {
