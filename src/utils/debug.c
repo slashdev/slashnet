@@ -24,7 +24,7 @@ void debug_init(void) {
     
     // Wait a little and send debug message
     _delay_ms(100);
-    debug_string_p(PSTR("\r\nUART debug started"));
+    debug_string_p(PSTR("\r\nUART debug started\r\n"));
 }
 
 void debug_string(char *string) {
