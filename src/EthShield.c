@@ -9,7 +9,12 @@
 #define F_CPU 20000000
 #endif
 
+#include <inttypes.h>
+#include "utils/debug.h"
+
 int main(void) {
+    
+    debug_init();
     
     // Infinite loop
     while (1) {
