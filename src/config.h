@@ -4,6 +4,12 @@
  * This file is part of EthShield, distributed under the MIT license.
  */
 
+/**
+ * Clock setting
+ */
+#ifndef F_CPU
+#define F_CPU 20000000
+#endif
 
 /**
  * Communication channels
