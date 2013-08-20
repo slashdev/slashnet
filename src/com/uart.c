@@ -39,16 +39,12 @@ void uart_init(uart_config_t *config) {
     if (config->doublespeed) {
         UCSR0A |= (1 << U2X0);
 		// Calculate baudrate divider
-		brr = ((F_CPU / (8UL * config->baudrate)) -1);
+		UBRR0 = ((F_CPU / (8UL * config->baudrate)) - 1);
     } else {
         UCSR0A &= ~(1 << U2X0);
 		// Calculate baudrate divider
-		brr = ((F_CPU / (16UL * config->baudrate)) -1);
+		UBRR0 = ((F_CPU / (16UL * config->baudrate)) - 1);
     }
-	
-	// Set baudrate divider
-	UBRR0H = (brr >> 8);
-	UBRR0L = (brr & 0xFF);
     
     // Set multi-processor mode
     if (config->multiprocessormode) {
