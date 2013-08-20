@@ -13,7 +13,9 @@
 #include "utils/debug.h"
 
 int main(void) {
-    
+	// Enable interrupts
+    sei();
+	
     debug_init();
     
     // Infinite loop
