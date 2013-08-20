@@ -33,18 +33,22 @@ void uart_init(uart_config_t *config) {
     // Disable transmit and receive
     UCSR0B &= ~((1 << RXEN0) | (1 << TXEN0));
     
-    // Set baudrate
-    uint16_t brr = ((F_CPU / (8UL * config->baudrate)) -1);
-    UBRR0H = brr >> 8;
-    UBRR0L = brr & 0xFF;
-    
     // Set UCSR0A register
-    // Set double speed
+    // Set double speed and calculate brr divider
+	int16_t brr;
     if (config->doublespeed) {
         UCSR0A |= (1 << U2X0);
+		// Calculate baudrate divider
+		brr = ((F_CPU / (8UL * config->baudrate)) -1);
     } else {
         UCSR0A &= ~(1 << U2X0);
+		// Calculate baudrate divider
+		brr = ((F_CPU / (16UL * config->baudrate)) -1);
     }
+	
+	// Set baudrate divider
+	UBRR0H = (brr >> 8);
+	UBRR0L = (brr & 0xFF);
     
     // Set multi-processor mode
     if (config->multiprocessormode) {
