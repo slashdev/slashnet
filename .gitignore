@@ -18,7 +18,10 @@ Icon
 # Xcode
 *.xcworkspace
 
-
+# Atmel Studio
+*.atsln
+*.atsuo
+*.cproj
 
 # C
 
