@@ -22,8 +22,7 @@ void debug_init(void) {
     // Initialize uart with config
     uart_init(&config);
     
-    // Wait a little and send debug message
-    _delay_ms(100);
+    // Send debug message
     debug_string_p(PSTR("\r\nUART debug started\r\n"));
 }
 
