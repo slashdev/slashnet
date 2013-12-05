@@ -1,6 +1,7 @@
 /**
  * Copyright (C) Ferdi van der Werf. All rights reserved
- *
+ * 
+ * Version: 0.1.0
  * This file is part of EthShield, distributed under the MIT license.
  */
 
