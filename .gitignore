@@ -1,3 +1,6 @@
+# Project
+Debug
+
 # OS-X
 .DS_Store
 .AppleDouble
@@ -12,7 +15,13 @@ Icon
 .Spotlight-V100
 .Trashes
 
+# Xcode
+*.xcworkspace
 
+# Atmel Studio
+*.atsln
+*.atsuo
+*.cproj
 
 # C
 
