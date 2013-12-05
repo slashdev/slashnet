@@ -35,7 +35,6 @@ void uart_init(uart_config_t *config) {
     
     // Set UCSR0A register
     // Set double speed and calculate brr divider
-	int16_t brr;
     if (config->doublespeed) {
         UCSR0A |= (1 << U2X0);
 		// Calculate baudrate divider
