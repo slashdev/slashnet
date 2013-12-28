@@ -12,7 +12,7 @@
 void debug_init(void) {
     // Get default uart config
     uart_config_t config;
-    uart_set_default_config(&config);
+    uart_get_default_config(&config);
     
     // Enable double speed
     config.doublespeed = 1;

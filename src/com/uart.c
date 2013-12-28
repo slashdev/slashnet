@@ -70,7 +70,7 @@ void uart_init(uart_config_t *config) {
     
 }
 
-void uart_set_default_config(uart_config_t *config) {
+void uart_get_default_config(uart_config_t *config) {
     // Make sure we have a valid pointer
     if (!config)
         return;

@@ -43,8 +43,7 @@ typedef struct uart_config {
 
 /**
  * @brief Initialize UART channel
- * @param baudrate Baudrate you want to use
- * @param doublespeed 1 for double speed, 0 for normal speed
+ * @param config Configuration for uart channel
  */
 extern void uart_init(uart_config_t *config);
 
@@ -57,7 +56,7 @@ extern void uart_init(uart_config_t *config);
  * - Enable receive: yes
  * - Enable transmit: yes
  */
-extern void uart_set_default_config(uart_config_t *config);
+extern void uart_get_default_config(uart_config_t *config);
 
 /**
  * @brief Send a byte
