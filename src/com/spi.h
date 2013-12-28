@@ -29,8 +29,8 @@ typedef struct spi_config {
  */
 extern void spi_init(spi_config *config);
 
-#define SPI_START(port, pin) (port) &= ~(1 << (pin))
-#define SPI_STOP(port, pin)  (port) |=  (1 << (pin))
+#define SPI_ACTIVE(port, pin)  (port) &= ~(1 << (pin))
+#define SPI_PASSIVE(port, pin) (port) |=  (1 << (pin))
 
 #endif // COM_SPI
 #endif // COM_SPI_H
