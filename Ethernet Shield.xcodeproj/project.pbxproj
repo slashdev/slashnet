@@ -14,6 +14,8 @@
 		C0013359185100D9000E8B0D /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; name = Makefile; path = src/Makefile; sourceTree = "<group>"; };
 		C001335B185100D9000E8B0D /* debug.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = debug.c; sourceTree = "<group>"; };
 		C001335C185100D9000E8B0D /* debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = debug.h; sourceTree = "<group>"; };
+		C0FBC508186F764000DB9B65 /* spi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = spi.c; sourceTree = "<group>"; };
+		C0FBC509186F76C400DB9B65 /* spi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spi.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -31,8 +33,10 @@
 		C0013350185100D9000E8B0D /* com */ = {
 			isa = PBXGroup;
 			children = (
-				C0013351185100D9000E8B0D /* uart.c */,
+				C0FBC509186F76C400DB9B65 /* spi.h */,
+				C0FBC508186F764000DB9B65 /* spi.c */,
 				C0013352185100D9000E8B0D /* uart.h */,
+				C0013351185100D9000E8B0D /* uart.c */,
 			);
 			name = com;
 			path = src/com;
@@ -125,7 +129,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
-                TERM = xterm;
+				TERM = xterm;
 			};
 			name = Debug;
 		};
@@ -157,7 +161,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				SDKROOT = macosx;
-                TERM = xterm;
+				TERM = xterm;
 			};
 			name = Release;
 		};
