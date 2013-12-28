@@ -20,6 +20,7 @@ FUSE_HIGH = 0xDF
 FUSE_EXT  = 0xFF
 
 OBJECTS    = \
+com/spi.o \
 com/uart.o \
 utils/debug.o \
 EthShield.o 

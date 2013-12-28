@@ -15,6 +15,10 @@
  * Communication channels
  */
 
+// SPI
+// Enable SPI?
+#define COM_SPI
+
 // UART
 // Enable UART?
 #define COM_UART
