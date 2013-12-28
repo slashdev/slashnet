@@ -73,6 +73,9 @@ fuse:
 dude: $(OUTPUT_HEX)
 	avrdude -c avrisp2 -P usb -p $(DEVICE) -U flash:w:$(OUTPUT_DIR)$(OUTPUT_HEX):i
 
+restart:
+	avrdude -c avrisp2 -P usb -p $(DEVICE)
+
 # file targets:
 $(OUTPUT_ELF): $(OBJECTS)
 	@tput setaf 1
