@@ -89,7 +89,7 @@ $(OUTPUT_ELF): $(OBJECTS)
 $(OUTPUT_HEX): $(OUTPUT_ELF)
 	@rm -f $(OUTPUT_HEX)
 	@avr-objcopy -j .text -j .data -O ihex $(OUTPUT_ELF) $(OUTPUT_HEX)
-	@avr-objcopy -h -S $(OUTPUT_ELF) > $(OUTPUT_LSS)
+	@avr-objdump -f -d -S -t -j .text -w $(OUTPUT_ELF) > $(OUTPUT_LSS)
 	@tput setaf 1
 	@echo AVR-Size:
 	@tput setaf 7
