@@ -15,6 +15,9 @@ OUTPUT_DIR   = Debug/
 OUTPUT_HEX   = EthShield.hex
 OUTPUT_ELF   = EthShield.elf
 OUTPUT_LSS   = EthShield.lss
+FUSE_LOW  = 0xE7
+FUSE_HIGH = 0xDF
+FUSE_EXT  = 0xFF
 
 OBJECTS    = \
 com/uart.o \
@@ -64,6 +67,11 @@ start: all
 clean:
 	rm -f $(OUTPUT_DIR)$(OUTPUT_HEX) $(OUTPUT_DIR)$(OUTPUT_ELF) $(OBJECTS)
 
+fuse:
+	avrdude -c avrisp2 -P usb -p $(DEVICE) -U lfuse:w:$(FUSE_LOW):m -U hfuse:w:$(FUSE_HIGH):m -U efuse:w:$(FUSE_EXT):m
+
+dude: $(OUTPUT_HEX)
+	avrdude -c avrisp2 -P usb -p $(DEVICE) -U flash:w:$(OUTPUT_DIR)$(OUTPUT_HEX):i -U lfuse:w:$(FUSE_LOW):m -U hfuse:w:$(FUSE_HIGH):m -U efuse:w:$(FUSE_EXT):m
 
 # file targets:
 $(OUTPUT_ELF): $(OBJECTS)
