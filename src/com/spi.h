@@ -21,13 +21,13 @@
  */
 typedef struct spi_config {
     
-};
+} spi_config_t;
 
 /**
  * @brief Initialize SPI channel
  * @param config Configuration for spi channel
  */
-extern void spi_init(spi_config *config);
+extern void spi_init(spi_config_t *config);
 
 #define SPI_ACTIVE(port, pin)  (port) &= ~(1 << (pin))
 #define SPI_PASSIVE(port, pin) (port) |=  (1 << (pin))
