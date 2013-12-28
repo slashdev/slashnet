@@ -26,7 +26,7 @@ EthShield.o
 
 # Tune the lines below only if you know what you are doing:
 
-COMPILE = avr-gcc -Wall -Os -DF_CPU=$(CLOCK) -mmcu=$(DEVICE)
+COMPILE = avr-gcc -Wall -Os -gdwarf-2 -DF_CPU=$(CLOCK) -mmcu=$(DEVICE)
 
 # symbolic targets:
 all:	$(OUTPUT_HEX)
