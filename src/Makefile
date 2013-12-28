@@ -16,12 +16,6 @@ OUTPUT_HEX   = EthShield.hex
 OUTPUT_ELF   = EthShield.elf
 OUTPUT_LSS   = EthShield.lss
 
-C_SRCS = \
-com/uart.c \
-utils/debug.c \
-EthShield.c
-
-
 OBJECTS    = \
 com/uart.o \
 utils/debug.o \
@@ -101,6 +95,3 @@ $(OUTPUT_HEX): $(OUTPUT_ELF)
 # Targets for code debugging and analysis:
 disasm:	$(OUTPUT_ELF)
 	avr-objdump -d $(OUTPUT_DIR)$(OUTPUT_ELF)
-
-cpp:
-	$(COMPILE) -E $(C_SRCS)
