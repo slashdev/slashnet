@@ -1,7 +1,12 @@
 /**
- * Copyright (C) Ferdi van der Werf. All rights reserved
+ * @file config.h
+ * @brief Configuration of EthShield
  *
- * This file is part of EthShield, distributed under the MIT license.
+ * \copyright Copyright 2013 /Dev. All rights reserved.
+ * \license This project is released under MIT license.
+ *
+ * @author Ferdi van der Werf <efcm@slashdev.nl>
+ * @since 0.1.0
  */
 
 /**
@@ -15,15 +20,29 @@
  * Communication channels
  */
 
+// SPI
+/**
+ * @brief Enables Serial Peripheral Interface channel
+ */
+#define COM_SPI
+
 // UART
-// Enable UART?
-#define COM_UART
-// Define buffer ring size
-#define COM_UART_BUFFER_RING_SIZE 64
+/**
+ * @brief Enable Universal Synchronous and Asymchronous serial Receiver and 
+ * Transmitter channel
+ */
+#define COM_USART
+/**
+ * @brief USART buffer ring size
+ */
+#define COM_USART_BUFFER_RING_SIZE 64
 
 /**
  * Utilities
  */
 
 // Debug
+/**
+ * @brief Enable debug over USART
+ */
 #define UTILS_DEBUG

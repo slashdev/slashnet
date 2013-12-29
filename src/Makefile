@@ -15,15 +15,19 @@ OUTPUT_DIR   = Debug/
 OUTPUT_HEX   = EthShield.hex
 OUTPUT_ELF   = EthShield.elf
 OUTPUT_LSS   = EthShield.lss
+FUSE_LOW  = 0xE7
+FUSE_HIGH = 0xDF
+FUSE_EXT  = 0xFF
 
 OBJECTS    = \
-com/uart.o \
+com/spi.o \
+com/usart.o \
 utils/debug.o \
 EthShield.o 
 
 # Tune the lines below only if you know what you are doing:
 
-COMPILE = avr-gcc -Wall -Os -DF_CPU=$(CLOCK) -mmcu=$(DEVICE)
+COMPILE = avr-gcc -Wall -Os -gdwarf-2 -DF_CPU=$(CLOCK) -mmcu=$(DEVICE)
 
 # symbolic targets:
 all:	$(OUTPUT_HEX)
@@ -64,6 +68,14 @@ start: all
 clean:
 	rm -f $(OUTPUT_DIR)$(OUTPUT_HEX) $(OUTPUT_DIR)$(OUTPUT_ELF) $(OBJECTS)
 
+fuse:
+	avrdude -c avrisp2 -P usb -p $(DEVICE) -U lfuse:w:$(FUSE_LOW):m -U hfuse:w:$(FUSE_HIGH):m -U efuse:w:$(FUSE_EXT):m
+
+dude: $(OUTPUT_HEX)
+	avrdude -c avrisp2 -P usb -p $(DEVICE) -U flash:w:$(OUTPUT_DIR)$(OUTPUT_HEX):i
+
+restart:
+	avrdude -c avrisp2 -P usb -p $(DEVICE)
 
 # file targets:
 $(OUTPUT_ELF): $(OBJECTS)
@@ -78,7 +90,7 @@ $(OUTPUT_ELF): $(OBJECTS)
 $(OUTPUT_HEX): $(OUTPUT_ELF)
 	@rm -f $(OUTPUT_HEX)
 	@avr-objcopy -j .text -j .data -O ihex $(OUTPUT_ELF) $(OUTPUT_HEX)
-	@avr-objcopy -h -S $(OUTPUT_ELF) > $(OUTPUT_LSS)
+	@avr-objdump -f -d -S -t -j .text -w $(OUTPUT_ELF) > $(OUTPUT_LSS)
 	@tput setaf 1
 	@echo AVR-Size:
 	@tput setaf 7

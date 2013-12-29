@@ -1,25 +1,34 @@
-/*!
- * Copyright (C) Ferdi van der Werf. All rights reserved
+/**
+ * @file usart.h
+ * @brief Universal Synchronous and Asymchronous serial Receiver and Transmitter
+ * channel functionality
  *
- * This file is part of EthShield, distributed under the MIT license.
+ * \copyright Copyright 2013 /Dev. All rights reserved.
+ * \license This project is released under MIT license.
+ *
+ * @author Ferdi van der Werf <efcm@slashdev.nl>
+ * @since 0.1.0
  */
 
-#ifndef COM_UART_H
-#define COM_UART_H
+#ifndef COM_USART_H
+#define COM_USART_H
 
 #include "../config.h"
 
 // Do we want UART?
-#ifdef COM_UART
+#ifdef COM_USART
 
 #include <inttypes.h>
 #include <avr/interrupt.h>
 #include <avr/pgmspace.h>
 
 /**
- * UART config file
+ * USART config file
  */
-typedef struct uart_config {
+typedef struct {
+    /**
+     * @brief Requested baudrate to communicate on
+     */
     uint16_t baudrate;
     /**
      * @brief Double the transmission speed
@@ -39,16 +48,16 @@ typedef struct uart_config {
      * @brief Enable transmission
      */
     uint8_t enable_tx;
-} uart_config_t;
+} usart_config_t;
 
 /**
- * @brief Initialize UART channel
- * @param config Configuration for uart channel
+ * @brief Initialize USART channel
+ * @param config Configuration for usart channel
  */
-extern void uart_init(uart_config_t *config);
+extern void usart_init(usart_config_t *config);
 
 /**
- * @brief Set default config for UART
+ * @brief Set default config for USART
  * Default config is:
  * - Baudrate: 9600
  * - Double speed: no
@@ -56,23 +65,23 @@ extern void uart_init(uart_config_t *config);
  * - Enable receive: yes
  * - Enable transmit: yes
  */
-extern void uart_get_default_config(uart_config_t *config);
+extern void usart_get_default_config(usart_config_t *config);
 
 /**
  * @brief Send a byte
  * @param data Byte to send
  */
-extern void uart_send(uint8_t data);
+extern void usart_send(uint8_t data);
 /**
  * @brief Send an array (or string)
  * @param data Array (or string) to send
  */
-extern void uart_send_string(char *data);
+extern void usart_send_string(char *data);
 /**
  * @brief Send an array (or string) from progmem
  * @param pdata Array (or string) to send
  */
-extern void uart_send_string_p(const char *data);
+extern void usart_send_string_p(const char *data);
 
-#endif // COM_UART
-#endif // COM_UART_H
+#endif // COM_USART
+#endif // COM_USART_H
