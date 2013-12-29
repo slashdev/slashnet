@@ -8,6 +8,7 @@
  * @author Ferdi van der Werf <efcm@slashdev.nl>
  * @since 0.1.0
  */
+#define VERSION "0.2.0"
 
 /**
  * Clock setting

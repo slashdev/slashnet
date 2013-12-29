@@ -28,6 +28,9 @@ void debug_init(void) {
     
     // Send debug message
     debug_string_p(PSTR("\r\nUSART debug started\r\n"));
+    debug_string_p(PSTR("EthShield version: "));
+    debug_string_p(PSTR(VERSION));
+    debug_string_p(PSTR("\r\n"));
 }
 
 void debug_string(char *string) {
