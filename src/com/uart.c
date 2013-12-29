@@ -1,7 +1,11 @@
 /**
- * Copyright (C) Ferdi van der Werf. All rights reserved
+ * @file uart.c
  *
- * This file is part of EthShield, distributed under the MIT license.
+ * \copyright Copyright 2013 /Dev. All rights reserved.
+ * \license This project is released under MIT license.
+ *
+ * @author Ferdi van der Werf <efcm@slashdev.nl>
+ * @since 0.2.0
  */
 
 #include "uart.h"
