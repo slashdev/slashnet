@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		C0013351185100D9000E8B0D /* uart.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = uart.c; sourceTree = "<group>"; };
-		C0013352185100D9000E8B0D /* uart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uart.h; sourceTree = "<group>"; };
+		C0013351185100D9000E8B0D /* usart.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = usart.c; sourceTree = "<group>"; };
+		C0013352185100D9000E8B0D /* usart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = usart.h; sourceTree = "<group>"; };
 		C0013353185100D9000E8B0D /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = config.h; path = src/config.h; sourceTree = "<group>"; };
 		C0013358185100D9000E8B0D /* EthShield.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = EthShield.c; path = src/EthShield.c; sourceTree = "<group>"; };
 		C0013359185100D9000E8B0D /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; name = Makefile; path = src/Makefile; sourceTree = "<group>"; };
@@ -35,8 +35,8 @@
 			children = (
 				C0FBC509186F76C400DB9B65 /* spi.h */,
 				C0FBC508186F764000DB9B65 /* spi.c */,
-				C0013352185100D9000E8B0D /* uart.h */,
-				C0013351185100D9000E8B0D /* uart.c */,
+				C0013352185100D9000E8B0D /* usart.h */,
+				C0013351185100D9000E8B0D /* usart.c */,
 			);
 			name = com;
 			path = src/com;

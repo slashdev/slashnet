@@ -17,15 +17,15 @@
 // Do we want debug?
 #ifdef UTILS_DEBUG
 
-// Make sure UART is enabled
-#ifndef COM_UART
-#warning Using UTILS_DEBUG while COM_UART not enabled, forcing COM_UART
-#define COM_UART
-#endif // COM_UART
+// Make sure USART is enabled
+#ifndef COM_USART
+#warning Using UTILS_DEBUG while COM_USART not enabled, forcing COM_USART
+#define COM_USART
+#endif // COM_USART
 
 #include <inttypes.h>
 #include <util/delay.h>
-#include "../com/uart.h"
+#include "../com/usart.h"
 
 extern void debug_init(void);
 extern void debug_string(char *string);

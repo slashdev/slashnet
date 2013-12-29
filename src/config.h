@@ -31,11 +31,11 @@
  * @brief Enable Universal Synchronous and Asymchronous serial Receiver and 
  * Transmitter channel
  */
-#define COM_UART
+#define COM_USART
 /**
  * @brief USART buffer ring size
  */
-#define COM_UART_BUFFER_RING_SIZE 64
+#define COM_USART_BUFFER_RING_SIZE 64
 
 /**
  * Utilities
