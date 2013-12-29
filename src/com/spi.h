@@ -31,6 +31,7 @@ extern void spi_init(spi_config_t *config);
 
 #define SPI_ACTIVE(port, pin)  (port) &= ~(1 << (pin))
 #define SPI_PASSIVE(port, pin) (port) |=  (1 << (pin))
+#define SPI_WAIT() while(!(SPSR&(1<<SPIF)))
 
 #endif // COM_SPI
 #endif // COM_SPI_H
