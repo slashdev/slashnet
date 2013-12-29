@@ -45,8 +45,8 @@
 		C001335A185100D9000E8B0D /* utils */ = {
 			isa = PBXGroup;
 			children = (
-				C001335B185100D9000E8B0D /* debug.c */,
 				C001335C185100D9000E8B0D /* debug.h */,
+				C001335B185100D9000E8B0D /* debug.c */,
 			);
 			name = utils;
 			path = src/utils;
