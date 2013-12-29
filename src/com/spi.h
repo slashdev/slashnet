@@ -32,8 +32,17 @@ typedef struct spi_config {
  */
 extern void spi_init(spi_config_t *config);
 
+/**
+ * @brief Activate slave select for _pin_ on _port_
+ */
 #define SPI_ACTIVE(port, pin)  (port) &= ~(1 << (pin))
+/**
+ * @brief Deactivate slave select for _pin_ on _port_
+ */
 #define SPI_PASSIVE(port, pin) (port) |=  (1 << (pin))
+/**
+ * @brief Active wait until SPI finished sending/receiving
+ */
 #define SPI_WAIT() while(!(SPSR&(1<<SPIF)))
 
 #endif // COM_SPI

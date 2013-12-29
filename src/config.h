@@ -21,13 +21,20 @@
  */
 
 // SPI
-// Enable SPI?
+/**
+ * @brief Enables Serial Peripheral Interface channel
+ */
 #define COM_SPI
 
 // UART
-// Enable UART?
+/**
+ * @brief Enable Universal Synchronous and Asymchronous serial Receiver and 
+ * Transmitter channel
+ */
 #define COM_UART
-// Define buffer ring size
+/**
+ * @brief USART buffer ring size
+ */
 #define COM_UART_BUFFER_RING_SIZE 64
 
 /**
@@ -35,4 +42,7 @@
  */
 
 // Debug
+/**
+ * @brief Enable debug over USART
+ */
 #define UTILS_DEBUG

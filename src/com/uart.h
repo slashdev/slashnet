@@ -25,7 +25,10 @@
 /**
  * UART config file
  */
-typedef struct uart_config {
+typedef struct {
+    /**
+     * @brief Requested baudrate to communicate on
+     */
     uint16_t baudrate;
     /**
      * @brief Double the transmission speed
