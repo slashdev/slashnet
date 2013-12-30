@@ -8,6 +8,10 @@
  * @author Ferdi van der Werf <efcm@slashdev.nl>
  * @since 0.1.0
  */
+
+/**
+ * @brief Version of the EthShield firmware
+ */
 #define VERSION "0.2.0"
 
 /**
@@ -37,6 +41,15 @@
  * @brief USART buffer ring size
  */
 #define COM_USART_BUFFER_RING_SIZE 64
+
+/**
+ * Network
+ */
+
+/**
+ * @brief Enable network
+ */
+#define NET_NETWORK
 
 /**
  * Utilities
