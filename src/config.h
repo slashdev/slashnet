@@ -50,6 +50,14 @@
  * @brief Enable network
  */
 #define NET_NETWORK
+/**
+ * @brief Network buffer in size
+ */
+#define BUFFER_IN_SIZE 1023
+/**
+ * @brief Network buffer out size
+ */
+#define BUFFER_OUT_SIZE 1023
 
 /**
  * Utilities
@@ -60,3 +68,17 @@
  * @brief Enable debug over USART
  */
 #define UTILS_DEBUG
+
+
+/**********************************************************************
+ * DO NOT CHANGE BELOW
+ * - References from config.c, change them in config.c
+ * - Logic to check for bad config
+ ***********************************************************************/
+
+#if BUFFER_IN_SIZE > 1500
+#error BUFFER_IN_SIZE larger than network chip can handle
+#endif
+#if BUFFER_OUT_SIZE > 1500
+#error BUFFER_OUT_SIZE larger than network chip can handle
+#endif
