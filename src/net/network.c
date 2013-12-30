@@ -18,4 +18,23 @@
 #error F_CPU is not set but required for network
 #endif // F_CPU
 
+// Variables
+// ---------
+
+// External addresses from config
+extern uint8_t my_ip[];
+extern uint8_t my_mac[];
+
+// Current register
+static uint8_t bank;
+// Next packet pointer
+static uint16_t next_packet_ptr;
+
+// Buffer for recieved packets
+uint8_t buffer_in[BUFFER_IN_SIZE+1];
+// Buffer for packets to transmit
+uint8_t buffer_out[BUFFER_OUT_SIZE];
+// Length of received packet
+uint16_t buffer_in_length;
+
 #endif // NET_NETWORK
