@@ -18,6 +18,23 @@
 #error F_CPU is not set but required for network
 #endif // F_CPU
 
+// Defines
+// ---------
+
+// Port and data direction register
+#define NETWORK_PORT PORTB
+#define NETWORK_DDR  DDRB
+
+// Control pins
+#define NETWORK_CTR_CS  PORTB4
+#define NETWORK_CTR_SI  PORTB5
+#define NETWORK_CTR_SO  PORTB6
+#define NETWORK_CTR_SCK PORTB7
+
+// Enable or disable SPI selector
+#define NETWORK_SPI_ACTIVE() SPI_ACTIVE(NETWORK_PORT, NETWORK_CTR_CS)
+#define NETWORK_SPI_PASSIVE() SPI_PASSIVE(NETWORK_PORT, NETWORK_CTR_CS)
+
 // Variables
 // ---------
 
