@@ -27,7 +27,7 @@ int main(void) {
     debug_init();
     
     // Initialize network chip
-    //network_init();
+    network_init();
     
     // Infinite loop
     while (1) {
