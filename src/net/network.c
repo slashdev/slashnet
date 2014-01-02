@@ -268,7 +268,7 @@ uint8_t network_is_link_up(void) {
 
 void network_init(void) {
     // Notify debug
-    debug_string_p(PSTR("\r\nInit network\r\n"));
+    debug_string_p(PSTR("Init network\r\n"));
     
     // Initialize spi
     // --------------
