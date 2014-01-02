@@ -262,4 +262,49 @@ uint8_t network_is_link_up(void) {
     return (0);
 }
 
+//
+// Network functions
+//
+
+void network_init(void) {
+    // Notify debug
+    debug_string_p(PSTR("\r\nInit network\r\n"));
+    
+    // Initialize spi
+    // --------------
+    // Initialize IO for SPI communication
+    NETWORK_DDR |= 0
+    | (1 << NETWORK_CTR_CS)   // SS as output
+    | (1 << NETWORK_CTR_SI)   // SI as output
+    | (1 << NETWORK_CTR_SCK); // SCK as output
+    NETWORK_DDR &= ~(1 << NETWORK_CTR_SO); // Explicitly make SO input
+    
+    // Set SPI to passive
+    NETWORK_SPI_PASSIVE();
+    
+    // Set SI and SCK to LOW
+    NETWORK_PORT |= 0
+    | (1 << NETWORK_CTR_SI)
+    | (1 << NETWORK_CTR_SCK);
+    
+    // Spi config
+    // - Enable
+    // - Master role
+    // - Fosc / 2 clock rate
+    spi_config_t spi_config;
+    spi_config.enable = 1;
+    spi_config.role = SPI_ROLE_MASTER;
+    spi_config.clock_rate = SPI_CLOCK_RATE_FOSC_2;
+    spi_init(&spi_config);
+    
+    
+    // Soft reset
+    // ----------
+    
+    // Do a soft reset of the chip
+    //write_op(NETWORK_SOFT_RESET, 0, NETWORK_SOFT_RESET);
+    // Wait for 20ms
+    //_delay_ms(20);
+}
+
 #endif // NET_NETWORK

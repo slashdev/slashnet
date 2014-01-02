@@ -37,6 +37,7 @@
 #include <util/delay.h>
 #include "network_defines.h"
 #include "../com/spi.h"
+#include "../utils/debug.h"
 
 /**
  * @brief Initialization of the network chip, includes setting MAC address (and
