@@ -290,11 +290,10 @@ void network_init(void) {
     // Spi config
     // - Enable
     // - Master role
-    // - Fosc / 2 clock rate
     spi_config_t spi_config;
-    spi_config.enable = 1;
+    spi_get_default_config(&spi_config);
+    spi_config.enable = SPI_ENABLE;
     spi_config.role = SPI_ROLE_MASTER;
-    spi_config.clock_rate = SPI_CLOCK_RATE_FOSC_2;
     spi_init(&spi_config);
     
     
