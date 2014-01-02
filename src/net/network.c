@@ -273,8 +273,8 @@ void network_init(void) {
     // Initialize spi
     // --------------
     // Initialize IO for SPI communication
-    NETWORK_DDR |= 0
-    | (1 << NETWORK_CTR_CS)   // SS as output
+    NETWORK_DDR |=
+      (1 << NETWORK_CTR_CS)   // SS as output
     | (1 << NETWORK_CTR_SI)   // SI as output
     | (1 << NETWORK_CTR_SCK); // SCK as output
     NETWORK_DDR &= ~(1 << NETWORK_CTR_SO); // Explicitly make SO input
@@ -283,8 +283,8 @@ void network_init(void) {
     NETWORK_SPI_PASSIVE();
     
     // Set SI and SCK to LOW
-    NETWORK_PORT |= 0
-    | (1 << NETWORK_CTR_SI)
+    NETWORK_PORT |=
+      (1 << NETWORK_CTR_SI)
     | (1 << NETWORK_CTR_SCK);
     
     // Spi config
