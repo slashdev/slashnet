@@ -60,6 +60,11 @@ extern void network_init(void);
  * handler associated to it. When no handler is found for the packet, the packet
  * is not discarded but should be handled manually in the main loop.
  *
+ * @note If a packet is smaller than the required 60 bytes of an ethernet frame
+ * it will be zero padded to match 60 bytes. This reflects in the length set in
+ * _buffer_in_length_. If the length is available in a protocol header,
+ * use that length to know the actual length of the data block.
+ *
  * @see #network_init(void)
  */
 extern void network_backbone(void);
@@ -128,22 +133,6 @@ extern uint8_t network_status(void);
  * @param length The total length of the packet to be send
  */
 extern void network_send(uint16_t length);
-
-/**
- * @brief Receive a packet from the network chip if it is available. If no
- * packet is available _buffer_in_length_ will be zero.
- *
- * The network chip will be checked for a packet, if no packet is available
- * _buffer_in_length_ will be zero and this function will stop. When a
- * packet is available the packet will be copied to _buffer_in_ and the
- * length of the packet will be saved in _buffer_in_length_.
- *
- * @note If a packet is smaller than the required 60 bytes of an ethernet frame
- * it will be zero padded to match 60 bytes. This reflects in the length set in
- * _buffer_in_length_. If the length is available in a protocol header,
- * use that length to know the actual length of the data block.
- */
-extern uint16_t network_receive(void);
 
 /**
  * @brief Enable broadcast packets on the network chip
