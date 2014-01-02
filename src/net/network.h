@@ -77,13 +77,6 @@ extern void network_backbone(void);
 extern uint8_t network_is_link_up(void);
 
 /**
- * @brief Has the network chip a received packet in buffer?
- *
- * @return One if there is a received packet in _buffer_in_
- */
-extern uint8_t network_has_received_packet(void);
-
-/**
  * @brief Return the status of the physical layer
  *
  * <table>
