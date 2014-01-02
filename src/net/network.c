@@ -301,9 +301,147 @@ void network_init(void) {
     // ----------
     
     // Do a soft reset of the chip
-    //write_op(NETWORK_SOFT_RESET, 0, NETWORK_SOFT_RESET);
+    write_op(NETWORK_SOFT_RESET, 0, NETWORK_SOFT_RESET);
     // Wait for 20ms
-    //_delay_ms(20);
+    _delay_ms(20);
+    
+    // Initiate bank 0 settings
+    // ------------------------
+    // Transmit and receive buffer settings
+    
+    // Tx start
+    write(ETXSTL, TXSTART_INIT & 0xFF);
+    write(ETXSTH, TXSTART_INIT >> 8);
+    
+    // Tx stop
+    write(ETXNDL, TXSTOP_INIT & 0xFF);
+    write(ETXNDH, TXSTOP_INIT >> 8);
+    
+    // Set receive buffer start address
+    next_packet_ptr = RXSTART_INIT;
+    
+    // Rx start
+    write(ERXSTL, RXSTART_INIT & 0xFF);
+    write(ERXSTH, RXSTART_INIT >> 8);
+    
+    // Rx stop
+    write(ERXNDL, RXSTOP_INIT & 0xFF);
+    write(ERXNDH, RXSTOP_INIT >> 8);
+    
+    // Set receive pointer
+    write(ERXRDPTL, RXSTART_INIT & 0xFF);
+    write(ERXRDPTH, RXSTART_INIT >> 8);
+    
+    // Initiate bank 1 settings
+    // ------------------------
+    // Packet filters
+    
+    // Set filters
+    write(ERXFCON,
+          ERXFCON_UCEN   // Unicast enabled, only accept matching local mac
+        | ERXFCON_CRCEN  // Check CRC post filter
+        | ERXFCON_PMEN); // Enable packet pattern match filter
+    
+    // The packet pattern match filter allows arp broadcast packets
+    // The pattern to match is:
+    // Type   Eth Destination
+    // ARP    Broadcast
+    // 06 08  FF FF FF FF FF FF
+    // IP checksum for these bytes is F7F9
+    // In binary these positions are: 11 0000 0011 1111
+    // This is hex 303F
+    write(EPMM0, 0x3F);
+    write(EPMM1, 0x30);
+    write(EPMCSL, 0xF9);
+    write(EPMCSH, 0xF7);
+    
+    
+    // Initiate bank 2 settings
+    // ------------------------
+    
+    // Enable mac receive
+    write(MACON1,
+          MACON1_MARXEN   // Mac receive enable
+        | MACON1_TXPAUS   // Pause control transmit enable
+        | MACON1_RXPAUS); // Pause control receive enable
+    
+    // Bring mac out of reset
+    write(MACON2, 0x00);
+    
+    // Enable automatic padding to 60 bytes and CRC operations
+    write(MACON3,
+          MACON3_PADCFG0   // Short frames will be padded to 60 bytes and crc appended
+        | MACON3_TXCRCEN   // Transmit CRC enable
+        | MACON3_FRMLNEN); // Frame length check enable
+    
+    // No options of macon4 should be used
+    write(MACON4, 0x00);
+    
+    // Set inter-frame gap (back-to-back)
+    write(MABBIPG, 0x12); // Half-duplex value
+    
+    // Set inter-frame gap (non back-to-back)
+    write(MAIPGL, 0x12);
+    write(MAIPGH, 0x0C);
+    
+    // Set the maximum packet size which the chip will accept
+    // Do not recieve packets larger than BUFFER_IN_SIZE
+    write(MAMXFLL, BUFFER_IN_SIZE & 0xFF);
+    write(MAMXFLH, BUFFER_IN_SIZE >> 8);
+    
+    
+    // Initialize bank 3 settings
+    // --------------------------
+    // Mac adress
+    
+    // Set mac address
+    write(MAADR0, my_mac[0]);
+    write(MAADR1, my_mac[1]);
+    write(MAADR2, my_mac[2]);
+    write(MAADR3, my_mac[3]);
+    write(MAADR4, my_mac[4]);
+    write(MAADR5, my_mac[5]);
+    
+    
+    // PHY bank settings
+    // -----------------
+    
+    // Disable loopback of transmitted frames
+    write_phy(PHCON2, PHCON2_HDLDIS);
+    
+    // Magjack led configuration
+    // See datasheet p. 11
+    // Led a = link status, led b = receive/transmit => 0x476
+    write_phy(PHLCON, 0x476);
+    
+    // General settings
+    // ----------------
+    
+    // Set bank to 0
+    set_bank(ECON1);
+    
+    // Enable interrupts
+    write_op(NETWORK_BIT_FIELD_SET, EIE,
+          EIE_INTIE   // Global interrupt enable
+        | EIE_PKTIE); // Receive packet pending interrupt enable
+    
+    // Enable packet reception
+    write_op(NETWORK_BIT_FIELD_SET, ECON1, ECON1_RXEN); // Receive enable
+    
+    // Disable clock output
+    write(ECOCON, 0x00);
+    
+    // Wait ~60 us
+    _delay_us(60);
+    
+    debug_string_p(PSTR("Init network finished\r\n"));
+    
+    // Init arp
+    // Init udp
+    // Init counter
+    // Init DHCP
+}
+
 }
 
 #endif // NET_NETWORK
