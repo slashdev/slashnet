@@ -75,8 +75,9 @@ uint8_t read_phy_low(uint8_t address);
 void    write_phy(uint8_t address, uint16_t data);
 
 // Helpers
-void    set_bank(uint8_t address);
-uint8_t get_revision(void);
+void     set_bank(uint8_t address);
+uint8_t  get_revision(void);
+uint16_t network_receive(void);
 
 //
 // Read / write registers
@@ -442,6 +443,21 @@ void network_init(void) {
     // Init DHCP
 }
 
+void network_backbone(void) {
+    // Check if there is a packet available
+    network_receive();
+    // Check if a DHCP packet is received
+    //dhcp_renew_handler
+    // If there is no buffer_in_length, there is no packet
+    if (buffer_in_length == 0) {
+        return;
+    }
+    // Handle protocols
+    // arp, icmp, udp, tcp
+}
+
+uint16_t network_receive(void) {
+    return 0;
 }
 
 #endif // NET_NETWORK
