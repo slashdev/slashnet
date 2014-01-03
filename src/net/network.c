@@ -456,6 +456,35 @@ void network_backbone(void) {
     // arp, icmp, udp, tcp
 }
 
+void network_send(uint16_t length) {
+    // Check if there is a transmission in progress
+    while (read_op(NETWORK_READ_CTRL_REG, ECON1) & ECON1_TXRTS) {
+        // Reset the transmission logic problem.
+        // See revision B4 silicon errata point 12
+        if (read_op(NETWORK_READ_CTRL_REG, EIR) & EIR_TXERIF) {
+            write_op(NETWORK_BIT_FIELD_SET, ECON1, ECON1_TXRST);
+            write_op(NETWORK_BIT_FIELD_CLR, ECON1, ECON1_TXRST);
+        }
+    }
+    
+    // Set the write pointer to the start of the transmit buffer area
+    write(EWRPTL, TXSTART_INIT & 0xFF);
+    write(EWRPTH, TXSTART_INIT >> 8);
+    
+    // Set the TXND pointer to correspond the packet size given
+    write(ETXNDL, (TXSTART_INIT + length) & 0xFF);
+    write(ETXNDH, (TXSTART_INIT + length) >> 8);
+    
+    // Write per-packet control byte (0x00 means use MACON3 settings)
+    write_op(NETWORK_WRITE_BUF_MEM, 0, 0x00);
+    
+    // Write data to transmit buffer
+    write_buffer(length, buffer_out);
+    
+    // Send the packet onto the network
+    write_op(NETWORK_BIT_FIELD_SET, ECON1, ECON1_TXRTS);
+}
+
 uint16_t network_receive(void) {
     return 0;
 }
