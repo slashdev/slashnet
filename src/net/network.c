@@ -483,10 +483,80 @@ void network_send(uint16_t length) {
     
     // Send the packet onto the network
     write_op(NETWORK_BIT_FIELD_SET, ECON1, ECON1_TXRTS);
+    
+    // TODO: Handle werkti
 }
 
 uint16_t network_receive(void) {
-    return 0;
+    uint16_t rxstatus;
+    uint16_t length;
+    
+    // Reset buffer length
+    buffer_in_length = 0;
+    
+    // Check if a packet has been received and buffered
+    if (read(EPKTCNT) == 0) {
+        return (0);
+    }
+    
+    // Set the read pointer to the start of the received packet
+    write(ERDPTL, (next_packet_ptr & 0xFF));
+    write(ERDPTH, (next_packet_ptr >> 8));
+    
+    // Read the next packet pointer
+    next_packet_ptr = read_op(NETWORK_READ_BUF_MEM, 0);
+    next_packet_ptr |= ((uint16_t)read_op(NETWORK_READ_BUF_MEM, 0)) << 8;
+    
+    // Read the packet length
+    // See datasheet p. 43
+    length = read_op(NETWORK_READ_BUF_MEM, 0);
+    length |= ((uint16_t)read_op(NETWORK_READ_BUF_MEM, 0)) << 8;
+    // Subtract CRC
+    length -= 4;
+    
+    // Read receive status
+    // See datasheet p. 43
+    rxstatus = read_op(NETWORK_READ_BUF_MEM, 0);
+    rxstatus |= ((uint16_t)read_op(NETWORK_READ_BUF_MEM, 0)) << 8;
+    
+    // Limit retrieve length
+    if (length > BUFFER_IN_SIZE) {
+        length = BUFFER_IN_SIZE;
+    }
+    
+    // Check CRC and symbol errors
+    // See datasheet p 44, table 7-3
+    if ((rxstatus & 0x80) == 0) {
+        // Check failed, invalid packet
+        length = 0;
+    } else {
+        // Read packet to buffer
+        read_buffer(length, buffer_in);
+    }
+    
+    // Move the RX read pointer to the start of the next new packet
+    // This frees the buffer we just read
+    // Errata point 13 revision B4: never write an even address!
+    // encNextPacketPtr is always an even address if RXSTOP_INIT is odd
+    if (next_packet_ptr > RXSTOP_INIT) {
+        // RXSTART_INIT is zero, no tests for encNextPacketPtr less than RXSTART_INIT
+        write(ERXRDPTL, (RXSTOP_INIT) & 0xFF);
+        write(ERXRDPTH, (RXSTOP_INIT) >> 8);
+    } else {
+        write(ERXRDPTL, (next_packet_ptr-1) & 0xFF);
+        write(ERXRDPTH, (next_packet_ptr-1) >> 8);
+    }
+    
+    // Decrease the packet counter to indicate we are done with this packet
+    write_op(NETWORK_BIT_FIELD_SET, ECON2, ECON2_PKTDEC);
+    
+    // Set buffer terminator and buffer length
+    buffer_in[BUFFER_IN_SIZE] = '\0';
+    buffer_in_length = length;
+    
+    // TODO: handle werkti
+    
+    return (length);
 }
 
 #endif // NET_NETWORK
