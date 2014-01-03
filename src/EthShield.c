@@ -15,13 +15,19 @@
 #endif
 
 #include <inttypes.h>
+#include <avr/interrupt.h>
+#include "net/network.h"
 #include "utils/debug.h"
 
 int main(void) {
 	// Enable interrupts
     sei();
 	
+    // Initialize debug
     debug_init();
+    
+    // Initialize network chip
+    network_init();
     
     // Infinite loop
     while (1) {

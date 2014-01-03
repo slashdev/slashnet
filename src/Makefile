@@ -22,7 +22,9 @@ FUSE_EXT  = 0xFF
 OBJECTS    = \
 com/spi.o \
 com/usart.o \
+net/network.o \
 utils/debug.o \
+config.o \
 EthShield.o 
 
 # Tune the lines below only if you know what you are doing:
