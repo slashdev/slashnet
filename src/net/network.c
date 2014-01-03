@@ -559,4 +559,23 @@ uint16_t network_receive(void) {
     return (length);
 }
 
+//
+// Broadcast settings
+//
+
+void network_broadcast_enable(void) {
+    uint8_t reg;
+    reg = read(ERXFCON);
+    reg |= ERXFCON_BCEN;
+    write(ERXFCON, reg);
+}
+
+void network_broadcast_disable(void) {
+    uint8_t reg;
+    reg = read(ERXFCON);
+    reg &= (0xFF ^ ERXFCON_BCEN);
+    write(ERXFCON, reg);
+}
+
+
 #endif // NET_NETWORK
