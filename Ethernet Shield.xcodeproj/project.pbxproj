@@ -16,6 +16,10 @@
 		C001335C185100D9000E8B0D /* debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = debug.h; sourceTree = "<group>"; };
 		C0FBC508186F764000DB9B65 /* spi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = spi.c; sourceTree = "<group>"; };
 		C0FBC509186F76C400DB9B65 /* spi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spi.h; sourceTree = "<group>"; };
+		C0FBC50D1870633100DB9B65 /* network.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = network.c; path = src/net/network.c; sourceTree = "<group>"; };
+		C0FBC50E1870633100DB9B65 /* network.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = network.h; path = src/net/network.h; sourceTree = "<group>"; };
+		C0FBC50F187080F900DB9B65 /* network_defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = network_defines.h; path = src/net/network_defines.h; sourceTree = "<group>"; };
+		C0FBC5101870841400DB9B65 /* config.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = config.c; path = src/config.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -24,8 +28,10 @@
 			children = (
 				C0013359185100D9000E8B0D /* Makefile */,
 				C0013350185100D9000E8B0D /* com */,
+				C0FBC50C18705F3800DB9B65 /* net */,
 				C001335A185100D9000E8B0D /* utils */,
 				C0013353185100D9000E8B0D /* config.h */,
+				C0FBC5101870841400DB9B65 /* config.c */,
 				C0013358185100D9000E8B0D /* EthShield.c */,
 			);
 			sourceTree = "<group>";
@@ -50,6 +56,16 @@
 			);
 			name = utils;
 			path = src/utils;
+			sourceTree = "<group>";
+		};
+		C0FBC50C18705F3800DB9B65 /* net */ = {
+			isa = PBXGroup;
+			children = (
+				C0FBC50E1870633100DB9B65 /* network.h */,
+				C0FBC50F187080F900DB9B65 /* network_defines.h */,
+				C0FBC50D1870633100DB9B65 /* network.c */,
+			);
+			name = net;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

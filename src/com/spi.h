@@ -68,12 +68,17 @@ typedef struct {
     /**
      * @brief Clock rate selector, value from 0 to 7.
      * __Default: 0, fosc/4
-     * @note Use defines
+     * @note Use defines SPI_CLOCK_RATE_FOSC_2, SPI_CLOCK_RATE_FOSC_4, 
+     * SPI_CLOCK_RATE_FOSC_8, SPI_CLOCK_RATE_FOSC_16, SPI_CLOCK_RATE_FOSC_32,
+     * SPI_CLOCK_RATE_FOSC_64, SPI_CLOCK_RATE_FOSC_128
      */
     uint8_t clock_rate;
 } spi_config_t;
 
 // SPI config values
+// Enable
+#define SPI_ENABLE 1
+#define SPI_DISABLE 0
 // Interrup
 #define SPI_INTERRUPT_ENABLE 1
 #define SPI_INTERRUPT_DISABLE 0
@@ -103,6 +108,13 @@ typedef struct {
  * @param config Configuration for spi channel
  */
 extern void spi_init(spi_config_t *config);
+
+/**
+ * @brief Get default spi config
+ * @param config Configuration to set to default values
+ * @see spi_config_t
+ */
+extern void spi_get_default_config(spi_config_t *config);
 
 /**
  * @brief Activate slave select for _pin_ on _port_

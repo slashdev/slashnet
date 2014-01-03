@@ -8,6 +8,15 @@
  * @author Ferdi van der Werf <efcm@slashdev.nl>
  * @since 0.1.0
  */
+
+#ifndef CONFIG_H
+#define CONFIG_H
+
+#include <inttypes.h>
+
+/**
+ * @brief Version of the EthShield firmware
+ */
 #define VERSION "0.2.0"
 
 /**
@@ -39,6 +48,23 @@
 #define COM_USART_BUFFER_RING_SIZE 64
 
 /**
+ * Network
+ */
+
+/**
+ * @brief Enable network
+ */
+#define NET_NETWORK
+/**
+ * @brief Network buffer in size
+ */
+#define BUFFER_IN_SIZE 1023
+/**
+ * @brief Network buffer out size
+ */
+#define BUFFER_OUT_SIZE 1023
+
+/**
  * Utilities
  */
 
@@ -47,3 +73,46 @@
  * @brief Enable debug over USART
  */
 #define UTILS_DEBUG
+
+
+/**********************************************************************
+ * DO NOT CHANGE BELOW
+ * - References from config.c, change them in config.c
+ * - Logic to check for bad config
+ ***********************************************************************/
+
+/**
+ * @brief MAC address of the device. Needs to be unique in the network.
+ * @note Only change last two digits and make sure every device in a network has
+ * a unique mac address!
+ */
+extern uint8_t my_mac[];
+/**
+ * @brief IPv4 address of the device. Needs to be set when not using DHCP.
+ * When using DHCP it is set automatically.
+ */
+extern uint8_t my_ip[];
+/**
+ * @brief MAC address of the gateway. Needs to be set when not using DHCP.
+ * When using DHCP it is set automatically.
+ */
+extern uint8_t gateway_mac[];
+/**
+ * @brief IPv4 address of the gateway. Needs to be set when not using DHCP.
+ * When using DHCP it is set automatically.
+ */
+extern uint8_t gateway_ip[];
+/**
+ * @brief IPv4 netmask for the network. Needs to be set when not using DHCP.
+ * When using DHCP it is set automatically.
+ */
+extern uint8_t gateway_netmask[];
+
+#if BUFFER_IN_SIZE > 1500
+#error BUFFER_IN_SIZE larger than network chip can handle
+#endif
+#if BUFFER_OUT_SIZE > 1500
+#error BUFFER_OUT_SIZE larger than network chip can handle
+#endif
+
+#endif // CONFIG_H

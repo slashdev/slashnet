@@ -36,4 +36,14 @@ void spi_init(spi_config_t *config) {
     | 0;
 }
 
+void spi_get_default_config(spi_config_t *config) {
+    config->enable = SPI_DISABLE;
+    config->interrupt = SPI_INTERRUPT_DISABLE;
+    config->data_order = SPI_DATA_ORDER_MOST_SIGNIFICANT_BIT;
+    config->role = SPI_ROLE_SLAVE;
+    config->clock_polarity = SPI_CLOCK_POLARITY_IDLE_LOW;
+    config->clock_phase = SPI_CLOCK_PHASE_SAMPLE_ON_LEADING;
+    config->clock_rate = SPI_CLOCK_RATE_FOSC_4;
+}
+
 #endif // COM_SPI
