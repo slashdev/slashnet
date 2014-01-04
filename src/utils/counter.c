@@ -36,7 +36,7 @@ void cntTick(void) {
     dhcpSeconds++;
     PORTC = dhcpSeconds;
 #endif
-#ifdef API_UPTIME
+#ifdef UTILS_UPTIME
     // Update uptime counter
     uptimeTick();
 #endif

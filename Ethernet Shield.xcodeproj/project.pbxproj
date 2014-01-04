@@ -16,6 +16,8 @@
 		C001335C185100D9000E8B0D /* debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = debug.h; sourceTree = "<group>"; };
 		C078D23018769B470098C828 /* counter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = counter.c; sourceTree = "<group>"; };
 		C078D23118769B470098C828 /* counter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = counter.h; sourceTree = "<group>"; };
+		C078D232187862400098C828 /* uptime.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = uptime.c; sourceTree = "<group>"; };
+		C078D233187862400098C828 /* uptime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uptime.h; sourceTree = "<group>"; };
 		C0FBC508186F764000DB9B65 /* spi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = spi.c; sourceTree = "<group>"; };
 		C0FBC509186F76C400DB9B65 /* spi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spi.h; sourceTree = "<group>"; };
 		C0FBC50D1870633100DB9B65 /* network.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = network.c; path = src/net/network.c; sourceTree = "<group>"; };
@@ -57,6 +59,8 @@
 				C078D23018769B470098C828 /* counter.c */,
 				C001335C185100D9000E8B0D /* debug.h */,
 				C001335B185100D9000E8B0D /* debug.c */,
+				C078D233187862400098C828 /* uptime.h */,
+				C078D232187862400098C828 /* uptime.c */,
 			);
 			name = utils;
 			path = src/utils;
