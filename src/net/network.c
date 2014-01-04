@@ -18,6 +18,13 @@
 #error F_CPU is not set but required for network
 #endif // F_CPU
 
+#if BUFFER_IN_SIZE > 1500
+#error BUFFER_IN_SIZE larger than network chip can handle
+#endif
+#if BUFFER_OUT_SIZE > 1500
+#error BUFFER_OUT_SIZE larger than network chip can handle
+#endif
+
 // Defines
 // ---------
 
