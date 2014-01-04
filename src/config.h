@@ -26,30 +26,43 @@
 #define F_CPU 20000000
 #endif
 
-/**
- * Communication channels
- */
 
+/**********************************************************************
+ * Communication channels
+ **********************************************************************/
+
+//
 // SPI
+// --------------------------------------------------------------------
+
 /**
  * @brief Enables Serial Peripheral Interface channel
  */
 #define COM_SPI
 
-// UART
+//
+// USART
+// --------------------------------------------------------------------
+
 /**
  * @brief Enable Universal Synchronous and Asymchronous serial Receiver and 
  * Transmitter channel
  */
 #define COM_USART
+
 /**
  * @brief USART buffer ring size
  */
 #define COM_USART_BUFFER_RING_SIZE 64
 
-/**
+
+/**********************************************************************
  * Network
- */
+ **********************************************************************/
+
+//
+// Network
+// --------------------------------------------------------------------
 
 /**
  * @brief Enable network
@@ -64,11 +77,15 @@
  */
 #define BUFFER_OUT_SIZE 1023
 
-/**
- * Utilities
- */
 
+/**********************************************************************
+ * Utilities
+ **********************************************************************/
+
+//
 // Counter
+// --------------------------------------------------------------------
+
 /**
  * @brief Enable second counter
  */
@@ -85,7 +102,10 @@
 #define UTILS_COUNTER_TIMER1
 //#define UTILS_COUNTER_TIMER2
 
+//
 // Debug
+// --------------------------------------------------------------------
+
 /**
  * @brief Enable debug over USART
  */
@@ -95,7 +115,7 @@
 /**********************************************************************
  * DO NOT CHANGE BELOW
  * References from config.c, change them in config.c
- ***********************************************************************/
+ **********************************************************************/
 
 /**
  * @brief MAC address of the device. Needs to be unique in the network.
