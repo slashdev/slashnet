@@ -19,5 +19,33 @@
 // Do we want uptime?
 #ifdef UTILS_UPTIME
 
+#include <inttypes.h>
+
+/**
+ * Uptime struct
+ */
+typedef struct {
+    uint16_t days;
+    uint8_t hours;
+    uint8_t minutes;
+    uint8_t seconds;
+} uptime_t;
+
+
+/**
+ * @brief Initialize uptime data structure
+ */
+extern void uptimeInit(void);
+
+/**
+ * @brief Update the uptime with a second
+ */
+extern void uptimeTick(void);
+
+/**
+ * @brief Uptime data structure
+ */
+extern uptime_t uptime;
+
 #endif // UTILS_UPTIME
 #endif // UTILS_UPTIME_H

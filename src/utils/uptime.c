@@ -13,4 +13,26 @@
 // Do we want uptime?
 #ifdef UTILS_UPTIME
 
+uptime_t uptime;
+
+void uptimeInit(void) {
+    uptime.seconds = 0;
+    uptime.minutes = 0;
+    uptime.hours = 0;
+    uptime.days = 0;
+}
+
+void uptimeTick(void) {
+    if (++uptime.seconds >= 60) {
+        uptime.seconds = 0;
+        if (++uptime.minutes >= 60) {
+            uptime.minutes = 0;
+            if (++uptime.hours >= 24) {
+                uptime.hours = 0;
+                uptime.days++;
+            }
+        }
+    }
+}
+
 #endif // UTILS_UPTIME
