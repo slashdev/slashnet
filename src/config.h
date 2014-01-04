@@ -17,7 +17,7 @@
 /**
  * @brief Version of the EthShield firmware
  */
-#define VERSION "0.3.0"
+#define VERSION "0.4.0"
 
 /**
  * Clock setting
@@ -26,30 +26,43 @@
 #define F_CPU 20000000
 #endif
 
-/**
- * Communication channels
- */
 
+/**********************************************************************
+ * Communication channels
+ **********************************************************************/
+
+//
 // SPI
+// --------------------------------------------------------------------
+
 /**
  * @brief Enables Serial Peripheral Interface channel
  */
 #define COM_SPI
 
-// UART
+//
+// USART
+// --------------------------------------------------------------------
+
 /**
  * @brief Enable Universal Synchronous and Asymchronous serial Receiver and 
  * Transmitter channel
  */
 #define COM_USART
+
 /**
  * @brief USART buffer ring size
  */
 #define COM_USART_BUFFER_RING_SIZE 64
 
-/**
+
+/**********************************************************************
  * Network
- */
+ **********************************************************************/
+
+//
+// Network
+// --------------------------------------------------------------------
 
 /**
  * @brief Enable network
@@ -64,11 +77,35 @@
  */
 #define BUFFER_OUT_SIZE 1023
 
-/**
- * Utilities
- */
 
+/**********************************************************************
+ * Utilities
+ **********************************************************************/
+
+//
+// Counter
+// --------------------------------------------------------------------
+
+/**
+ * @brief Enable second counter
+ */
+#define UTILS_COUNTER
+
+/**
+ * @brief Timer selection for counter
+ *
+ * Choose which counter is used to count seconds. This counter can be used by 
+ * dhcp to keep track of lease time and to resend messages when a reply
+ * did not come in time
+ */
+//#define UTILS_COUNTER_TIMER0
+#define UTILS_COUNTER_TIMER1
+//#define UTILS_COUNTER_TIMER2
+
+//
 // Debug
+// --------------------------------------------------------------------
+
 /**
  * @brief Enable debug over USART
  */
@@ -77,9 +114,8 @@
 
 /**********************************************************************
  * DO NOT CHANGE BELOW
- * - References from config.c, change them in config.c
- * - Logic to check for bad config
- ***********************************************************************/
+ * References from config.c, change them in config.c
+ **********************************************************************/
 
 /**
  * @brief MAC address of the device. Needs to be unique in the network.
@@ -107,12 +143,5 @@ extern uint8_t gateway_ip[];
  * When using DHCP it is set automatically.
  */
 extern uint8_t gateway_netmask[];
-
-#if BUFFER_IN_SIZE > 1500
-#error BUFFER_IN_SIZE larger than network chip can handle
-#endif
-#if BUFFER_OUT_SIZE > 1500
-#error BUFFER_OUT_SIZE larger than network chip can handle
-#endif
 
 #endif // CONFIG_H

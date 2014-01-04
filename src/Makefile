@@ -23,6 +23,7 @@ OBJECTS    = \
 com/spi.o \
 com/usart.o \
 net/network.o \
+utils/counter.o \
 utils/debug.o \
 config.o \
 EthShield.o 
