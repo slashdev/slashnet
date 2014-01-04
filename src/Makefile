@@ -25,6 +25,7 @@ com/usart.o \
 net/network.o \
 utils/counter.o \
 utils/debug.o \
+utils/uptime.o \
 config.o \
 EthShield.o 
 

@@ -23,6 +23,7 @@
 
 #include <inttypes.h>
 #include <avr/interrupt.h>
+#include "uptime.h"
 
 /**
  * @brief Initialize the selected timer for counting
