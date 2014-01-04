@@ -74,6 +74,17 @@
  */
 #define UTILS_COUNTER
 
+/**
+ * @brief Timer selection for counter
+ *
+ * Choose which counter is used to count seconds. This counter can be used by 
+ * dhcp to keep track of lease time and to resend messages when a reply
+ * did not come in time
+ */
+//#define UTILS_COUNTER_TIMER0
+#define UTILS_COUNTER_TIMER1
+//#define UTILS_COUNTER_TIMER2
+
 // Debug
 /**
  * @brief Enable debug over USART

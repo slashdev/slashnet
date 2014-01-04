@@ -21,7 +21,13 @@
 // Do we want to use the counter?
 #ifdef UTILS_COUNTER
 
+#include <inttypes.h>
+#include <avr/interrupt.h>
 
+/**
+ * @brief Initialize the selected timer for counting
+ */
+extern void cntInit(void);
 
 #endif // UTILS_COUNTER
 #endif // UTILS_COUNTER_H
