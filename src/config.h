@@ -17,7 +17,7 @@
 /**
  * @brief Version of the EthShield firmware
  */
-#define VERSION "0.4.0"
+#define VERSION "0.5.0"
 
 /**
  * Clock setting
@@ -45,7 +45,7 @@
 // --------------------------------------------------------------------
 
 /**
- * @brief Enable Universal Synchronous and Asymchronous serial Receiver and 
+ * @brief Enable Universal Synchronous and Asymchronous serial Receiver and
  * Transmitter channel
  */
 #define COM_USART
@@ -94,7 +94,7 @@
 /**
  * @brief Timer selection for counter
  *
- * Choose which counter is used to count seconds. This counter can be used by 
+ * Choose which counter is used to count seconds. This counter can be used by
  * dhcp to keep track of lease time and to resend messages when a reply
  * did not come in time
  */
