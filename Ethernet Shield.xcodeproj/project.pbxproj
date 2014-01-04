@@ -14,6 +14,8 @@
 		C0013359185100D9000E8B0D /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; name = Makefile; path = src/Makefile; sourceTree = "<group>"; };
 		C001335B185100D9000E8B0D /* debug.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = debug.c; sourceTree = "<group>"; };
 		C001335C185100D9000E8B0D /* debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = debug.h; sourceTree = "<group>"; };
+		C078D23018769B470098C828 /* counter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = counter.c; sourceTree = "<group>"; };
+		C078D23118769B470098C828 /* counter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = counter.h; sourceTree = "<group>"; };
 		C0FBC508186F764000DB9B65 /* spi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = spi.c; sourceTree = "<group>"; };
 		C0FBC509186F76C400DB9B65 /* spi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spi.h; sourceTree = "<group>"; };
 		C0FBC50D1870633100DB9B65 /* network.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = network.c; path = src/net/network.c; sourceTree = "<group>"; };
@@ -51,6 +53,8 @@
 		C001335A185100D9000E8B0D /* utils */ = {
 			isa = PBXGroup;
 			children = (
+				C078D23118769B470098C828 /* counter.h */,
+				C078D23018769B470098C828 /* counter.c */,
 				C001335C185100D9000E8B0D /* debug.h */,
 				C001335B185100D9000E8B0D /* debug.c */,
 			);

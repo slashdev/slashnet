@@ -68,6 +68,12 @@
  * Utilities
  */
 
+// Counter
+/**
+ * @brief Enable second counter
+ */
+#define UTILS_COUNTER
+
 // Debug
 /**
  * @brief Enable debug over USART
