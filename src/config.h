@@ -83,8 +83,7 @@
 
 /**********************************************************************
  * DO NOT CHANGE BELOW
- * - References from config.c, change them in config.c
- * - Logic to check for bad config
+ * References from config.c, change them in config.c
  ***********************************************************************/
 
 /**
@@ -113,12 +112,5 @@ extern uint8_t gateway_ip[];
  * When using DHCP it is set automatically.
  */
 extern uint8_t gateway_netmask[];
-
-#if BUFFER_IN_SIZE > 1500
-#error BUFFER_IN_SIZE larger than network chip can handle
-#endif
-#if BUFFER_OUT_SIZE > 1500
-#error BUFFER_OUT_SIZE larger than network chip can handle
-#endif
 
 #endif // CONFIG_H
