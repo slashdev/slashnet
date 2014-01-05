@@ -17,14 +17,14 @@
 #include <inttypes.h>
 #include <avr/interrupt.h>
 #include "net/network.h"
-#include "utils/debug.h"
+#include "utils/logger.h"
 
 int main(void) {
 	// Enable interrupts
     sei();
 	
     // Initialize debug
-    debug_init();
+    logger_init();
     
     // Initialize network chip
     network_init();
