@@ -34,7 +34,7 @@ extern void logger__number(uint16_t value);
 extern void logger_number_as_hex(uint16_t value);
 extern void logger_array(uint8_t *data, uint16_t length, char glue);
 
-#if defined(UTILS_LOGGER_INFO)
+#if defined(UTILS_LOGGER_DEBUG)
 
 // Info level enabled
 #define info_string(s) logger_string(s)
@@ -49,7 +49,7 @@ extern void logger_array(uint8_t *data, uint16_t length, char glue);
 #define debug_number_as_hex(...) do {} while (0)
 #define debug_array(...) do {} while (0)
 
-#elif defined(UTILS_LOGGER_DEBUG)
+#elif defined(UTILS_LOGGER_INFO)
 
 // Info level enabled
 #define info_string(s) logger_string(s)
