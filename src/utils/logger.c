@@ -27,10 +27,10 @@ void logger_init(void) {
     usart_init(&config);
     
     // Send debug message
-    debug_string_p(PSTR("\r\nUSART logger started\r\n"));
-    debug_string_p(PSTR("EthShield version: "));
-    debug_string_p(PSTR(VERSION));
-    debug_string_p(PSTR("\r\n"));
+    info_string_p(PSTR("\r\nUSART logger started\r\n"));
+    info_string_p(PSTR("EthShield version: "));
+    info_string_p(PSTR(VERSION));
+    info_string_p(PSTR("\r\n"));
 }
 
 void logger_string(char *string) {
