@@ -24,7 +24,7 @@ com/spi.o \
 com/usart.o \
 net/network.o \
 utils/counter.o \
-utils/debug.o \
+utils/logger.o \
 utils/uptime.o \
 config.o \
 EthShield.o 

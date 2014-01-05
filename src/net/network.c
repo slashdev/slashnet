@@ -276,7 +276,7 @@ uint8_t network_is_link_up(void) {
 
 void network_init(void) {
     // Notify debug
-    debug_string_p(PSTR("Init network\r\n"));
+    info_string_p(PSTR("Init network"));
     
     // Initialize spi
     // --------------
@@ -304,6 +304,9 @@ void network_init(void) {
     spi_config.role = SPI_ROLE_MASTER;
     spi_init(&spi_config);
     
+    // Tick debug for spi init
+    debug_string_p(PSTR("."));
+    
     
     // Soft reset
     // ----------
@@ -312,6 +315,9 @@ void network_init(void) {
     write_op(NETWORK_SOFT_RESET, 0, NETWORK_SOFT_RESET);
     // Wait for 20ms
     _delay_ms(20);
+    
+    // Tick debug for soft reset
+    debug_string_p(PSTR("."));
     
     // Initiate bank 0 settings
     // ------------------------
@@ -340,6 +346,9 @@ void network_init(void) {
     write(ERXRDPTL, RXSTART_INIT & 0xFF);
     write(ERXRDPTH, RXSTART_INIT >> 8);
     
+    // Tick debug for bank 0
+    debug_string_p(PSTR("."));
+    
     // Initiate bank 1 settings
     // ------------------------
     // Packet filters
@@ -362,6 +371,9 @@ void network_init(void) {
     write(EPMM1, 0x30);
     write(EPMCSL, 0xF9);
     write(EPMCSH, 0xF7);
+    
+    // Tick debug for bank 1
+    debug_string_p(PSTR("."));
     
     
     // Initiate bank 2 settings
@@ -397,6 +409,9 @@ void network_init(void) {
     write(MAMXFLL, BUFFER_IN_SIZE & 0xFF);
     write(MAMXFLH, BUFFER_IN_SIZE >> 8);
     
+    // Tick debug for bank 2
+    debug_string_p(PSTR("."));
+    
     
     // Initialize bank 3 settings
     // --------------------------
@@ -410,6 +425,9 @@ void network_init(void) {
     write(MAADR4, my_mac[4]);
     write(MAADR5, my_mac[5]);
     
+    // Tick debug for bank 3
+    debug_string_p(PSTR("."));
+    
     
     // PHY bank settings
     // -----------------
@@ -421,6 +439,9 @@ void network_init(void) {
     // See datasheet p. 11
     // Led a = link status, led b = receive/transmit => 0x476
     write_phy(PHLCON, 0x476);
+    
+    // Tick debug for phy
+    debug_string_p(PSTR("."));
     
     // General settings
     // ----------------
@@ -439,10 +460,13 @@ void network_init(void) {
     // Disable clock output
     write(ECOCON, 0x00);
     
+    // Tick debug for general
+    debug_string_p(PSTR("."));
+    
     // Wait ~60 us
     _delay_us(60);
     
-    debug_string_p(PSTR("Init network finished\r\n"));
+    info_string_p(PSTR(" [ok]\r\n"));
     
     // Init arp
     // Init udp

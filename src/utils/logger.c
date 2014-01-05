@@ -1,5 +1,5 @@
 /**
- * @file debug.c
+ * @file logger.c
  *
  * \copyright Copyright 2013 /Dev. All rights reserved.
  * \license This project is released under MIT license.
@@ -8,12 +8,12 @@
  * @since 0.1.0
  */
 
-#include "debug.h"
+#include "logger.h"
 
-// Do we want debug?
-#ifdef UTILS_DEBUG
+// Do we want logging?
+#if defined(UTILS_LOGGER_INFO) || defined(UTILS_LOGGER_DEBUG)
 
-void debug_init(void) {
+void logger_init(void) {
     // Get default usart config
     usart_config_t config;
     usart_get_default_config(&config);
@@ -27,21 +27,21 @@ void debug_init(void) {
     usart_init(&config);
     
     // Send debug message
-    debug_string_p(PSTR("\r\nUSART debug started\r\n"));
+    debug_string_p(PSTR("\r\nUSART logger started\r\n"));
     debug_string_p(PSTR("EthShield version: "));
     debug_string_p(PSTR(VERSION));
     debug_string_p(PSTR("\r\n"));
 }
 
-void debug_string(char *string) {
+void logger_string(char *string) {
     usart_send_string(string);
 }
 
-void debug_string_p(const char *pstring) {
+void logger_string_p(const char *pstring) {
     usart_send_string_p(pstring);
 }
 
-void debug_number_(uint16_t value, uint8_t base) {
+void logger_number_(uint16_t value, uint8_t base) {
     // Create buffer
     char buffer[8*sizeof(uint16_t)+1];
     char *str = &buffer[sizeof(buffer)-1];
@@ -69,19 +69,19 @@ void debug_number_(uint16_t value, uint8_t base) {
     usart_send_string(str);
 }
 
-void debug_number(uint16_t value) {
-    debug_number_(value, 10);
+void logger_number(uint16_t value) {
+    logger_number_(value, 10);
 }
 
-void debug_number_as_hex(uint16_t value) {
-    debug_number_(value, 16);
+void logger_number_as_hex(uint16_t value) {
+    logger_number_(value, 16);
 }
 
-void debug_array(uint8_t *data, uint16_t length, char glue) {
+void logger_array(uint8_t *data, uint16_t length, char glue) {
     while (length--) {
         usart_send(*data++);
         usart_send(glue);
     }
 }
 
-#endif // UTILS_DEBUG
+#endif // UTILS_LOGGER_INFO || UTILS_LOGGER_DEBUG
