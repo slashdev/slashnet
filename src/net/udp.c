@@ -13,6 +13,10 @@
 // Do we want UDP?
 #ifdef NET_UDP
 
+// Check if NET_NETWORK is enabled
+#ifndef NET_NETWORK
+#error UDP cannot work without NET_NETWORK
+#endif // NET_NETWORK
 
 
 #endif // NET_UDP
