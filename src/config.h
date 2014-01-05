@@ -103,13 +103,20 @@
 //#define UTILS_COUNTER_TIMER2
 
 //
-// Debug
+// Logger
 // --------------------------------------------------------------------
 
 /**
- * @brief Enable debug over USART
+ * @brief Enable logging over USART, level INFO
+ * This is the less verbose logger. Shows info_* logging.
  */
-#define UTILS_DEBUG
+#define UTILS_LOGGER_INFO
+
+/**
+ * @brief Enable logging over USART, level DEBUG
+ * This is the more verbose logger. Shows info_* and debug_* logging.
+ */
+#define UTILS_LOGGER_DEBUG
 
 //
 // Uptime

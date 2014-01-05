@@ -1,5 +1,5 @@
 /**
- * @file debug.c
+ * @file logger.c
  *
  * \copyright Copyright 2013 /Dev. All rights reserved.
  * \license This project is released under MIT license.
@@ -10,8 +10,8 @@
 
 #include "logger.h"
 
-// Do we want debug?
-#ifdef UTILS_DEBUG
+// Do we want logging?
+#if defined(UTILS_LOGGER_INFO) || defined(UTILS_LOGGER_DEBUG)
 
 void debug_init(void) {
     // Get default usart config
@@ -84,4 +84,4 @@ void debug_array(uint8_t *data, uint16_t length, char glue) {
     }
 }
 
-#endif // UTILS_DEBUG
+#endif // UTILS_LOGGER_INFO || UTILS_LOGGER_DEBUG

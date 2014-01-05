@@ -1,6 +1,6 @@
 /**
- * @file debug.h
- * @brief Debug over uart functionality
+ * @file logger.h
+ * @brief Log over usart functionality
  *
  * \copyright Copyright 2013 /Dev. All rights reserved.
  * \license This project is released under MIT license.
@@ -9,13 +9,13 @@
  * @since 0.1.0
  */
 
-#ifndef UTILS_DEBUG_H
-#define UTILS_DEBUG_H
+#ifndef UTILS_LOGGER_H
+#define UTILS_LOGGER_H
 
 #include "../config.h"
 
-// Do we want debug?
-#ifdef UTILS_DEBUG
+// Do we want logging?
+#if defined(UTILS_LOGGER_INFO) || defined(UTILS_LOGGER_DEBUG)
 
 // Make sure USART is enabled
 #ifndef COM_USART
@@ -34,9 +34,9 @@ extern void debug_number(uint16_t value);
 extern void debug_number_as_hex(uint16_t value);
 extern void debug_array(uint8_t *data, uint16_t length, char glue);
 
-#else // UTILS_DEBUG
+#else // UTILS_LOGGER_INFO || UTILS_LOGGER_DEBUG
 
-// No debug wanted, create placeholders
+// No logger wanted, create placeholders
 #define debug_init(...) do {} while (0)
 #define debug_string(...) do {} while (0)
 #define debug_string_p(...) do {} while (0)
@@ -44,5 +44,5 @@ extern void debug_array(uint8_t *data, uint16_t length, char glue);
 #define debug_number_as_hex(...) do {} while (0)
 #define debug_array(...) do {} while (0)
 
-#endif // UTILS_DEBUG
-#endif // UTILS_DEBUG_H
+#endif // UTILS_LOGGER_INFO || UTILS_LOGGER_DEBUG
+#endif // UTILS_LOGGER_H
