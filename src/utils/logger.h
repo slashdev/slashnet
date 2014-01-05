@@ -43,11 +43,11 @@ extern void logger_array(uint8_t *data, uint16_t length, char glue);
 #define info_number_as_hex(x) logger_number_as_hex(x)
 #define info_array(x, l) logger_array(x, l)
 // Debug level disabled
-#define debug_string(...) do {} while (0)
-#define debug_string_p(...) do {} while (0)
-#define debug_number(...) do {} while (0)
-#define debug_number_as_hex(...) do {} while (0)
-#define debug_array(...) do {} while (0)
+#define debug_string(s) logger_string(s)
+#define debug_string_p(s) logger_string_p(s)
+#define debug_number(x) logger_number(x)
+#define debug_number_as_hex(x) logger_number_as_hex(x)
+#define debug_array(x, l) logger_array(x, l)
 
 #elif defined(UTILS_LOGGER_INFO)
 
