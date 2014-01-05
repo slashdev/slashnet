@@ -8,7 +8,7 @@
  * @since 0.1.0
  */
 
-#include "debug.h"
+#include "logger.h"
 
 // Do we want debug?
 #ifdef UTILS_DEBUG

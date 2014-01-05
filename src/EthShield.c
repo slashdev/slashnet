@@ -17,7 +17,7 @@
 #include <inttypes.h>
 #include <avr/interrupt.h>
 #include "net/network.h"
-#include "utils/debug.h"
+#include "utils/logger.h"
 
 int main(void) {
 	// Enable interrupts
