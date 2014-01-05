@@ -18,6 +18,8 @@
 		C078D233187862400098C828 /* uptime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uptime.h; sourceTree = "<group>"; };
 		C078D2341879AB2C0098C828 /* logger.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = logger.c; sourceTree = "<group>"; };
 		C078D2351879AB2D0098C828 /* logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logger.h; sourceTree = "<group>"; };
+		C078D2361879BEA10098C828 /* udp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = udp.c; path = src/net/udp.c; sourceTree = "<group>"; };
+		C078D2371879BEA10098C828 /* udp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = udp.h; path = src/net/udp.h; sourceTree = "<group>"; };
 		C0FBC508186F764000DB9B65 /* spi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = spi.c; sourceTree = "<group>"; };
 		C0FBC509186F76C400DB9B65 /* spi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spi.h; sourceTree = "<group>"; };
 		C0FBC50D1870633100DB9B65 /* network.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = network.c; path = src/net/network.c; sourceTree = "<group>"; };
@@ -72,6 +74,8 @@
 				C0FBC50E1870633100DB9B65 /* network.h */,
 				C0FBC50F187080F900DB9B65 /* network_defines.h */,
 				C0FBC50D1870633100DB9B65 /* network.c */,
+				C078D2371879BEA10098C828 /* udp.h */,
+				C078D2361879BEA10098C828 /* udp.c */,
 			);
 			name = net;
 			sourceTree = "<group>";
