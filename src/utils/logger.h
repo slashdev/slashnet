@@ -27,17 +27,17 @@
 #include <util/delay.h>
 #include "../com/usart.h"
 
-extern void debug_init(void);
-extern void debug_string(char *string);
-extern void debug_string_p(const char *pstring);
-extern void debug_number(uint16_t value);
-extern void debug_number_as_hex(uint16_t value);
-extern void debug_array(uint8_t *data, uint16_t length, char glue);
+extern void logger_init(void);
+extern void logger_string(char *string);
+extern void logger_string_p(const char *pstring);
+extern void logger__number(uint16_t value);
+extern void logger_number_as_hex(uint16_t value);
+extern void logger_array(uint8_t *data, uint16_t length, char glue);
 
 #else // UTILS_LOGGER_INFO || UTILS_LOGGER_DEBUG
 
 // No logger wanted, create placeholders
-#define debug_init(...) do {} while (0)
+#define logging_init(...) do {} while (0)
 #define debug_string(...) do {} while (0)
 #define debug_string_p(...) do {} while (0)
 #define debug_number(...) do {} while (0)

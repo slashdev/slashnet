@@ -24,7 +24,7 @@ int main(void) {
     sei();
 	
     // Initialize debug
-    debug_init();
+    logger_init();
     
     // Initialize network chip
     network_init();
