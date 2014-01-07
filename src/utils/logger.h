@@ -70,7 +70,7 @@ extern void logger_array(uint8_t *data, uint16_t length, char glue);
 #else // UTILS_LOGGER_INFO || UTILS_LOGGER_DEBUG
 
 // No logger wanted, create placeholders
-#define logging_init(...) do {} while (0)
+#define logger_init(...) do {} while (0)
 // Info level disabled
 #define info_string(...) do {} while (0)
 #define info_string_p(...) do {} while (0)
