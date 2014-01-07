@@ -24,6 +24,7 @@
 #ifdef NET_UDP
 
 #include <inttypes.h>
+#include "shared.h"
 
 /**
  * @brief Prepare the headers (ethernet, ip, udp) for a packet.
