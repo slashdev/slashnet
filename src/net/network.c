@@ -469,7 +469,10 @@ void network_init(void) {
     info_string_p(PSTR(" [ok]\r\n"));
     
     // Init arp
+#ifdef NET_UDP_SERVER
     // Init udp
+    udp_server_init();
+#endif // NET_UDP_SERVER
     // Init counter
     // Init DHCP
 }
@@ -484,7 +487,20 @@ void network_backbone(void) {
         return;
     }
     // Handle protocols
-    // arp, icmp, udp, tcp
+    // arp, icmp, tcp
+    // IP packets
+    else if (buffer_in_length > 33 // Minimum size of IP packet
+        && buffer_in[ETH_PTR_TYPE_H] == ETH_VAL_TYPE_IP_H
+        && buffer_in[ETH_PTR_TYPE_L] == ETH_VAL_TYPE_IP_L) {
+        // Optimizing trick
+        if (0) {}
+#ifdef NET_UDP_SERVER
+        // Check if packet is UDP packet
+        else if (buffer_in_length && buffer_in[IP_PTR_PROTOCOL] == IP_VAL_PROTO_UDP) {
+            udp_packet_receive();
+        }
+#endif // ETH_UDP_SERVER
+    }
 }
 
 void network_send(uint16_t length) {
