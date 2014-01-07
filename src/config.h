@@ -17,7 +17,7 @@
 /**
  * @brief Version of the EthShield firmware
  */
-#define VERSION "0.6.1"
+#define VERSION "0.7.0"
 
 /**
  * Clock setting
