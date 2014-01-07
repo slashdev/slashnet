@@ -90,12 +90,12 @@ void udp_send(uint16_t length) {
 
 #ifdef NET_UDP_SERVER
 
-void udpServerInit(void) {
+void udp_server_init(void) {
     // Prepare port list
     port_service_init(port_services, NET_UDP_SERVICES_LIST_SIZE);
 }
 
-void udpPacketReceive(void) {
+void udp_packet_receive(void) {
     
 #ifdef API_WERKTI_EXTENDED
     // Update werkti udp in
