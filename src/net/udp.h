@@ -25,6 +25,7 @@
 
 #include <inttypes.h>
 #include "shared.h"
+#include "../utils/port_service.h"
 
 /**
  * @brief Prepare the headers (ethernet, ip, udp) for a packet.
@@ -70,6 +71,21 @@ extern void udp_server_init(void);
  * the start of the data and the length of the data.
  */
 extern void udp_packet_receive(void);
+
+/**
+ * @brief Register a service to a port.
+ *
+ * @param port Port to register to
+ * @param callback Callback function which takes (uint8_t *data, uint16_t length)
+ */
+extern void udp_port_register(uint16_t port, void (*callback)(uint8_t *data, uint16_t length));
+
+/**
+ * @brief Unregister a service from a port
+ *
+ * @param port Port to unregister from
+ */
+extern void udp_port_unregister(uint16_t port);
 
 /**
  * @brief Create an UDP reply template from a received UDP packet.

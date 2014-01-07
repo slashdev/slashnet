@@ -91,6 +91,11 @@
  */
 #define NET_UDP_SERVER
 
+/**
+ * @brief UDP services list size
+ */
+#define NET_UDP_SERVICES_LIST_SIZE 10
+
 
 /**********************************************************************
  * Utilities
