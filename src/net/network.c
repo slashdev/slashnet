@@ -494,12 +494,18 @@ void network_backbone(void) {
         && buffer_in[ETH_PTR_TYPE_L] == ETH_VAL_TYPE_IP_L) {
         // Optimizing trick
         if (0) {}
+#ifdef NET_ICMP
+        // Check if packet is ICMP packet
+        else if (buffer_in_length && buffer_in[IP_PTR_PROTOCOL] == IP_VAL_PROTO_ICMP) {
+            icmp_packet_receive();
+        }
+#endif // NET_ICMP
 #ifdef NET_UDP_SERVER
         // Check if packet is UDP packet
         else if (buffer_in_length && buffer_in[IP_PTR_PROTOCOL] == IP_VAL_PROTO_UDP) {
             udp_packet_receive();
         }
-#endif // ETH_UDP_SERVER
+#endif // NET_UDP_SERVER
     }
 }
 
