@@ -18,12 +18,6 @@
 #error UDP cannot work without NET_NETWORK
 #endif // NET_NETWORK
 
-// Output buffer from config
-extern uint8_t buffer_out[];
-// Addresses from config
-extern uint8_t my_mac[];
-extern uint8_t my_ip[];
-
 // Port services list
 #ifdef NET_UDP_SERVER
 // Check if port list size is defined
