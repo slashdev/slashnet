@@ -30,7 +30,7 @@
 extern void logger_init(void);
 extern void logger_string(char *string);
 extern void logger_string_p(const char *pstring);
-extern void logger__number(uint16_t value);
+extern void logger_number(uint16_t value);
 extern void logger_number_as_hex(uint16_t value);
 extern void logger_array(uint8_t *data, uint16_t length, char glue);
 
