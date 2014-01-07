@@ -77,6 +77,25 @@
  */
 #define BUFFER_OUT_SIZE 1023
 
+//
+// User Datagram Protocol (UDP)
+// --------------------------------------------------------------------
+
+/**
+ * @brief UDP enable
+ */
+#define NET_UDP
+
+/**
+ * @brief UDP server enable
+ */
+#define NET_UDP_SERVER
+
+/**
+ * @brief UDP services list size
+ */
+#define NET_UDP_SERVICES_LIST_SIZE 10
+
 
 /**********************************************************************
  * Utilities
