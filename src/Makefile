@@ -23,8 +23,11 @@ OBJECTS    = \
 com/spi.o \
 com/usart.o \
 net/network.o \
+net/shared.o \
+net/udp.o \
 utils/counter.o \
 utils/logger.o \
+utils/port_service.o \
 utils/uptime.o \
 config.o \
 EthShield.o 

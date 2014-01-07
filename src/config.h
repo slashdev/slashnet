@@ -17,7 +17,7 @@
 /**
  * @brief Version of the EthShield firmware
  */
-#define VERSION "0.6.1"
+#define VERSION "0.7.0"
 
 /**
  * Clock setting
@@ -76,6 +76,25 @@
  * @brief Network buffer out size
  */
 #define BUFFER_OUT_SIZE 1023
+
+//
+// User Datagram Protocol (UDP)
+// --------------------------------------------------------------------
+
+/**
+ * @brief UDP enable
+ */
+#define NET_UDP
+
+/**
+ * @brief UDP server enable
+ */
+#define NET_UDP_SERVER
+
+/**
+ * @brief UDP services list size
+ */
+#define NET_UDP_SERVICES_LIST_SIZE 10
 
 
 /**********************************************************************
