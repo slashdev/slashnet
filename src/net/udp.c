@@ -5,7 +5,7 @@
  * \license This project is released under MIT license.
  *
  * @author Ferdi van der Werf
- * @since
+ * @since 0.7.0
  */
 
 #include "udp.h"
@@ -17,12 +17,6 @@
 #ifndef NET_NETWORK
 #error UDP cannot work without NET_NETWORK
 #endif // NET_NETWORK
-
-// Output buffer from config
-extern uint8_t buffer_out[];
-// Addresses from config
-extern uint8_t my_mac[];
-extern uint8_t my_ip[];
 
 // Port services list
 #ifdef NET_UDP_SERVER

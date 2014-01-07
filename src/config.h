@@ -78,6 +78,15 @@
 #define BUFFER_OUT_SIZE 1023
 
 //
+// Internet Control Message Protocol (ICMP)
+// --------------------------------------------------------------------
+
+/**
+ * @brief ICMP enable
+ */
+#define NET_ICMP
+
+//
 // User Datagram Protocol (UDP)
 // --------------------------------------------------------------------
 

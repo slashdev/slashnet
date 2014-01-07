@@ -12,7 +12,7 @@
  * \license This project is released under MIT license.
  *
  * @author Ferdi van der Werf
- * @since
+ * @since 0.7.0
  */
 
 #ifndef NET_UDP_H

@@ -24,6 +24,8 @@
 		C078D239187BE29C0098C828 /* port_service.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = port_service.h; sourceTree = "<group>"; };
 		C078D23A187BEA520098C828 /* shared.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = shared.c; sourceTree = "<group>"; };
 		C078D23B187BEA520098C828 /* shared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shared.h; sourceTree = "<group>"; };
+		C078D23C187CAB6E0098C828 /* icmp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = icmp.c; sourceTree = "<group>"; };
+		C078D23D187CAB6E0098C828 /* icmp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = icmp.h; sourceTree = "<group>"; };
 		C0FBC508186F764000DB9B65 /* spi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = spi.c; sourceTree = "<group>"; };
 		C0FBC509186F76C400DB9B65 /* spi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spi.h; sourceTree = "<group>"; };
 		C0FBC50D1870633100DB9B65 /* network.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = network.c; sourceTree = "<group>"; };
@@ -77,6 +79,8 @@
 		C0FBC50C18705F3800DB9B65 /* net */ = {
 			isa = PBXGroup;
 			children = (
+				C078D23D187CAB6E0098C828 /* icmp.h */,
+				C078D23C187CAB6E0098C828 /* icmp.c */,
 				C0FBC50E1870633100DB9B65 /* network.h */,
 				C0FBC50F187080F900DB9B65 /* network_defines.h */,
 				C0FBC50D1870633100DB9B65 /* network.c */,

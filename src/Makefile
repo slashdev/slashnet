@@ -22,6 +22,7 @@ FUSE_EXT  = 0xFF
 OBJECTS    = \
 com/spi.o \
 com/usart.o \
+net/icmp.o \
 net/network.o \
 net/shared.o \
 net/udp.o \

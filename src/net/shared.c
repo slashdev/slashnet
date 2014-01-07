@@ -13,10 +13,6 @@
 // Do we need shared?
 #ifdef NET_NETWORK
 
-// Buffer and addresses
-extern uint8_t buffer_out[];
-extern uint8_t my_mac[];
-
 // Identifier used in IP protocol header
 volatile uint8_t id_nr = 0x05;
 
