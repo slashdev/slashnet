@@ -20,6 +20,8 @@
 		C078D2351879AB2D0098C828 /* logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logger.h; sourceTree = "<group>"; };
 		C078D2361879BEA10098C828 /* udp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = udp.c; sourceTree = "<group>"; };
 		C078D2371879BEA10098C828 /* udp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = udp.h; sourceTree = "<group>"; };
+		C078D238187BE29C0098C828 /* port_service.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = port_service.c; sourceTree = "<group>"; };
+		C078D239187BE29C0098C828 /* port_service.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = port_service.h; sourceTree = "<group>"; };
 		C078D23A187BEA520098C828 /* shared.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = shared.c; sourceTree = "<group>"; };
 		C078D23B187BEA520098C828 /* shared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shared.h; sourceTree = "<group>"; };
 		C0FBC508186F764000DB9B65 /* spi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = spi.c; sourceTree = "<group>"; };
@@ -63,6 +65,8 @@
 				C078D23018769B470098C828 /* counter.c */,
 				C078D2351879AB2D0098C828 /* logger.h */,
 				C078D2341879AB2C0098C828 /* logger.c */,
+				C078D239187BE29C0098C828 /* port_service.h */,
+				C078D238187BE29C0098C828 /* port_service.c */,
 				C078D233187862400098C828 /* uptime.h */,
 				C078D232187862400098C828 /* uptime.c */,
 			);
