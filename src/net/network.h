@@ -39,6 +39,7 @@
 #include "icmp.h"
 #include "udp.h"
 #include "../com/spi.h"
+#include "../utils/counter.h"
 #include "../utils/logger.h"
 
 /**

@@ -15,14 +15,14 @@
 
 uptime_t uptime;
 
-void uptimeInit(void) {
+void uptime_init(void) {
     uptime.seconds = 0;
     uptime.minutes = 0;
     uptime.hours = 0;
     uptime.days = 0;
 }
 
-void uptimeTick(void) {
+void uptime_tick(void) {
     if (++uptime.seconds >= 60) {
         uptime.seconds = 0;
         if (++uptime.minutes >= 60) {

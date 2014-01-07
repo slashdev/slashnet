@@ -473,7 +473,10 @@ void network_init(void) {
     // Init udp
     udp_server_init();
 #endif // NET_UDP_SERVER
+#ifdef UTILS_COUNTER
     // Init counter
+    counter_init();
+#endif // UTILS_COUNTER
     // Init DHCP
 }
 
