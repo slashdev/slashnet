@@ -18,6 +18,34 @@
 // Do we need shared?
 #ifdef NET_NETWORK
 
+#include <inttypes.h>
+#include "network.h"
+
+/**
+ * @brief Prepare an ETH and IP header in bufferOut
+ *
+ * This function is used by udp_prepare and tcp_prepare to create the headers
+ * of a packet to send. It sets the source and destination addresses, protocol
+ * type, version, type of service (ToS), identification, flags, time to live
+ * (TTL), protocol and source and destination IP addresses.
+ *
+ * @param protocol Protocol to be used, see RFC 1700, p. 8, PROTOCOL NUMBERS
+ * @param dst_ip IP address of the destination
+ * @param dst_mac MAC address of the destination
+ * @see #udp_prepare(uint16_t, uint8_t*, uint16_t, uint8_t*)
+ * @see #udp_prepare_reply(void)
+ */
+extern void ip_prepare(uint8_t protocol, uint8_t *dst_ip, uint8_t *dst_mac);
+/**
+ * @brief Calculate the checksum of the provided buffer for the provided length
+ *
+ * @param buffer Pointer from where the checksum should be calculated
+ * @param length Length of the buffer of which the checksum is to be calculated
+ * @param type Type of packet, defined in CHK_*
+ * @return Calculated checksum
+ */
+extern uint16_t checksum(uint8_t *buffer, uint16_t length, uint8_t type);
+
 // Checksum
 // --------------------
 #define CHK_IP   0
