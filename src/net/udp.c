@@ -89,7 +89,7 @@ void udp_server_init(void) {
     port_service_init(port_services, NET_UDP_SERVICES_LIST_SIZE);
 }
 
-void udp_packet_receive(void) {
+void udp_receive(void) {
     
 #ifdef API_WERKTI_EXTENDED
     // Update werkti udp in
