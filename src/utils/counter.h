@@ -30,5 +30,10 @@
  */
 extern void counter_init(void);
 
+/**
+ * @brief Returns 1 if the counter is running
+ */
+extern uint8_t counter_is_running(void);
+
 #endif // UTILS_COUNTER
 #endif // UTILS_COUNTER_H
