@@ -84,4 +84,28 @@ void logger_array(uint8_t *data, uint16_t length, char glue) {
     }
 }
 
+void logger_ip(uint8_t *addr) {
+    logger_number(addr[0]);
+    usart_send(0x2E); // .
+    logger_number(addr[1]);
+    usart_send(0x2E); // .
+    logger_number(addr[2]);
+    usart_send(0x2E); // .
+    logger_number(addr[3]);
+}
+
+void logger_mac(uint8_t *addr) {
+    logger_number_as_hex(addr[0]);
+    usart_send(0x3A); // :
+    logger_number_as_hex(addr[1]);
+    usart_send(0x3A); // :
+    logger_number_as_hex(addr[2]);
+    usart_send(0x3A); // :
+    logger_number_as_hex(addr[3]);
+    usart_send(0x3A); // :
+    logger_number_as_hex(addr[4]);
+    usart_send(0x3A); // :
+    logger_number_as_hex(addr[5]);
+}
+
 #endif // UTILS_LOGGER_INFO || UTILS_LOGGER_DEBUG
