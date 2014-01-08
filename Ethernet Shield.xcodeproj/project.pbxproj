@@ -28,6 +28,8 @@
 		C078D23D187CAB6E0098C828 /* icmp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = icmp.h; sourceTree = "<group>"; };
 		C078D23E187CB5510098C828 /* arp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = arp.c; sourceTree = "<group>"; };
 		C078D23F187CB5510098C828 /* arp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = arp.h; sourceTree = "<group>"; };
+		C078D240187D31CA0098C828 /* dhcp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dhcp.c; sourceTree = "<group>"; };
+		C078D241187D31CA0098C828 /* dhcp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dhcp.h; sourceTree = "<group>"; };
 		C0FBC508186F764000DB9B65 /* spi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = spi.c; sourceTree = "<group>"; };
 		C0FBC509186F76C400DB9B65 /* spi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spi.h; sourceTree = "<group>"; };
 		C0FBC50D1870633100DB9B65 /* network.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = network.c; sourceTree = "<group>"; };
@@ -83,6 +85,8 @@
 			children = (
 				C078D23F187CB5510098C828 /* arp.h */,
 				C078D23E187CB5510098C828 /* arp.c */,
+				C078D241187D31CA0098C828 /* dhcp.h */,
+				C078D240187D31CA0098C828 /* dhcp.c */,
 				C078D23D187CAB6E0098C828 /* icmp.h */,
 				C078D23C187CAB6E0098C828 /* icmp.c */,
 				C0FBC50E1870633100DB9B65 /* network.h */,

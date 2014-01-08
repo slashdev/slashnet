@@ -4,7 +4,7 @@
  * \copyright Copyright 2013 /Dev. All rights reserved.
  * \license This project is released under MIT license.
  *
- * @author Ferdi van der Werf
+ * @author Ferdi van der Werf <efcm@slashdev.nl>
  * @since 0.7.0
  */
 
@@ -89,7 +89,7 @@ void udp_server_init(void) {
     port_service_init(port_services, NET_UDP_SERVICES_LIST_SIZE);
 }
 
-void udp_packet_receive(void) {
+void udp_receive(void) {
     
 #ifdef API_WERKTI_EXTENDED
     // Update werkti udp in

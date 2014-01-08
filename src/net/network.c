@@ -468,7 +468,10 @@ void network_init(void) {
     
     info_string_p(PSTR(" [ok]\r\n"));
     
+#ifdef NET_ARP
     // Init arp
+    arp_init();
+#endif // NET_ARP
 #ifdef NET_UDP_SERVER
     // Init udp
     udp_server_init();
@@ -477,20 +480,43 @@ void network_init(void) {
     // Init counter
     counter_init();
 #endif // UTILS_COUNTER
+#ifdef NET_DHCP
     // Init DHCP
+    debug_string_p(PSTR("Start DHCP\r\n"));
+    // Get initial DHCP address
+    uint8_t result = 0;
+    while (result == 0) {
+        network_receive();
+        result = dhcp_request_ip();
+    }
+    info_string_p(PSTR("DHCP: IP: "));
+    info_ip(my_ip);
+    info_string_p(PSTR("\r\n"));
+#endif // NET_DHCP
 }
 
 void network_backbone(void) {
     // Check if there is a packet available
     network_receive();
     // Check if a DHCP packet is received
-    //dhcp_renew_handler
+    dhcp_renew();
     // If there is no buffer_in_length, there is no packet
     if (buffer_in_length == 0) {
         return;
     }
     // Handle protocols
-    // arp, icmp, tcp
+    // tcp
+    
+#ifdef NET_ARP
+    // ARP packets
+    else if (buffer_in_length > 41 // Minimum size of ARP packet
+             && buffer_in[ETH_PTR_TYPE_H] == ETH_VAL_TYPE_ARP_H
+             && buffer_in[ETH_PTR_TYPE_L] == ETH_VAL_TYPE_ARP_L) {
+        // ARP packets
+        arp_receive();
+    }
+#endif // ETH_ARP
+    
     // IP packets
     else if (buffer_in_length > 33 // Minimum size of IP packet
         && buffer_in[ETH_PTR_TYPE_H] == ETH_VAL_TYPE_IP_H
@@ -506,7 +532,7 @@ void network_backbone(void) {
 #ifdef NET_UDP_SERVER
         // Check if packet is UDP packet
         else if (buffer_in_length && buffer_in[IP_PTR_PROTOCOL] == IP_VAL_PROTO_UDP) {
-            udp_packet_receive();
+            udp_receive();
         }
 #endif // NET_UDP_SERVER
     }

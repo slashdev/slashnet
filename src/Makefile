@@ -23,6 +23,7 @@ OBJECTS    = \
 com/spi.o \
 com/usart.o \
 net/arp.o \
+net/dhcp.o \
 net/icmp.o \
 net/network.o \
 net/shared.o \

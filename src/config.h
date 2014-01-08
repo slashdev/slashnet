@@ -17,7 +17,7 @@
 /**
  * @brief Version of the EthShield firmware
  */
-#define VERSION "0.8.0"
+#define VERSION "0.9.0"
 
 /**
  * Clock setting
@@ -90,6 +90,25 @@
  * @brief ARP cache size
  */
 #define NET_ARP_CACHE_SIZE 10
+
+//
+// Dynamic Host Configuration Protocol (DHCP)
+// --------------------------------------------------------------------
+
+/**
+ * @brief DHCP enable
+ */
+#define NET_DHCP
+
+/**
+ * @brief Do not use DHCP renewal
+ */
+//#define NET_DHCP_NO_RENEWAL
+
+/**
+ * @brief
+ */
+#define NET_DHCP_HOSTNAME "SDev-devel"
 
 //
 // Internet Control Message Protocol (ICMP)

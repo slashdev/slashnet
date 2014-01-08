@@ -35,7 +35,8 @@ int main(void) {
     
     // Infinite loop
     while (1) {
-        
+        // Handle network traffic
+        network_backbone();
     }
     
 }
