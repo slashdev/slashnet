@@ -24,7 +24,7 @@
 #include <inttypes.h>
 #include "network.h"
 #include "shared.h"
-#include "../utils/debug.h"
+#include "../utils/logger.h"
 
 /**
  * @brief Initialize the ARP part.
