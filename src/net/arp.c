@@ -4,7 +4,7 @@
  * \copyright Copyright 2013 /Dev. All rights reserved.
  * \license This project is released under MIT license.
  *
- * @author Ferdi van der Werf
+ * @author Ferdi van der Werf <efcm@slashdev.nl>
  * @since 0.8.0
  */
 
@@ -69,7 +69,7 @@ void arp_init(void) {
     }
 }
 
-void arpPacketReceive(void) {
+void arp_receive(void) {
 #ifdef UTILS_WERKTI_MORE
     // Update arp incoming
     werkti_arp_in += buffer_in_length;

@@ -23,12 +23,8 @@
 #endif
 
 // Counter which shows how far in a second we are
-volatile uint8_t sub_seconds = 0;
-#ifdef NET_DHCP
-// Current second in dhcp mechanics
-extern volatile uint8_t dhcp_seconds;
-#endif
-
+volatile uint8_t sub_seconds;
+volatile uint8_t is_running;
 
 void tick(void) {
 #ifdef NET_DHCP
@@ -39,6 +35,10 @@ void tick(void) {
     // Update uptime counter
     uptime_tick();
 #endif
+}
+
+uint8_t counter_is_running(void) {
+    return is_running;
 }
 
 // For each timer selection cntInit() and overflow interrupt will be created
@@ -57,6 +57,8 @@ void counter_init(void) {
     OCR0A = 0xD9;
     // Set compare interrupt
     TIMSK0 = (1 << OCIE0A);
+    // Set timer is running
+    is_running = 1;
 }
 
 ISR(TIMER0_COMPA_vect) {
@@ -80,6 +82,8 @@ void counter_init(void) {
     OCR1A = 0x4C48;
     // Set compare interrupt
     TIMSK1 = (1 << OCIE1A);
+    // Set timer is running
+    is_running = 1;
 }
 
 ISR(TIMER1_COMPA_vect) {
@@ -101,6 +105,8 @@ void counter_init(void) {
     OCR2A = 0xD9;
     // Set compare interrupt
     TIMSK2 = (1 << OCIE2A);
+    // Set timer is running
+    is_running = 1;
 }
 
 ISR(TIMER2_COMPA_vect) {

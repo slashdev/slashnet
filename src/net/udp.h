@@ -11,7 +11,7 @@
  * \copyright Copyright 2013 /Dev. All rights reserved.
  * \license This project is released under MIT license.
  *
- * @author Ferdi van der Werf
+ * @author Ferdi van der Werf <efcm@slashdev.nl>
  * @since 0.7.0
  */
 
@@ -71,7 +71,7 @@ extern void udp_server_init(void);
  * a service attached. If so, the service will be called and given a pointer to
  * the start of the data and the length of the data.
  */
-extern void udp_packet_receive(void);
+extern void udp_receive(void);
 
 /**
  * @brief Register a service to a port.

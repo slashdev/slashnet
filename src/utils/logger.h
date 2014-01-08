@@ -33,6 +33,8 @@ extern void logger_string_p(const char *pstring);
 extern void logger_number(uint16_t value);
 extern void logger_number_as_hex(uint16_t value);
 extern void logger_array(uint8_t *data, uint16_t length, char glue);
+extern void logger_ip(uint8_t *addr);
+extern void logger_mac(uint8_t *addr);
 
 #if defined(UTILS_LOGGER_DEBUG)
 
@@ -42,12 +44,16 @@ extern void logger_array(uint8_t *data, uint16_t length, char glue);
 #define info_number(x) logger_number(x)
 #define info_number_as_hex(x) logger_number_as_hex(x)
 #define info_array(x, l) logger_array(x, l)
+#define info_ip(ip) logger_ip(ip)
+#define info_mac(mac) logger_mac(mac)
 // Debug level disabled
 #define debug_string(s) logger_string(s)
 #define debug_string_p(s) logger_string_p(s)
 #define debug_number(x) logger_number(x)
 #define debug_number_as_hex(x) logger_number_as_hex(x)
 #define debug_array(x, l) logger_array(x, l)
+#define debug_ip(ip) logger_ip(ip)
+#define debug_mac(mac) logger_mac(mac)
 
 #elif defined(UTILS_LOGGER_INFO)
 
@@ -57,12 +63,16 @@ extern void logger_array(uint8_t *data, uint16_t length, char glue);
 #define info_number(x) logger_number(x)
 #define info_number_as_hex(x) logger_number_as_hex(x)
 #define info_array(x, l) logger_array(x, l)
+#define info_ip(ip) logger_ip(ip)
+#define info_mac(mac) logger_mac(mac)
 // Debug level disabled
 #define debug_string(...) do {} while (0)
 #define debug_string_p(...) do {} while (0)
 #define debug_number(...) do {} while (0)
 #define debug_number_as_hex(...) do {} while (0)
 #define debug_array(...) do {} while (0)
+#define debug_ip(ip) do {} while (0)
+#define debug_mac(mac) do {} while (0)
 
 #endif // UTILS_LOGGER_INFO
 
@@ -77,12 +87,16 @@ extern void logger_array(uint8_t *data, uint16_t length, char glue);
 #define info_number(...) do {} while (0)
 #define info_number_as_hex(...) do {} while (0)
 #define info_array(...) do {} while (0)
+#define info_ip(ip) do {} while (0)
+#define info_mac(mac) do {} while (0)
 // Debug level disabled
 #define debug_string(...) do {} while (0)
 #define debug_string_p(...) do {} while (0)
 #define debug_number(...) do {} while (0)
 #define debug_number_as_hex(...) do {} while (0)
 #define debug_array(...) do {} while (0)
+#define debug_ip(ip) do {} while (0)
+#define debug_mac(mac) do {} while (0)
 
 #endif // UTILS_LOGGER_INFO || UTILS_LOGGER_DEBUG
 #endif // UTILS_LOGGER_H
