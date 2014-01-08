@@ -36,6 +36,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include "network_defines.h"
+#include "arp.h"
 #include "icmp.h"
 #include "udp.h"
 #include "../com/spi.h"

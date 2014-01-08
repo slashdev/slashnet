@@ -468,7 +468,10 @@ void network_init(void) {
     
     info_string_p(PSTR(" [ok]\r\n"));
     
+#ifdef NET_ARP
     // Init arp
+    arp_init();
+#endif // NET_ARP
 #ifdef NET_UDP_SERVER
     // Init udp
     udp_server_init();
@@ -490,7 +493,18 @@ void network_backbone(void) {
         return;
     }
     // Handle protocols
-    // arp, icmp, tcp
+    // tcp
+    
+#ifdef NET_ARP
+    // ARP packets
+    else if (buffer_in_length > 41 // Minimum size of ARP packet
+             && buffer_in[ETH_PTR_TYPE_H] == ETH_VAL_TYPE_ARP_H
+             && buffer_in[ETH_PTR_TYPE_L] == ETH_VAL_TYPE_ARP_L) {
+        // ARP packets
+        arp_receive();
+    }
+#endif // ETH_ARP
+    
     // IP packets
     else if (buffer_in_length > 33 // Minimum size of IP packet
         && buffer_in[ETH_PTR_TYPE_H] == ETH_VAL_TYPE_IP_H

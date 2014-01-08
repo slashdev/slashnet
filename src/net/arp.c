@@ -69,7 +69,7 @@ void arp_init(void) {
     }
 }
 
-void arpPacketReceive(void) {
+void arp_receive(void) {
 #ifdef UTILS_WERKTI_MORE
     // Update arp incoming
     werkti_arp_in += buffer_in_length;

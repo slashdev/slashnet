@@ -40,7 +40,7 @@ extern void arp_init(void);
  * in <i>buffer_in</i>. This function analyses that packet to see if it's a
  * request to respond to or a reply to a request which was send.
  */
-extern void arp_packet_receive(void);
+extern void arp_receive(void);
 
 /**
  * @brief Request the MAC address that corresponds to <i>ip_request</i>.
