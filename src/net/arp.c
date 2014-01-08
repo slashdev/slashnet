@@ -76,23 +76,20 @@ void arp_receive(void) {
 #endif // API_WERKTI_EXTENDED
     
     uint8_t i = 0;
-    debug_string_p(PSTR("ARP: "));
     
     // If it is an ARP request packet, it could be requesting my MAC address
     if (buffer_in[ARP_PTR_OPER_H] == 0
         && buffer_in[ARP_PTR_OPER_L] == ARP_VAL_OPER_REQUEST) {
-        debug_string_p(PSTR("Request, "));
         // Is the packet for me?
         while (i < 4) {
             if (buffer_in[ARP_PTR_TARG_PROTO + i] != my_ip[i]) {
-                debug_string_p(PSTR("Not for me\r\n"));
                 return; // Not my IP address
             }
             i++;
         }
         
         // It's meant for me, reply with my MAC address
-        debug_string_p(PSTR("For me..."));
+        debug_string_p(PSTR("ARP: Request for me..."));
         arp_reply_to_request();
         debug_string_p(PSTR("answered\r\n"));
         
@@ -105,18 +102,16 @@ void arp_receive(void) {
     // If it is an ARP reply packet, it could be an answer to me
     if (buffer_in[ARP_PTR_OPER_H] == 0
         && buffer_in[ARP_PTR_OPER_L] == ARP_VAL_OPER_REPLY) {
-        debug_string_p(PSTR("Reply, "));
         // Is the packet for me?
         while (i < 4) {
             if (buffer_in[ARP_PTR_TARG_PROTO + i] != my_ip[i]) {
-                debug_string_p(PSTR("Not for me\r\n"));
                 return;
             }
             i++;
         }
         
         // It's meant for me, store value
-        debug_string_p(PSTR("For me..."));
+        debug_string_p(PSTR("ARP: Reply for me "));
         save_to_cache();
         debug_string_p(PSTR("saved\r\n"));
         
