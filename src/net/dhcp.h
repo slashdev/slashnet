@@ -47,7 +47,46 @@
 // Do we want DHCP?
 #ifdef NET_DHCP
 
+#include <inttypes.h>
+#include "network.h"
+#include "shared.h"
+#include "udp.h"
+#include "../utils/logger.h"
 
+/**
+ * @brief DHCP seconds running
+ */
+extern volatile uint8_t dhcp_seconds;
 
+/**
+ * @brief DHCP initialization, sets timers and interrupts
+ */
+extern void dhcp_init(void);
+
+/**
+ * @brief Initial IP request
+ *
+ * Do <b>not</b> call this function again when a valid IP address is received.
+ *
+ * @note This is called by network_init, which should be called before your main
+ * loop
+ * @return On valid IP 1, else 0
+ */
+extern uint8_t  dhcp_request_ip(void);
+
+#ifndef NET_DHCP_NO_RENEWAL
+
+/**
+ * @brief Lease time renewal
+ *
+ * If you do not use network_backbone, use DHCP and have a lease time, make sure
+ * this is called in your main loop. When the lease time passes, it will try to
+ * get a new lease.
+ *
+ * @note This is called by network_backbone, which should be in your main loop.
+ */
+extern uint16_t dhcp_renew(void);
+
+#endif // NET_DHCP_NO_RENEWAL
 #endif // NET_DHCP
 #endif // NET_DHCP_H

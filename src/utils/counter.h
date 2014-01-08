@@ -24,6 +24,7 @@
 #include <inttypes.h>
 #include <avr/interrupt.h>
 #include "uptime.h"
+#include "../net/dhcp.h"
 
 /**
  * @brief Initialize the selected timer for counting

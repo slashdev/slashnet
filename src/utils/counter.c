@@ -25,11 +25,6 @@
 // Counter which shows how far in a second we are
 volatile uint8_t sub_seconds;
 volatile uint8_t is_running;
-#ifdef NET_DHCP
-// Current second in dhcp mechanics
-extern volatile uint8_t dhcp_seconds;
-#endif
-
 
 void tick(void) {
 #ifdef NET_DHCP

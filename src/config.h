@@ -103,7 +103,12 @@
 /**
  * @brief Do not use DHCP renewal
  */
-#define NET_DHCP_NO_RENEWAL
+//#define NET_DHCP_NO_RENEWAL
+
+/**
+ * @brief
+ */
+#define NET_DHCP_HOSTNAME "SDev-devel"
 
 //
 // Internet Control Message Protocol (ICMP)
