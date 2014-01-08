@@ -78,6 +78,20 @@
 #define BUFFER_OUT_SIZE 1023
 
 //
+// Adres Resolution Protocol (ARP)
+// --------------------------------------------------------------------
+
+/**
+ * @brief ARP enable
+ */
+#define NET_ARP
+
+/**
+ * @brief ARP cache size
+ */
+#define NET_ARP_CACHE_SIZE 10
+
+//
 // Internet Control Message Protocol (ICMP)
 // --------------------------------------------------------------------
 
