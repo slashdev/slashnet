@@ -17,7 +17,7 @@
 /**
  * @brief Version of the EthShield firmware
  */
-#define VERSION "0.7.2"
+#define VERSION "0.8.0"
 
 /**
  * Clock setting
@@ -76,6 +76,29 @@
  * @brief Network buffer out size
  */
 #define BUFFER_OUT_SIZE 1023
+
+//
+// Adres Resolution Protocol (ARP)
+// --------------------------------------------------------------------
+
+/**
+ * @brief ARP enable
+ */
+#define NET_ARP
+
+/**
+ * @brief ARP cache size
+ */
+#define NET_ARP_CACHE_SIZE 10
+
+//
+// Internet Control Message Protocol (ICMP)
+// --------------------------------------------------------------------
+
+/**
+ * @brief ICMP enable
+ */
+#define NET_ICMP
 
 //
 // User Datagram Protocol (UDP)

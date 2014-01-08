@@ -18,6 +18,7 @@
 #include <avr/interrupt.h>
 #include "net/network.h"
 #include "utils/logger.h"
+#include "utils/uptime.h"
 
 int main(void) {
 	// Enable interrupts
@@ -25,6 +26,9 @@ int main(void) {
 	
     // Initialize debug
     logger_init();
+    
+    // Initialize uptime
+    uptime_init();
     
     // Initialize network chip
     network_init();

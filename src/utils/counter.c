@@ -24,27 +24,26 @@
 
 // Counter which shows how far in a second we are
 volatile uint8_t sub_seconds = 0;
-#ifdef ETH_DHCP
+#ifdef NET_DHCP
 // Current second in dhcp mechanics
-extern volatile uint8_t dhcpSeconds;
+extern volatile uint8_t dhcp_seconds;
 #endif
 
 
-void cntTick(void) {
-#ifdef ETH_DHCP
+void tick(void) {
+#ifdef NET_DHCP
     // Update dhcp counter
-    dhcpSeconds++;
-    PORTC = dhcpSeconds;
+    dhcp_seconds++;
 #endif
 #ifdef UTILS_UPTIME
     // Update uptime counter
-    uptimeTick();
+    uptime_tick();
 #endif
 }
 
 // For each timer selection cntInit() and overflow interrupt will be created
 #if defined(UTILS_COUNTER_TIMER0)
-void cntInit(void) {
+void counter_init(void) {
     // 8 bit timer
     // 20 Mhz, prescaler 1024, compare match on 0xD9
     // Count to 11 for a second
@@ -64,13 +63,13 @@ ISR(TIMER0_COMPA_vect) {
     sub_seconds++;
     if (sub_seconds >= 89) {
         // A second passed
-        cntTick();
+        tick();
         sub_seconds = 0;
     }
 }
 
 #elif defined(UTILS_COUNTER_TIMER1)
-void cntInit(void) {
+void counter_init(void) {
     // 16 bit timer
     // 20 Mhz, prescaler 1024, compare match on 0x4C4A
     
@@ -84,11 +83,11 @@ void cntInit(void) {
 }
 
 ISR(TIMER1_COMPA_vect) {
-    cntTick();
+    tick();
 }
 
 #elif defined(UTILS_COUNTER_TIMER2)
-void cntInit(void) {
+void counter_init(void) {
     // 8 bit timer
     // 20 Mhz, prescaler 1024, compare match on 0xD9
     // Count to 11 for a second
@@ -108,7 +107,7 @@ ISR(TIMER2_COMPA_vect) {
     sub_seconds++;
     if (sub_seconds >= 89) {
         // A second passed
-        cntTick();
+        tick();
         sub_seconds = 0;
     }
 }

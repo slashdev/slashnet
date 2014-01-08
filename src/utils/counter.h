@@ -28,7 +28,7 @@
 /**
  * @brief Initialize the selected timer for counting
  */
-extern void cntInit(void);
+extern void counter_init(void);
 
 #endif // UTILS_COUNTER
 #endif // UTILS_COUNTER_H

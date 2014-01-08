@@ -35,12 +35,12 @@ typedef struct {
 /**
  * @brief Initialize uptime data structure
  */
-extern void uptimeInit(void);
+extern void uptime_init(void);
 
 /**
  * @brief Update the uptime with a second
  */
-extern void uptimeTick(void);
+extern void uptime_tick(void);
 
 /**
  * @brief Uptime data structure
