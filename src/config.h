@@ -86,6 +86,11 @@
  */
 #define NET_ARP
 
+/**
+ * @brief ARP cache size
+ */
+#define NET_ARP_CACHE_SIZE 10
+
 //
 // Internet Control Message Protocol (ICMP)
 // --------------------------------------------------------------------
