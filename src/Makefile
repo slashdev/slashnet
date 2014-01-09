@@ -32,6 +32,7 @@ utils/counter.o \
 utils/logger.o \
 utils/port_service.o \
 utils/uptime.o \
+utils/werkti.o \
 config.o \
 EthShield.o 
 

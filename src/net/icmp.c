@@ -13,12 +13,6 @@
 // Do we want ICMP?
 #ifdef NET_ICMP
 
-#ifdef API_WERKTI_MORE
-// Traffic from werkti
-extern uint16_t werkti_icmp_in;
-extern uint16_t werkti_icmp_out;
-#endif // API_WERKTI_EXTENDED
-
 void icmp_ping_reply();
 
 void icmp_packet_receive() {
@@ -26,7 +20,7 @@ void icmp_packet_receive() {
 #ifdef UTILS_WERKTI_MORE
     // Update werkti icmp in
     werkti_icmp_in += buffer_in_length;
-#endif // API_WERKTI_EXTENDED
+#endif // UTILS_WERKTI_MORE
     
     uint8_t type = buffer_in[ICMP_PTR_TYPE];
     
@@ -84,10 +78,10 @@ void icmp_ping_reply() {
         buffer_out[ICMP_PTR_CHECKSUM_L]++;
     }
     
-#ifdef API_WERKTI_MORE
+#ifdef UTILS_WERKTI_MORE
     // Update werkti icmp out
     werkti_icmp_out += buffer_in_length;
-#endif // API_WERKTI_EXTENDED
+#endif // UTILS_WERKTI_MORE
     
     // Send packet to chip
     network_send(buffer_in_length);

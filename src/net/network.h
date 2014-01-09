@@ -42,6 +42,7 @@
 #include "../com/spi.h"
 #include "../utils/counter.h"
 #include "../utils/logger.h"
+#include "../utils/werkti.h"
 
 /**
  * @brief Initialization of the network chip, includes setting MAC address (and

@@ -25,7 +25,9 @@
 
 #include <inttypes.h>
 #include "shared.h"
+#include "../utils/logger.h"
 #include "../utils/port_service.h"
+#include "../utils/werkti.h"
 
 /**
  * @brief Prepare the headers (ethernet, ip, udp) for a packet.
