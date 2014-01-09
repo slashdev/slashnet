@@ -98,7 +98,7 @@ void send_report(uint8_t type, uint16_t in, uint16_t out) {
     uint8_t i = 0;
     
     // Create UDP header
-    uint8_t *buf = udp_prepare(7800, werkti_remote_ip, 7900, werkti_remote_mac);
+    uint8_t *buf = udp_prepare(0, werkti_remote_ip, WERKTI_REMOTE_PORT, werkti_remote_mac);
     
     // Add MAC address
     while (i < 6) {
