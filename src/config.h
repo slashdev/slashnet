@@ -17,7 +17,7 @@
 /**
  * @brief Version of the EthShield firmware
  */
-#define VERSION "0.9.1"
+#define VERSION "0.10.0"
 
 /**
  * Clock setting
@@ -188,6 +188,43 @@
  */
 #define UTILS_UPTIME
 
+//
+// Werkti
+// --------------------------------------------------------------------
+
+/**
+ * @brief Werkti enable
+ */
+#define UTILS_WERKTI
+
+/**
+ * @brief Make werkti log traffice per protocol
+ */
+#define UTILS_WERKTI_MORE
+
+/**
+ * @brief At this interval reports are send and counters reset
+ * Default: 300
+ */
+#define UTILS_WERKTI_REPORT_INTERVAL 300
+
+/**
+ * @brief Werkti remote server mac address
+ * @note Define as  0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+ */
+#define WERKTI_REMOTE_MAC 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+
+/**
+ * @brief Werkti remote server ip address
+ * @note Define as 0x00, 0x00, 0x00, 0x00
+ */
+#define WERKTI_REMOTE_IP 0x00, 0x00, 0x00, 0x00
+
+/**
+ * @brief Werkti remote port
+ */
+#define WERKTI_REMOTE_PORT 7900
+
 /**********************************************************************
  * DO NOT CHANGE BELOW
  * References from config.c, change them in config.c
@@ -219,5 +256,12 @@ extern uint8_t gateway_ip[];
  * When using DHCP it is set automatically.
  */
 extern uint8_t gateway_netmask[];
+
+#ifdef API_WERKTI
+
+// Remote addresses are set in config.c
+extern uint8_t werktiRemoteMac[];
+extern uint8_t werktiRemoteIp[];
+#endif
 
 #endif // CONFIG_H

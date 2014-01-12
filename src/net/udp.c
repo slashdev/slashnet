@@ -73,10 +73,10 @@ void udp_send(uint16_t length) {
     buffer_out[UDP_PTR_CHECKSUM_H] = tmp >> 8;
     buffer_out[UDP_PTR_CHECKSUM_L] = tmp & 0xFF;
     
-#ifdef UTILS_WERKTI_EXTENDED
+#ifdef UTILS_WERKTI_MORE
     // Update werkti udp out
     werkti_udp_out += ETH_LEN_HEADER + IP_LEN_HEADER + UDP_LEN_HEADER + length;
-#endif // API_WERKTI_EXTENDED
+#endif // UTILS_WERKTI_MORE
     
     // Send packet to chip
     network_send(ETH_LEN_HEADER + IP_LEN_HEADER + UDP_LEN_HEADER + length);
@@ -91,10 +91,10 @@ void udp_server_init(void) {
 
 void udp_receive(void) {
     
-#ifdef API_WERKTI_EXTENDED
+#ifdef UTILS_WERKTI_MORE
     // Update werkti udp in
     werkti_udp_in += buffer_in_length;
-#endif // API_WERKTI_EXTENDED
+#endif // UTILS_WERKTI_MORE
     
     debug_string_p(PSTR("UDP: received\r\n"));
     
