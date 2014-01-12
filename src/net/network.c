@@ -566,7 +566,10 @@ void network_send(uint16_t length) {
     // Send the packet onto the network
     write_op(NETWORK_BIT_FIELD_SET, ECON1, ECON1_TXRTS);
     
-    // TODO: Handle werkti
+#ifdef UTILS_WERKTI
+    // Update bytes received
+    werkti_out += length;
+#endif // UTILS_WERKTI
 }
 
 uint16_t network_receive(void) {
@@ -636,7 +639,10 @@ uint16_t network_receive(void) {
     buffer_in[BUFFER_IN_SIZE] = '\0';
     buffer_in_length = length;
     
-    // TODO: handle werkti
+#ifdef UTILS_WERKTI
+    // Update bytes received
+    werkti_in += length;
+#endif // UTILS_WERKTI
     
     return (length);
 }

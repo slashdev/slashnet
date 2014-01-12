@@ -35,6 +35,10 @@ void tick(void) {
     // Update uptime counter
     uptime_tick();
 #endif
+#if defined(UTILS_WERKTI) || defined(UTILS_WERKTI_MORE)
+    // Update werkti timer
+    werkti_tick();
+#endif // UTILS_WERKTI || UTILS_WERKTI_MORE
 }
 
 uint8_t counter_is_running(void) {

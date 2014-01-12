@@ -73,7 +73,7 @@ void arp_receive(void) {
 #ifdef UTILS_WERKTI_MORE
     // Update arp incoming
     werkti_arp_in += buffer_in_length;
-#endif // API_WERKTI_EXTENDED
+#endif // UTILS_WERKTI_MORE
     
     uint8_t i = 0;
     

@@ -25,6 +25,7 @@
 #include "network.h"
 #include "shared.h"
 #include "../utils/logger.h"
+#include "../utils/werkti.h"
 
 /**
  * @brief Initialize the ARP part.

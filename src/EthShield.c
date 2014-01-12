@@ -19,6 +19,7 @@
 #include "net/network.h"
 #include "utils/logger.h"
 #include "utils/uptime.h"
+#include "utils/werkti.h"
 
 int main(void) {
 	// Enable interrupts
@@ -37,6 +38,8 @@ int main(void) {
     while (1) {
         // Handle network traffic
         network_backbone();
+        // Maybe send werkti report
+        werkti_maybe_report();
     }
     
 }
