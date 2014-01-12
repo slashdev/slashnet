@@ -204,6 +204,7 @@
 
 /**
  * @brief At this interval reports are send and counters reset
+ * Default: 300
  */
 #define UTILS_WERKTI_REPORT_INTERVAL 300
 
