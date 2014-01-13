@@ -20,6 +20,23 @@
 // Do we want I2C?
 #ifdef COM_I2C
 
+/**
+ * Initialize the I2C master. Only needs to be called once
+ */
+void i2c_init(void);
+
+/**
+ * @brief Issue start condition, send address and transfer direction
+ * @param address Address and transfer direction of slave device
+ * @retval 0 Device accessible
+ * @retval 1 Failed to access device
+ */
+uint8_t i2c_start(uint8_t address);
+
+/**
+ * Terminate the data transfer and release the I2C bus
+ */
+void i2c_stop(void);
 
 
 #endif // COM_I2C

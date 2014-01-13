@@ -13,6 +13,19 @@
 // Do we want I2C?
 #ifdef COM_I2C
 
+uint8_t flags;
 
+#define I2C_FLAG_INITIALIZED
+#define I2C_FLAG_STARTED
+
+void i2c_init(void) {
+    // Check if we already initialized I2C
+    if (initialized) {
+        return;
+    }
+    
+    // Set I2C as initialized
+    initialized = 1;
+}
 
 #endif // COM_I2C
