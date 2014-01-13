@@ -20,10 +20,13 @@
 // Do we want I2C?
 #ifdef COM_I2C
 
+#include <inttypes.h>
+#include <avr/io.h>
+
 /**
  * Initialize the I2C master. Only needs to be called once
  */
-void i2c_init(void);
+void i2c_init(uint16_t bitrateKHz);
 
 /**
  * @brief Issue start condition, send address and transfer direction
