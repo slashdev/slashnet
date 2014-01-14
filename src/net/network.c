@@ -498,8 +498,10 @@ void network_init(void) {
 void network_backbone(void) {
     // Check if there is a packet available
     network_receive();
+#if defined(NET_DHCP) && !defined(NET_DHCP_NO_RENEWAL)
     // Check if a DHCP packet is received
     dhcp_renew();
+#endif // NET_DHCP && !NET_DHCP_NO_RENEWAL
     // If there is no buffer_in_length, there is no packet
     if (buffer_in_length == 0) {
         return;
