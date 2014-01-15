@@ -15,6 +15,9 @@
 
 void i2c_init(uint16_t bitrateKHz) {
     
+    // Disable power reduction mode
+    PRR &= ~(1<<PRTWI);
+    
     uint8_t prescaler;
     
     // Clear prescaler bits
