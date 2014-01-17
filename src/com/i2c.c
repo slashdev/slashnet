@@ -41,6 +41,9 @@ void i2c_init(uint16_t bitrateKHz) {
     // SCL = F_CPU / (16 + 2(div) * prescaler)
     // div = (F_CPU / (2001*SCL*prescaler))
     TWBR = (F_CPU / 2001 / bitrateKHz / prescaler) - 7;
+    
+    // Enable TWI
+    TWCR |= (1 << TWEN);
 }
 
 #endif // COM_I2C
