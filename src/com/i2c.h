@@ -22,6 +22,7 @@
 
 #include <inttypes.h>
 #include <avr/io.h>
+#include "../utils/logger.h"
 
 /**
  * Initialize the I2C master. Only needs to be called once
