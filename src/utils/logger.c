@@ -30,7 +30,7 @@ void logger_init(void) {
     info_string_p(PSTR("\r\nUSART logger started\r\n"));
     info_string_p(PSTR("EthShield version: "));
     info_string_p(PSTR(VERSION));
-    info_string_p(PSTR("\r\n"));
+    info_string_p(logger_newline);
 }
 
 void logger_string(char *string) {
@@ -107,5 +107,7 @@ void logger_mac(uint8_t *addr) {
     usart_send(0x3A); // :
     logger_number_as_hex(addr[5]);
 }
+
+const char logger_newline[] PROGMEM = "\r\n";
 
 #endif // UTILS_LOGGER_INFO || UTILS_LOGGER_DEBUG

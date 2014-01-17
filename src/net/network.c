@@ -491,7 +491,7 @@ void network_init(void) {
     }
     info_string_p(PSTR("DHCP: IP: "));
     info_ip(my_ip);
-    info_string_p(PSTR("\r\n"));
+    info_newline();
 #endif // NET_DHCP
 }
 
