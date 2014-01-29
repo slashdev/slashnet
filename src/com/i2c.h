@@ -25,9 +25,10 @@
 #include "../utils/logger.h"
 
 /**
- * Initialize the I2C master. Only needs to be called once
+ * @brief Initialize the I2C interface
+ * @param bitrateKhz Bitrate in Khz for I2C to use
  */
-void i2c_init(uint16_t bitrateKHz);
+extern void i2c_init(uint16_t bitrateKHz);
 
 /**
  * @brief Issue start condition, send address and transfer direction
