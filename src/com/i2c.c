@@ -65,4 +65,15 @@ void error(const char *msg) {
 #define error(...) do {} while (0)
 #endif // UTILS_LOGGER_INFO || UTILS_LOGGER_DEBUG
 
+const uint16_t default_timeout = 0x4000;
+
+// Used for every operation except stop
+// Returns false on timeout
+uint8_t timeout(uint16_t timeout) {
+    // Wait for I2C to set TWINT
+    while ((!(TWCR & (1 << TWINT))) && timeout-- > 0) { }
+    // Return status
+    return timeout <= 0;
+}
+
 #endif // COM_I2C
