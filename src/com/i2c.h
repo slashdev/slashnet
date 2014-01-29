@@ -31,6 +31,11 @@
 extern void i2c_init(uint16_t bitrateKHz);
 
 /**
+ * @brief Disable the I2C interface
+ */
+extern void i2c_disable(void);
+
+/**
  * @brief Issue start condition, send address and transfer direction
  * @param address Address and transfer direction of slave device
  * @retval 0 Device accessible

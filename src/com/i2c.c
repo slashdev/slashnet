@@ -46,6 +46,10 @@ void i2c_init(uint16_t bitrateKHz) {
     TWCR |= (1 << TWEN);
 }
 
+void i2c_disable(void) {
+    TWCR &= ~(1 << TWEN);
+}
+
 #if defined(UTILS_LOGGER_INFO) || defined(UTILS_LOGGER_DEBUG)
 void i2c_error(const char *msg) {
     info_string_p(PSTR("I2C error: "));
