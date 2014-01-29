@@ -51,7 +51,7 @@ void i2c_disable(void) {
 }
 
 #if defined(UTILS_LOGGER_INFO) || defined(UTILS_LOGGER_DEBUG)
-void i2c_error(const char *msg) {
+void error(const char *msg) {
     info_string_p(PSTR("I2C error: "));
     info_string_p(msg);
     info_newline();
@@ -62,7 +62,7 @@ void i2c_error(const char *msg) {
 #endif // UTILS_LOGGER_DEBUG
 }
 #else // UTILS_LOGGER_INFO || UTILS_LOGGER_DEBUG
-#define i2c_error(...) do {} while (0)
+#define error(...) do {} while (0)
 #endif // UTILS_LOGGER_INFO || UTILS_LOGGER_DEBUG
 
 #endif // COM_I2C
