@@ -76,4 +76,13 @@ uint8_t timeout(uint16_t timeout) {
     return timeout <= 0;
 }
 
+void restart(void) {
+    // Release SCL and SDA
+    TWCR = 0;
+    // Wait 2 usec
+    _delay_us(2);
+    // Restart
+    TWCR = (1 << TWEN);
+}
+
 #endif // COM_I2C
