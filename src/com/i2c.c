@@ -177,4 +177,30 @@ uint8_t i2c_send_byte(uint8_t byte) {
     }
 }
 
+uint8_t i2c_receive_byte(uint8_t ack, uint8_t *data) {
+    // Prepare for byte
+    if (ack) {
+        TWCR = (1 << TWINT) | (1 << TWEN) | (1 << TWEA);
+    } else {
+        TWCR = (1 << TWINT) | (1 << TWEN);
+    }
+    // Wait until byte is received
+    if (timeout(default_timeout)) {
+        // Timeout
+        restart();
+        return (1);
+    }
+    // Check status
+    uint8_t status = TW_STATUS;
+    if (status == TW_MR_DATA_ACK) {
+        *data = TWDR;
+        return (0);
+    } else if (status == TW_MT_ARB_LOST) {
+        restart();
+        return (status);
+    } else {
+        return (status);
+    }
+}
+
 #endif // COM_I2C

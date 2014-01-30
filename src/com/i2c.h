@@ -70,6 +70,16 @@ extern uint8_t i2c_send_address(uint8_t address);
  */
 extern uint8_t i2c_send_byte(uint8_t byte);
 
+/**
+ * @brief Receive a byte over i2c
+ * @param ack True if we need to send an ack back, false otherwise
+ * @param *data Byte by ref to put received byte in
+ * @retval 0 Byte received
+ * @retval 1 Timeout
+ * @retval >1 Failed, status register
+ */
+extern uint8_t i2c_receive_byte(uint8_t ack, uint8_t *data);
+
 
 #endif // COM_I2C
 #endif // COM_I2C_H
