@@ -274,10 +274,6 @@ uint8_t network_is_link_up(void) {
 // Network functions
 //
 
-#ifdef UTILS_LOGGER_DEBUG
-const char str_dot[] PROGMEM = ".";
-#endif
-
 void network_init(void) {
     // Notify debug
     info_string_p(PSTR("Init network"));
@@ -309,7 +305,7 @@ void network_init(void) {
     spi_init(&spi_config);
     
     // Tick debug for spi init
-    debug_string_p(str_dot);
+    debug_dot();
     
     
     // Soft reset
@@ -321,7 +317,7 @@ void network_init(void) {
     _delay_ms(20);
     
     // Tick debug for soft reset
-    debug_string_p(str_dot);
+    debug_dot();
     
     // Initiate bank 0 settings
     // ------------------------
@@ -351,7 +347,7 @@ void network_init(void) {
     write(ERXRDPTH, RXSTART_INIT >> 8);
     
     // Tick debug for bank 0
-    debug_string_p(str_dot);
+    debug_dot();
     
     // Initiate bank 1 settings
     // ------------------------
@@ -377,7 +373,7 @@ void network_init(void) {
     write(EPMCSH, 0xF7);
     
     // Tick debug for bank 1
-    debug_string_p(str_dot);
+    debug_dot();
     
     
     // Initiate bank 2 settings
@@ -414,7 +410,7 @@ void network_init(void) {
     write(MAMXFLH, BUFFER_IN_SIZE >> 8);
     
     // Tick debug for bank 2
-    debug_string_p(str_dot);
+    debug_dot();
     
     
     // Initialize bank 3 settings
@@ -430,7 +426,7 @@ void network_init(void) {
     write(MAADR5, my_mac[5]);
     
     // Tick debug for bank 3
-    debug_string_p(str_dot);
+    debug_dot();
     
     
     // PHY bank settings
@@ -445,7 +441,7 @@ void network_init(void) {
     write_phy(PHLCON, 0x476);
     
     // Tick debug for phy
-    debug_string_p(str_dot);
+    debug_dot();
     
     // General settings
     // ----------------
@@ -465,7 +461,7 @@ void network_init(void) {
     write(ECOCON, 0x00);
     
     // Tick debug for general
-    debug_string_p(str_dot);
+    debug_dot();
     
     // Wait ~60 us
     _delay_us(60);
