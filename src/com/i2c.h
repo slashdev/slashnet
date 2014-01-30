@@ -45,9 +45,11 @@ extern void i2c_disable(void);
 extern uint8_t i2c_start(void);
 
 /**
- * Terminate the data transfer and release the I2C bus
+ * @brief Issue stop condition
+ * @retval 0 Stop success
+ * @retval 1 Timeout
  */
-void i2c_stop(void);
+extern uint8_t i2c_stop(void);
 
 
 #endif // COM_I2C
