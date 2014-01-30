@@ -52,6 +52,15 @@ extern uint8_t i2c_start(void);
  */
 extern uint8_t i2c_stop(void);
 
+/**
+ * @brief Send address and transfer direction
+ * @param address Address and transfer direction of slave device
+ * @retval 0 Device accessible
+ * @retval 1 Timeout
+ * @retval >1 Failed, status register
+ */
+extern uint8_t i2c_send_address(uint8_t address);
+
 
 #endif // COM_I2C
 #endif // COM_I2C_H
