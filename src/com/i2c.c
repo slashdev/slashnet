@@ -50,21 +50,6 @@ void i2c_disable(void) {
     TWCR &= ~(1 << TWEN);
 }
 
-#if defined(UTILS_LOGGER_INFO) || defined(UTILS_LOGGER_DEBUG)
-void error(const char *msg) {
-    info_string_p(PSTR("I2C error: "));
-    info_string_p(msg);
-    info_newline();
-#ifdef UTILS_LOGGER_DEBUG
-    debug_string_p(PSTR("TWSR: 0x"));
-    debug_number_as_hex(TWSR);
-    debug_newline();
-#endif // UTILS_LOGGER_DEBUG
-}
-#else // UTILS_LOGGER_INFO || UTILS_LOGGER_DEBUG
-#define error(...) do {} while (0)
-#endif // UTILS_LOGGER_INFO || UTILS_LOGGER_DEBUG
-
 const uint16_t default_timeout = 0x4000;
 
 // Used for every operation except stop
