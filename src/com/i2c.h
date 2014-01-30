@@ -38,11 +38,10 @@ extern void i2c_disable(void);
 
 /**
  * @brief Issue start condition, send address and transfer direction
- * @param address Address and transfer direction of slave device
  * @retval 0 Device accessible
  * @retval 1 Failed to access device
  */
-uint8_t i2c_start(uint8_t address);
+extern uint8_t i2c_start(void);
 
 /**
  * Terminate the data transfer and release the I2C bus
