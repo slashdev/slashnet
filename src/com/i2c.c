@@ -177,7 +177,7 @@ uint8_t i2c_receive_byte(uint8_t ack, uint8_t *data) {
     }
     // Check status
     uint8_t status = TW_STATUS;
-    if (status == TW_MR_DATA_ACK) {
+    if (status == TW_MR_DATA_ACK || status == TW_MR_DATA_NACK) {
         *data = TWDR;
         return (0);
     } else if (status == TW_MT_ARB_LOST) {

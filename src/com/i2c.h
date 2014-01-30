@@ -27,6 +27,15 @@
 #include "../utils/logger.h"
 
 /**
+ * @brief Set address with write bit
+ */
+#define I2C_WRITE(x) ((x) & ~0x01)
+/**
+ * @brief Set address with read bit
+ */
+#define I2C_READ(x) ((x) | 0x01)
+
+/**
  * @brief Initialize the I2C interface
  * @param bitrateKhz Bitrate in Khz for I2C to use
  */
