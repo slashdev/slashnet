@@ -23,6 +23,7 @@
 #include <inttypes.h>
 #include <avr/io.h>
 #include <util/delay.h>
+#include <util/twi.h>
 #include "../utils/logger.h"
 
 /**

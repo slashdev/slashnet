@@ -107,4 +107,20 @@ uint8_t i2c_start(void) {
     return (TW_STATUS);
 }
 
+uint8_t i2c_stop(void) {
+    // Send stop condition
+    TWCR = (1 << TWINT) | (1 << TWEN) | (1 << TWSTO);
+    // Wait for stop to complete
+    uint16_t timeout = default_timeout;
+    while (TWCR & (1 << TWSTO)) {
+        if (timeout-- <= 0) {
+            // Exit error
+            restart();
+            return (1);
+        }
+    }
+    // Exit ok
+    return (0);
+}
+
 #endif // COM_I2C
