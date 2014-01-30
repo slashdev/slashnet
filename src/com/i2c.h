@@ -37,9 +37,10 @@ extern void i2c_init(uint16_t bitrateKHz);
 extern void i2c_disable(void);
 
 /**
- * @brief Issue start condition, send address and transfer direction
- * @retval 0 Device accessible
- * @retval 1 Failed to access device
+ * @brief Issue start condition
+ * @retval 0 Start or repeated start success
+ * @retval 1 Timeout
+ * @retval >1 Failed, status register
  */
 extern uint8_t i2c_start(void);
 
