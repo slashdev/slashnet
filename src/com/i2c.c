@@ -85,4 +85,26 @@ void restart(void) {
     TWCR = (1 << TWEN);
 }
 
+uint8_t i2c_start(void) {
+    // Make sure at least 1.3 usec is between stop and start
+    _delay_us(2);
+    // Send start condition
+    TWCR = (1 << TWINT) | (1 << TWSTA) | (1 << TWEN);
+    // Wait until start has been acked
+    if (timeout(default_timeout)) {
+        // Timeout, restart
+        restart();
+        return (1);
+    }
+    // No timeout, check status
+    if ((TW_STATUS == TW_START) || (TW_STATUS == TW_REP_START)) {
+        return (0);
+    } else if (TW_STATUS == TW_MT_ARB_LOST) {
+        uint8_t status = TW_STATUS;
+        restart();
+        return (status);
+    }
+    return (TW_STATUS);
+}
+
 #endif // COM_I2C
