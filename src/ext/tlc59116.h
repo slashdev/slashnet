@@ -20,12 +20,23 @@
 #ifdef EXT_TLC59116
 
 #include <inttypes.h>
+#include <util/delay.h>
 #include "../com/i2c.h"
 
 /**
  * @brief Soft reset all connected chips
  */
 void tlc59116_reset(void);
+
+/**
+ * @brief Wake crystal on chip with address
+ * @note After sending i2c command it waits 500us for chip (see documentation
+ * page 13, table 3, footnote 3).
+ * @note Assumes I2C works without error
+ * @param address Address of chip to wake up
+ * @param sleep 0 to wake up, >0 to sleep
+ */
+void tlc59116_sleep(uint8_t address, uint8_t sleep);
 
 #endif // EXT_TLC59116
 #endif // EXT_TLC59116_H

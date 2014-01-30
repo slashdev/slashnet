@@ -32,4 +32,43 @@ void tlc59116_reset(void) {
     i2c_stop();
 }
 
+void tlc59116_sleep(uint8_t address, uint8_t sleep) {
+    // Sequence:
+    // Start, select chip, select register, repeated start, select chip,
+    // read register (not ack), start, repeated start, select chip,
+    // select register, write new byte (sleep or not), stop
+
+    // Make sure i2c is initialized
+    i2c_init(350);
+    // Start i2c
+    i2c_start();
+    // Select chip (WRITE)
+    i2c_send_address(I2C_WRITE(address));
+    // Select register
+    i2c_send_byte(0x00);
+    // Repeated start
+    i2c_start();
+    // Select chip (READ)
+    i2c_send_address(I2C_READ(address));
+    // Read byte (do not ack)
+    uint8_t old_state;
+    i2c_receive_byte(0, &old_state);
+    // Repeated start
+    i2c_start();
+    // Select chip (WRITE)
+    i2c_send_address(I2C_WRITE(address));
+    // Select register
+    i2c_send_byte(0x00);
+    // Write byte
+    if (sleep) {
+        i2c_send_byte(0x10);
+    } else {
+        i2c_send_byte(old_state & ~(0x10));
+    }
+    // Stop
+    i2c_stop();
+    // Wait for 500us to let chip start crystal
+    _delay_us(500);
+}
+
 #endif // EXT_TLC59116
