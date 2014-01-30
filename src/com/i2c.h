@@ -9,7 +9,7 @@
  * \license This project is released under MIT license.
  *
  * @author Ferdi van der Werf <efcm@slashdev.nl>
- * @since 0.2.0
+ * @since 0.11.0
  */
 
 #ifndef COM_I2C_H
