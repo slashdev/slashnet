@@ -61,6 +61,15 @@ extern uint8_t i2c_stop(void);
  */
 extern uint8_t i2c_send_address(uint8_t address);
 
+/**
+ * @brief Send byte over i2c
+ * @param byte Byte to send
+ * @retval 0 Byte send and ack'ed
+ * @retval 1 Timeout
+ * @retval >1 Failed, status register
+ */
+extern uint8_t i2c_send_byte(uint8_t byte);
+
 
 #endif // COM_I2C
 #endif // COM_I2C_H

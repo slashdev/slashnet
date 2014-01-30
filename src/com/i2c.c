@@ -150,4 +150,31 @@ uint8_t i2c_send_address(uint8_t address) {
     }
 }
 
+uint8_t i2c_send_byte(uint8_t byte) {
+    // Put byte into register
+    TWDR = byte;
+    // Send byte
+    TWCR = (1 << TWINT) | (1 << TWEN);
+    // Wait until send completes
+    if (timeout(default_timeout)) {
+        // Timeout
+        restart();
+        return (1);
+    }
+    // Check status
+    uint8_t status = TW_STATUS;
+    if (status == TW_MT_DATA_ACK) {
+        // Received ack
+        return (0);
+    } else if (status == TW_MT_DATA_NACK) {
+        // Received nack
+        i2c_stop();
+        return (status);
+    } else {
+        // Faulty
+        restart();
+        return (status);
+    }
+}
+
 #endif // COM_I2C
