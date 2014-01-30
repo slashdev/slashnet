@@ -510,7 +510,7 @@ void parse_options(void) {
                 // Output new lease time
                 debug_string_p(PSTR("DHCP: New lease time: "));
                 debug_number(lease_time);
-                debug_string_p(PSTR("\r\n"));
+                debug_newline();
                 
                 // We need at least 5 minutes
                 if (lease_time < 5)

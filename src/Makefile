@@ -20,6 +20,7 @@ FUSE_HIGH = 0xDF
 FUSE_EXT  = 0xFF
 
 OBJECTS    = \
+com/i2c.o \
 com/spi.o \
 com/usart.o \
 net/arp.o \

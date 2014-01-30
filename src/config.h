@@ -17,7 +17,7 @@
 /**
  * @brief Version of the EthShield firmware
  */
-#define VERSION "0.10.1"
+#define VERSION "0.11.0"
 
 /**
  * Clock setting
@@ -30,6 +30,15 @@
 /**********************************************************************
  * Communication channels
  **********************************************************************/
+
+//
+// Two Wire Interface (I2C, TWI)
+// --------------------------------------------------------------------
+
+/**
+ * @brief Enables Two Wire Interface
+ */
+#define COM_I2C
 
 //
 // SPI

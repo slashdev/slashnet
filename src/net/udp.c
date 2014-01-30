@@ -106,7 +106,7 @@ void udp_receive(void) {
     port |= buffer_in[UDP_PTR_PORT_DST_L];
     debug_string_p(PSTR("UDP: Port: "));
     debug_number(port);
-    debug_string_p(PSTR("\r\n"));
+    debug_newline();
     
     // Check if a listener is registered for this port
     debug_string_p(PSTR("UDP: Search service..."));

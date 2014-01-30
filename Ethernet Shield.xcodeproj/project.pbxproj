@@ -32,6 +32,10 @@
 		C078D241187D31CA0098C828 /* dhcp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dhcp.h; sourceTree = "<group>"; };
 		C078D242187E80E90098C828 /* werkti.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = werkti.c; sourceTree = "<group>"; };
 		C078D243187E80E90098C828 /* werkti.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = werkti.h; sourceTree = "<group>"; };
+		C078D24418844B240098C828 /* i2c.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = i2c.c; sourceTree = "<group>"; };
+		C078D24518844B240098C828 /* i2c.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = i2c.h; sourceTree = "<group>"; };
+		C0EE306A189AB482003D998E /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGELOG.md; sourceTree = "<group>"; };
+		C0EE306B189AB482003D998E /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		C0FBC508186F764000DB9B65 /* spi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = spi.c; sourceTree = "<group>"; };
 		C0FBC509186F76C400DB9B65 /* spi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spi.h; sourceTree = "<group>"; };
 		C0FBC50D1870633100DB9B65 /* network.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = network.c; sourceTree = "<group>"; };
@@ -44,6 +48,8 @@
 		C00133451850FFFF000E8B0D = {
 			isa = PBXGroup;
 			children = (
+				C0EE306A189AB482003D998E /* CHANGELOG.md */,
+				C0EE306B189AB482003D998E /* README.md */,
 				C0013359185100D9000E8B0D /* Makefile */,
 				C0013350185100D9000E8B0D /* com */,
 				C0FBC50C18705F3800DB9B65 /* net */,
@@ -57,6 +63,8 @@
 		C0013350185100D9000E8B0D /* com */ = {
 			isa = PBXGroup;
 			children = (
+				C078D24518844B240098C828 /* i2c.h */,
+				C078D24418844B240098C828 /* i2c.c */,
 				C0FBC509186F76C400DB9B65 /* spi.h */,
 				C0FBC508186F764000DB9B65 /* spi.c */,
 				C0013352185100D9000E8B0D /* usart.h */,
