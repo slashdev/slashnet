@@ -19,5 +19,13 @@
 // Do we want TLC59116
 #ifdef EXT_TLC59116
 
+#include <inttypes.h>
+#include "../com/i2c.h"
+
+/**
+ * @brief Soft reset all connected chips
+ */
+void tlc59116_reset(void);
+
 #endif // EXT_TLC59116
 #endif // EXT_TLC59116_H
