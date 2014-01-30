@@ -1,6 +1,11 @@
 EthShield changelog
 ===================
 
+0.11.1
+------
+- Fix I2C receive byte when sending NACK as reply
+- Introduce I2C_WRITE and I2C_READ to set read/write bit in address
+
 0.11.0
 ------
 - Support I2C (TWI) protocol
