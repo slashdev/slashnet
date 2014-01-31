@@ -18,8 +18,14 @@
 #error TLC59116 cannot work without COM_I2C
 #endif // COM_I2C
 
+/**
+ * Speed for I2C to talk over
+ */
+const i2c_speed = 350;
+
 void tlc59116_reset(void) {
-    i2c_init(350); // Make sure i2c is initialized
+    // Make sure i2c is initialized
+    i2c_init(i2c_speed);
     // Start i2c
     if (i2c_start()) { /* Start failed */ }
     // Send reset command
@@ -39,7 +45,7 @@ void tlc59116_sleep(uint8_t address, uint8_t sleep) {
     // select register, write new byte (sleep or not), stop
 
     // Make sure i2c is initialized
-    i2c_init(350);
+    i2c_init(i2c_speed);
     // Start i2c
     i2c_start();
     // Select chip (WRITE)
