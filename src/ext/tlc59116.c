@@ -77,4 +77,43 @@ void tlc59116_sleep(uint8_t address, uint8_t sleep) {
     _delay_us(500);
 }
 
+void tlc59116_set_led_mode(uint8_t address, uint8_t led_nr, uint8_t mode) {
+    // Sequence
+    // Start, select chip, select register, repeated start, select chip
+    // read register (not ack), repeated start, select chip, select register,
+    // write new byte (on or off), stop
+
+    // Determine register and mask
+    uint8_t reg  = 0x14 + (led_nr / 4);
+    uint8_t shift = (led_nr % 4) * 2;
+
+    // Make sure I2C is initialized
+    i2c_init(i2c_speed);
+    // Start i2c
+    i2c_start();
+    // Select chip (WRITE)
+    i2c_send_address(I2C_WRITE(address));
+    // Select register
+    i2c_send_byte(reg);
+    // Repeated start
+    i2c_start();
+    // Select chip (READ)
+    i2c_send_address(I2C_READ(address));
+    // Read byte (do not ack)
+    uint8_t state;
+    i2c_receive_byte(0, &state);
+    // Repeated start
+    i2c_start();
+    // Select chip (WRITE)
+    i2c_send_address(I2C_WRITE(address));
+    // Select register
+    i2c_send_byte(reg);
+    // Write new value
+    state &= ~(0x03 << shift);
+    state |= mode << shift;
+    i2c_send_byte(state);
+    // Stop
+    i2c_stop();
+}
+
 #endif // EXT_TLC59116
