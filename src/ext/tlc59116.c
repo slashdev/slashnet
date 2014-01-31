@@ -41,8 +41,8 @@ void tlc59116_reset(void) {
 void tlc59116_sleep(uint8_t address, uint8_t sleep) {
     // Sequence:
     // Start, select chip, select register, repeated start, select chip,
-    // read register (not ack), start, repeated start, select chip,
-    // select register, write new byte (sleep or not), stop
+    // read register (not ack), repeated start, select chip, select register,
+    // write new byte (sleep or not), stop
 
     // Make sure i2c is initialized
     i2c_init(i2c_speed);
