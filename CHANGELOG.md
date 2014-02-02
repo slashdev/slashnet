@@ -1,6 +1,10 @@
 EthShield changelog
 ===================
 
+0.12.0
+------
+- Basic support for Texas Instruments Led Driver (TLC59116) chip
+
 0.11.1
 ------
 - Fix I2C receive byte when sending NACK as reply
