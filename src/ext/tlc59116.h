@@ -65,5 +65,14 @@ void tlc59116_sleep(uint8_t address, uint8_t sleep);
  */
 void tlc59116_set_led_mode(uint8_t address, uint8_t led_nr, uint8_t mode);
 
+/**
+ * @brief Set the brightness for a single led
+ * @note Assumes I2C works without error
+ * @param address Address of chip
+ * @param led_nr Led output number (0 - 15)
+ * @param brightness Brightness of the led (0 - 255)
+ */
+void tlc59116_set_brightness(uint8_t address, uint8_t led_nr, uint8_t brightness);
+
 #endif // EXT_TLC59116
 #endif // EXT_TLC59116_H
