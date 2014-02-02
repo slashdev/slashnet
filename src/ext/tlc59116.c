@@ -134,4 +134,27 @@ void tlc59116_set_brightness(uint8_t address, uint8_t led_nr, uint8_t brightness
     i2c_stop();
 }
 
+void tlc59116_set_brightness_array(uint8_t address, uint8_t start_led_nr, uint8_t length, uint8_t *data) {
+    // Sequence
+    // Start, select chip, select start register, write new bytes, stop
+
+    // Make sure i2c is initialized
+    i2c_init(i2c_speed);
+    // Start i2c
+    i2c_start();
+    // Select chip (WRITE)
+    i2c_send_address(I2C_WRITE(address));
+    // Select start register (auto increase over brightness registers only)
+    i2c_send_byte(0xA2 + (start_led_nr % 16));
+    // Iterate over data
+    while (length--) {
+        // Send new byte
+        i2c_send_byte((*data) % 0xFF);
+        data++;
+    }
+    // Stop
+    i2c_stop();
+
+}
+
 #endif // EXT_TLC59116

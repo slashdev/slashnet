@@ -74,5 +74,15 @@ void tlc59116_set_led_mode(uint8_t address, uint8_t led_nr, uint8_t mode);
  */
 void tlc59116_set_brightness(uint8_t address, uint8_t led_nr, uint8_t brightness);
 
+/**
+ * @brief Set the brightness for an array of leds starting from start_led_nr
+ * @note Assumes I2C works without error
+ * @param address Address of chip
+ * @param start_led_nr Start nr of led outputs to set brightness for
+ * @param length Length of array to send
+ * @param data Array with brightness data
+ */
+void tlc59116_set_brightness_array(uint8_t address, uint8_t start_led_nr, uint8_t length, uint8_t *data);
+
 #endif // EXT_TLC59116
 #endif // EXT_TLC59116_H
