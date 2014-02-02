@@ -84,7 +84,7 @@ void tlc59116_set_led_mode(uint8_t address, uint8_t led_nr, uint8_t mode) {
     // write new byte (on or off), stop
 
     // Determine register and mask
-    uint8_t reg  = 0x14 + (led_nr / 4);
+    uint8_t reg  = 0x14 + ((led_nr % 16) / 4);
     uint8_t shift = (led_nr % 4) * 2;
 
     // Make sure I2C is initialized
