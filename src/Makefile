@@ -34,6 +34,7 @@ utils/logger.o \
 utils/port_service.o \
 utils/uptime.o \
 utils/werkti.o \
+ext/tlc59116.o \
 config.o \
 EthShield.o 
 

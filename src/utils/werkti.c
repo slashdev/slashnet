@@ -49,6 +49,11 @@ void send_report(uint8_t type, uint16_t in, uint16_t out);
 
 void werkti_maybe_report(void) {
     if (time >= UTILS_WERKTI_REPORT_INTERVAL) {
+        debug_string_p(PSTR("WERKTI: IN: "));
+        debug_number(werkti_in);
+        debug_string_p(PSTR(", OUT: "));
+        debug_number(werkti_out);
+        debug_newline();
         // Save overal out to temporary variable as it changes during report sending
         uint16_t out = werkti_out;
         werkti_out = 0;
@@ -88,7 +93,6 @@ void werkti_maybe_report(void) {
         
         // Debug: output bytes received and send
         debug_string_p(PSTR("WERKTI: report send\r\n"));
-        
         // Update time
         time = 0;
     }

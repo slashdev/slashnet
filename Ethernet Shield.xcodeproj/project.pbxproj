@@ -36,6 +36,8 @@
 		C078D24518844B240098C828 /* i2c.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = i2c.h; sourceTree = "<group>"; };
 		C0EE306A189AB482003D998E /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGELOG.md; sourceTree = "<group>"; };
 		C0EE306B189AB482003D998E /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		C0EE306C189AF2B1003D998E /* tlc59116.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tlc59116.h; sourceTree = "<group>"; };
+		C0EE306F189AF308003D998E /* tlc59116.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tlc59116.c; sourceTree = "<group>"; };
 		C0FBC508186F764000DB9B65 /* spi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = spi.c; sourceTree = "<group>"; };
 		C0FBC509186F76C400DB9B65 /* spi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spi.h; sourceTree = "<group>"; };
 		C0FBC50D1870633100DB9B65 /* network.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = network.c; sourceTree = "<group>"; };
@@ -54,6 +56,7 @@
 				C0013350185100D9000E8B0D /* com */,
 				C0FBC50C18705F3800DB9B65 /* net */,
 				C001335A185100D9000E8B0D /* utils */,
+				C0EE306E189AF2BE003D998E /* ext */,
 				C0013353185100D9000E8B0D /* config.h */,
 				C0FBC5101870841400DB9B65 /* config.c */,
 				C0013358185100D9000E8B0D /* EthShield.c */,
@@ -90,6 +93,16 @@
 			);
 			name = utils;
 			path = src/utils;
+			sourceTree = "<group>";
+		};
+		C0EE306E189AF2BE003D998E /* ext */ = {
+			isa = PBXGroup;
+			children = (
+				C0EE306F189AF308003D998E /* tlc59116.c */,
+				C0EE306C189AF2B1003D998E /* tlc59116.h */,
+			);
+			name = ext;
+			path = src/ext;
 			sourceTree = "<group>";
 		};
 		C0FBC50C18705F3800DB9B65 /* net */ = {

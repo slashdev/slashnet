@@ -17,7 +17,7 @@
 /**
  * @brief Version of the EthShield firmware
  */
-#define VERSION "0.11.1"
+#define VERSION "0.12.0"
 
 /**
  * Clock setting
@@ -233,6 +233,21 @@
  * @brief Werkti remote port
  */
 #define WERKTI_REMOTE_PORT 7900
+
+
+/**********************************************************************
+ * Extensions
+ **********************************************************************/
+
+//
+// Led driver TLC59116
+// --------------------------------------------------------------------
+
+/**
+ * @brief Enable TLC59116 support
+ */
+#define EXT_TLC59116
+
 
 /**********************************************************************
  * DO NOT CHANGE BELOW
