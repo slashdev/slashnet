@@ -1,6 +1,10 @@
 EthShield changelog
 ===================
 
+0.12.1
+------
+- Removed xcode userdata from repo
+
 0.12.0
 ------
 - Basic support for Texas Instruments Led Driver (TLC59116) chip
