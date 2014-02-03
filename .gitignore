@@ -18,6 +18,7 @@ Icon
 
 # Xcode
 *.xcworkspace
+xcuserdata
 
 # Atmel Studio
 *.atsln
