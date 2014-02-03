@@ -1,6 +1,8 @@
 EthShield changelog
 ===================
 
+------
+- Updated README
 0.12.1
 ------
 - Removed xcode userdata from repo
