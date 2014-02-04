@@ -1,6 +1,12 @@
 EthShield changelog
 ===================
 
+0.12.2
+------
+- Updated README
+- Add links to used RFCs in README
+- Ignore copies of RFCs on disk
+
 0.12.1
 ------
 - Removed xcode userdata from repo
