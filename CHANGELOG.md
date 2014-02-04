@@ -3,6 +3,7 @@ EthShield changelog
 
 ------
 - Updated README
+- Add links to used RFCs in README
 0.12.1
 ------
 - Removed xcode userdata from repo
