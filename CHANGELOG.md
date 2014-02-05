@@ -1,6 +1,7 @@
 EthShield changelog
 ===================
 
+0.12.4
 ------
 - Remove Xcode project
 
