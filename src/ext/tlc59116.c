@@ -21,7 +21,7 @@
 /**
  * Speed for I2C to talk over
  */
-const i2c_speed = 350;
+const uint16_t i2c_speed = 350;
 
 void tlc59116_reset(void) {
     // Make sure i2c is initialized
