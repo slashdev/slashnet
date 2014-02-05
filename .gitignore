@@ -18,6 +18,7 @@ Icon
 .Trashes
 
 # Xcode
+*.xcodeproj
 *.xcworkspace
 xcuserdata
 

@@ -1,6 +1,10 @@
 EthShield changelog
 ===================
 
+0.12.4
+------
+- Remove Xcode project
+
 0.12.3
 ------
 - Add type to i2c_speed in tlc59116
