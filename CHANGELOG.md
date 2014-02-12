@@ -1,6 +1,7 @@
 EthShield changelog
 ===================
 
+0.12.6
 ------
 - Add i2c_write_register
 - Allow all tlc59116 registers to be set
