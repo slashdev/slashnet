@@ -13,34 +13,41 @@
 // Do we want I2C?
 #ifdef COM_I2C
 
+uint8_t current_bitrateKHz;
+
 void i2c_init(uint16_t bitrateKHz) {
     
     // Disable power reduction mode
     PRR &= ~(1<<PRTWI);
+
+    if (bitrateKHz != current_bitrateKHz) {
+        uint8_t prescaler;
     
-    uint8_t prescaler;
+        // Clear prescaler bits
+        TWSR &= ~((1 << TWPS1) | (1 << TWPS0));
     
-    // Clear prescaler bits
-    TWSR &= ~((1 << TWPS1) | (1 << TWPS0));
+        // Decide which prescaler to use
+        if (bitrateKHz < 3) {
+            prescaler = 64;
+            TWSR = (1 << TWPS1) | (1 << TWPS0);
+        } else if (bitrateKHz < 10) {
+            prescaler = 16;
+            TWSR |= (1 << TWPS1);
+        } else if (bitrateKHz < 38) {
+            prescaler = 4;
+            TWSR |= (1 << TWPS0);
+        } else {
+            prescaler = 1;
+        }
     
-    // Decide which prescaler to use
-    if (bitrateKHz < 3) {
-        prescaler = 64;
-        TWSR = (1 << TWPS1) | (1 << TWPS0);
-    } else if (bitrateKHz < 10) {
-        prescaler = 16;
-        TWSR |= (1 << TWPS1);
-    } else if (bitrateKHz < 38) {
-        prescaler = 4;
-        TWSR |= (1 << TWPS0);
-    } else {
-        prescaler = 1;
+        // Calculate bitrate divider
+        // SCL = F_CPU / (16 + 2(div) * prescaler)
+        // div = (F_CPU / (2001*SCL*prescaler))
+        TWBR = (F_CPU / 2001 / bitrateKHz / prescaler) - 7;
+
+        // Set current bitrate
+        current_bitrateKHz = bitrateKHz;
     }
-    
-    // Calculate bitrate divider
-    // SCL = F_CPU / (16 + 2(div) * prescaler)
-    // div = (F_CPU / (2001*SCL*prescaler))
-    TWBR = (F_CPU / 2001 / bitrateKHz / prescaler) - 7;
     
     // Enable TWI
     TWCR |= (1 << TWEN);
