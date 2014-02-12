@@ -127,21 +127,13 @@ void tlc59116_write_register(uint8_t address, uint8_t reg, uint8_t byte) {
 }
 
 void tlc59116_set_brightness(uint8_t address, uint8_t led_nr, uint8_t brightness) {
-    // Sequence
-    // Start, select chip, select register, write new byte, stop
-
+    if (led_nr >= 16) {
+        return; // Led should be in range 0 - 15
+    }
     // Make sure i2c is initialized
     i2c_init(i2c_speed);
-    // Start i2c
-    i2c_start();
-    // Select chip (WRITE)
-    i2c_send_address(I2C_WRITE(address));
-    // Select register
-    i2c_send_byte(0x02 + (led_nr % 16));
-    // Write new value
-    i2c_send_byte(brightness);
-    // Stop
-    i2c_stop();
+    // Write to register
+    tlc59116_write_register(address, 0x02 + led_nr, brightness);
 }
 
 void tlc59116_set_brightness_array(uint8_t address, uint8_t start_led_nr, uint8_t length, uint8_t *data) {
