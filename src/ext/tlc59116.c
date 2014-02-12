@@ -129,7 +129,7 @@ void tlc59116_set_brightness(uint8_t address, uint8_t led_nr, uint8_t brightness
     // Select register
     i2c_send_byte(0x02 + (led_nr % 16));
     // Write new value
-    i2c_send_byte(brightness % 0xFF);
+    i2c_send_byte(brightness);
     // Stop
     i2c_stop();
 }
