@@ -132,7 +132,7 @@ void udp_port_unregister(uint16_t port) {
     port_service_remove(port_services, NET_UDP_SERVICES_LIST_SIZE, port);
 }
 
-uint8_t *udp_prepare_Reply(void) {
+uint8_t *udp_prepare_reply(void) {
     // Create IP header
     // Create IP protocol header
     ip_prepare(IP_VAL_PROTO_UDP, &buffer_in[IP_PTR_SRC], &buffer_in[ETH_PTR_MAC_SRC]);
