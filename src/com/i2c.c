@@ -169,6 +169,20 @@ uint8_t i2c_send_byte(uint8_t byte) {
     }
 }
 
+uint8_t i2c_write_register(uint8_t address, uint8_t reg, uint8_t byte) {
+    // Start i2c
+    if (i2c_start()) { return 1; }
+    // Select address
+    else if (i2c_send_address(I2C_WRITE(address))) { return 1; }
+    // Select register
+    else if (i2c_send_byte(reg)) { return 1; }
+    // Send new byte
+    else if (i2c_send_byte(byte)) { return 1; }
+    // Stop i2c
+    i2c_stop();
+    return 0;
+}
+
 uint8_t i2c_receive_byte(uint8_t ack, uint8_t *data) {
     // Prepare for byte
     if (ack) {
