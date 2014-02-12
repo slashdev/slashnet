@@ -1,6 +1,7 @@
 EthShield changelog
 ===================
 
+0.12.5
 ------
 - Fix method name typo
 
