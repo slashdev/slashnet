@@ -80,6 +80,16 @@ extern uint8_t i2c_send_address(uint8_t address);
 extern uint8_t i2c_send_byte(uint8_t byte);
 
 /**
+ * @brief Set register over i2c
+ * @param address Address of chip
+ * @param reg Register to write to
+ * @param value Value to write to register
+ * @retval 0 Register set
+ * @retval 1 Failed
+ */
+extern uint8_t i2c_write_register(uint8_t address, uint8_t reg, uint8_t byte);
+
+/**
  * @brief Receive a byte over i2c
  * @param ack True if we need to send an ack back, false otherwise
  * @param *data Byte by ref to put received byte in
