@@ -66,6 +66,15 @@ extern void tlc59116_sleep(uint8_t address, uint8_t sleep);
 extern void tlc59116_set_led_mode(uint8_t address, uint8_t led_nr, uint8_t mode);
 
 /**
+ * @brief Set register on chip with address
+ * @note Assumes I2C works without error
+ * @param address Address of chip
+ * @param reg Register to write to
+ * @param value Value to write to register
+ */
+extern void tlc59116_write_register(uint8_t address, uint8_t reg, uint8_t value);
+
+/**
  * @brief Set the brightness for a single led
  * @note Assumes I2C works without error
  * @param address Address of chip
