@@ -44,7 +44,7 @@
 /**
  * @brief Soft reset all connected chips
  */
-void tlc59116_reset(void);
+extern void tlc59116_reset(void);
 
 /**
  * @brief Wake crystal on chip with address
@@ -54,7 +54,7 @@ void tlc59116_reset(void);
  * @param address Address of chip to wake up
  * @param sleep 0 to wake up, >0 to sleep
  */
-void tlc59116_sleep(uint8_t address, uint8_t sleep);
+extern void tlc59116_sleep(uint8_t address, uint8_t sleep);
 
 /**
  * @brief Turn a led on or off
@@ -63,7 +63,16 @@ void tlc59116_sleep(uint8_t address, uint8_t sleep);
  * @param led_nr Led output number (0 - 15)
  * @param mode 0 for off, 1 for on, 2 for pwm, 3 for pwm and group dimming
  */
-void tlc59116_set_led_mode(uint8_t address, uint8_t led_nr, uint8_t mode);
+extern void tlc59116_set_led_mode(uint8_t address, uint8_t led_nr, uint8_t mode);
+
+/**
+ * @brief Set register on chip with address
+ * @note Assumes I2C works without error
+ * @param address Address of chip
+ * @param reg Register to write to
+ * @param value Value to write to register
+ */
+extern void tlc59116_write_register(uint8_t address, uint8_t reg, uint8_t value);
 
 /**
  * @brief Set the brightness for a single led
@@ -72,7 +81,7 @@ void tlc59116_set_led_mode(uint8_t address, uint8_t led_nr, uint8_t mode);
  * @param led_nr Led output number (0 - 15)
  * @param brightness Brightness of the led (0 - 255)
  */
-void tlc59116_set_brightness(uint8_t address, uint8_t led_nr, uint8_t brightness);
+extern void tlc59116_set_brightness(uint8_t address, uint8_t led_nr, uint8_t brightness);
 
 /**
  * @brief Set the brightness for an array of leds starting from start_led_nr
@@ -82,7 +91,7 @@ void tlc59116_set_brightness(uint8_t address, uint8_t led_nr, uint8_t brightness
  * @param length Length of array to send
  * @param data Array with brightness data
  */
-void tlc59116_set_brightness_array(uint8_t address, uint8_t start_led_nr, uint8_t length, uint8_t *data);
+extern void tlc59116_set_brightness_array(uint8_t address, uint8_t start_led_nr, uint8_t length, uint8_t *data);
 
 #endif // EXT_TLC59116
 #endif // EXT_TLC59116_H
