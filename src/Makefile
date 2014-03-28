@@ -36,7 +36,7 @@ utils/uptime.o \
 utils/werkti.o \
 ext/tlc59116.o \
 config.o \
-EthShield.o 
+EthShield.o
 
 # Tune the lines below only if you know what you are doing:
 
@@ -82,10 +82,10 @@ clean:
 	rm -f $(OUTPUT_DIR)$(OUTPUT_HEX) $(OUTPUT_DIR)$(OUTPUT_ELF) $(OBJECTS)
 
 fuse:
-	avrdude -c avrisp2 -P usb -p $(DEVICE) -U lfuse:w:$(FUSE_LOW):m -U hfuse:w:$(FUSE_HIGH):m -U efuse:w:$(FUSE_EXT):m
+	avrdude -c avrisp2 -P usb -B 5 -p $(DEVICE) -U lfuse:w:$(FUSE_LOW):m -U hfuse:w:$(FUSE_HIGH):m -U efuse:w:$(FUSE_EXT):m
 
 dude: $(OUTPUT_HEX)
-	avrdude -c avrisp2 -P usb -p $(DEVICE) -U flash:w:$(OUTPUT_DIR)$(OUTPUT_HEX):i
+	avrdude -c avrisp2 -P usb -B 1 -p $(DEVICE) -U flash:w:$(OUTPUT_DIR)$(OUTPUT_HEX):i
 
 restart:
 	avrdude -c avrisp2 -P usb -p $(DEVICE)
