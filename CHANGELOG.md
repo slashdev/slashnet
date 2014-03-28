@@ -1,6 +1,10 @@
 EthShield changelog
 ===================
 
+0.12.7
+------
+- Program fuses slow, hex fast (new chips need slow programming)
+
 0.12.6
 ------
 - Add i2c_write_register
