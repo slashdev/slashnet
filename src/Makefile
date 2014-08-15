@@ -12,9 +12,9 @@ DEVICE     = atmega644p
 CLOCK      = 20000000 # 20 Mhz
 
 OUTPUT_DIR   = Debug/
-OUTPUT_HEX   = EthShield.hex
-OUTPUT_ELF   = EthShield.elf
-OUTPUT_LSS   = EthShield.lss
+OUTPUT_HEX   = ethshield.hex
+OUTPUT_ELF   = ethshield.elf
+OUTPUT_LSS   = ethshield.lss
 FUSE_LOW  = 0xE7
 FUSE_HIGH = 0xDF
 FUSE_EXT  = 0xFF
@@ -36,7 +36,7 @@ utils/uptime.o \
 utils/werkti.o \
 ext/tlc59116.o \
 config.o \
-EthShield.o
+ethshield.o
 
 # Tune the lines below only if you know what you are doing:
 

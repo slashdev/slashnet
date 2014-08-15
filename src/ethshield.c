@@ -1,6 +1,6 @@
 /**
  * @file debug.h
- * @brief Initializer and main loop of EthShield
+ * @brief Initializer and main loop of ethshield
  *
  * \copyright Copyright 2013 /Dev. All rights reserved.
  * \license This project is released under MIT license.
@@ -24,16 +24,16 @@
 int main(void) {
 	// Enable interrupts
     sei();
-	
+
     // Initialize debug
     logger_init();
-    
+
     // Initialize uptime
     uptime_init();
-    
+
     // Initialize network chip
     network_init();
-    
+
     // Infinite loop
     while (1) {
         // Handle network traffic
@@ -41,5 +41,5 @@ int main(void) {
         // Maybe send werkti report
         werkti_maybe_report();
     }
-    
+
 }
