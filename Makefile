@@ -5,11 +5,10 @@
 # You should at least check the settings for
 # DEVICE ....... The AVR device you compile for
 # CLOCK ........ Target AVR clock rate in Hertz
-# OBJECTS ...... The object files created from your source files. This list is
-#                usually the same as the list of source files with suffix ".o".
 
+# Device, 20 MHz
 DEVICE     = atmega644p
-CLOCK      = 20000000 # 20 Mhz
+CLOCK      = 20000000
 
 # Default fuses
 FUSE_LOW  = 0xE7
@@ -21,104 +20,117 @@ OUTPUT_HEX   = ethshield.hex
 OUTPUT_ELF   = ethshield.elf
 OUTPUT_LSS   = ethshield.lss
 
-OBJECTS    = \
-com/i2c.o \
-com/spi.o \
-com/usart.o \
-net/arp.o \
-net/dhcp.o \
-net/icmp.o \
-net/network.o \
-net/shared.o \
-net/udp.o \
-utils/counter.o \
-utils/logger.o \
-utils/port_service.o \
-utils/uptime.o \
-utils/werkti.o \
-ext/tlc59116.o \
-config.o \
-ethshield.o
+# Executable
+EXECUTABLE  = ethshield
+
+# Directories
+SRC_DIR     = src
+OBJ_DIR     = obj
+BUILD_DIR   = build
 
 # Tune the lines below only if you know what you are doing:
+CC          = avr-gcc
+CC_FLAGS    = -Wall -Os -gdwarf-2 -DF_CPU=$(CLOCK) -mmcu=$(DEVICE)
+COMPILER    = avr-gcc
 
-COMPILE = avr-gcc -Wall -Os -gdwarf-2 -DF_CPU=$(CLOCK) -mmcu=$(DEVICE)
+SOURCES     = $(wildcard src/**/*.c) $(wildcard src/*.c)
+OBJECTS     = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SOURCES))
+DIRECTORIES = $(patsubst $(SRC_DIR)/%,$(OBJ_DIR)/%,$(sort $(dir $(wildcard $(SRC_DIR)/*/))))
 
-# symbolic targets:
-all:	$(OUTPUT_HEX)
+COL_INFO    = tput setaf 2
+COL_BUILD   = tput setaf 7
+COL_RESET   = tput sgr0
 
+ELF         = $(BUILD_DIR)/$(EXECUTABLE).elf
+HEX         = $(BUILD_DIR)/$(EXECUTABLE).hex
+LSS         = $(BUILD_DIR)/$(EXECUTABLE).lss
 
-.c.o:
-	@tput setaf 1
-	@echo Building file: $<
-	@tput setaf 7
-	$(COMPILE) -c $< -o $@
-	@tput setaf 1
-	@echo Finished building: $<
-	@tput sgr0
+# Build executable
+all:	dirs $(HEX) avr-size
 
-.S.o:
-	$(COMPILE) -x assembler-with-cpp -c $< -o $@
-# "-x assembler-with-cpp" should not be necessary since this is the default
-# file type for the .S (with capital S) extension. However, upper case
-# characters are not always preserved on Windows. To ensure WinAVR
-# compatibility define the file type manually.
+# Clean environment
+clean:
+	rm -f $(ELF) $(HEX) $(LSS) $(OBJECTS)
 
-.c.s:
-	@tput setaf 1
-	@echo Building file: $<
-	@tput setaf 7
-	$(COMPILE) -S $< -o $@
-	@tput setaf 1
-	@echo Finished building: $<
-	@tput sgr0
+# Use disasm for debugging
+disasm:	$(ELF)
+	avr-objdump -d $(ELF)
 
-# if you use a bootloader, change the command below appropriately:
+# Avr-dude
+fuse:
+	avrdude -c avrisp2 -P usb -B 5 -p $(DEVICE) -U lfuse:w:$(FUSE_LOW):m -U hfuse:w:$(FUSE_HIGH):m -U efuse:w:$(FUSE_EXT):m
+
+dude: $(HEX)
+	avrdude -c avrisp2 -P usb -B 1 -p $(DEVICE) -U flash:w:$(HEX):i
+
+restart:
+	avrdude -c avrisp2 -P usb -p $(DEVICE)
+
+# BootloadHID
 load: all
 	bootloadHID -l -f $(OUTPUT_DIR)$(OUTPUT_HEX)
 
 start: all
 	bootloadHID -l -s -f $(OUTPUT_DIR)$(OUTPUT_HEX)
 
-clean:
-	rm -f $(OUTPUT_DIR)$(OUTPUT_HEX) $(OUTPUT_DIR)$(OUTPUT_ELF) $(OBJECTS)
+# Build specific
+dirs:
+	@$(COL_INFO)
+	@echo Create directories in 'obj/'
+	@$(COL_BUILD)
+	mkdir -p $(DIRECTORIES) $(BUILD_DIR)
+	@$(COL_RESET)
 
-fuse:
-	avrdude -c avrisp2 -P usb -B 5 -p $(DEVICE) -U lfuse:w:$(FUSE_LOW):m -U hfuse:w:$(FUSE_HIGH):m -U efuse:w:$(FUSE_EXT):m
+$(OBJECTS): $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
+	@echo
+	@$(COL_INFO)
+	@echo Building file: $<
+	@$(COL_BUILD)
+	$(CC) $(CC_FLAGS) -c $< -o $@
+	@$(COL_INFO)
+	@echo Finished building: $<
+	@$(COL_RESET)
 
-dude: $(OUTPUT_HEX)
-	avrdude -c avrisp2 -P usb -B 1 -p $(DEVICE) -U flash:w:$(OUTPUT_DIR)$(OUTPUT_HEX):i
+$(ELF): $(OBJECTS)
+	@echo
+	@$(COL_INFO)
+	@echo Building file: $(ELF)
+	@$(COL_BUILD)
+	$(COMPILER) $(CC_FLAGS) -o $(ELF) $(OBJECTS)
+	@$(COL_INFO)
+	@echo Finished building: $(ELF)
+	@$(COL_RESET)
 
-restart:
-	avrdude -c avrisp2 -P usb -p $(DEVICE)
+$(HEX): $(ELF)
+	@echo
+	@$(COL_INFO)
+	@echo Clean old hex and lss
+	@rm -f $(HEX) $(LSS)
+	@$(COL_BUILD)
+	avr-objcopy -j .text -j .data -O ihex $(ELF) $(HEX)
+	avr-objdump -f -d -S -t -j .text -w $(ELF) > $(LSS)
+	@$(COL_RESET)
 
-# file targets:
-$(OUTPUT_ELF): $(OBJECTS)
-	@tput setaf 1
-	@echo Building file: $(OUTPUT_ELF)
-	@tput setaf 7
-	$(COMPILE) -o $(OUTPUT_ELF) $(OBJECTS)
-	@tput setaf 1
-	@echo Finished building: $(OUTPUT_ELF)
-	@tput sgr0
-
-$(OUTPUT_HEX): $(OUTPUT_ELF)
-	@rm -f $(OUTPUT_HEX)
-	@avr-objcopy -j .text -j .data -O ihex $(OUTPUT_ELF) $(OUTPUT_HEX)
-	@avr-objdump -f -d -S -t -j .text -w $(OUTPUT_ELF) > $(OUTPUT_LSS)
-	@tput setaf 1
+avr-size:
+	@echo
+	@$(COL_INFO)
 	@echo AVR-Size:
-	@tput setaf 7
-	avr-size --totals $(OUTPUT_ELF)
-	@tput sgr0
-	@rm -f $(OBJECTS)
-	@mv $(OUTPUT_ELF) $(OUTPUT_DIR).
-	@mv $(OUTPUT_HEX) $(OUTPUT_DIR).
-	@mv $(OUTPUT_LSS) $(OUTPUT_DIR).
+	@$(COL_BUILD)
+	avr-size --totals $(ELF)
+	@$(COL_RESET)
 
-# If you have an EEPROM section, you must also create a hex file for the
-# EEPROM and add it to the "flash" target.
+.S.o:
+	$(CC) $(CC_FLAGS) -x assembler-with-cpp -c $< -o $@
+# "-x assembler-with-cpp" should not be necessary since this is the default
+# file type for the .S (with capital S) extension. However, upper case
+# characters are not always preserved on Windows. To ensure WinAVR
+# compatibility define the file type manually.
 
-# Targets for code debugging and analysis:
-disasm:	$(OUTPUT_ELF)
-	avr-objdump -d $(OUTPUT_DIR)$(OUTPUT_ELF)
+.c.s:
+	@$(COL_INFO)
+	@echo Building file: $<
+	@$(COL_BUILD)
+	$(CC) $(CC_FLAGS) -S $< -o $@
+	@$(COL_INFO)
+	@echo Finished building: $<
+	@$(COL_RESET)
