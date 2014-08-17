@@ -15,11 +15,6 @@ FUSE_LOW  = 0xE7
 FUSE_HIGH = 0xDF
 FUSE_EXT  = 0xFF
 
-OUTPUT_DIR   = Debug/
-OUTPUT_HEX   = ethshield.hex
-OUTPUT_ELF   = ethshield.elf
-OUTPUT_LSS   = ethshield.lss
-
 # Executable
 EXECUTABLE  = ethshield
 
@@ -68,10 +63,10 @@ restart:
 
 # BootloadHID
 load: all
-	bootloadHID -l -f $(OUTPUT_DIR)$(OUTPUT_HEX)
+	bootloadHID -l -f $(HEX)
 
 start: all
-	bootloadHID -l -s -f $(OUTPUT_DIR)$(OUTPUT_HEX)
+	bootloadHID -l -s -f $(HEX)
 
 # Build specific
 dirs:
