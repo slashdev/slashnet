@@ -43,6 +43,19 @@ LSS         = $(BUILD_DIR)/$(EXECUTABLE).lss
 # Build executable
 all:	dirs $(HEX) avr-size
 
+# Help, explains usage
+help:
+	@echo "Usage:"
+	@echo "- all:     Build executable"
+	@echo "- help:    Display this help"
+	@echo "Using AVR-dude:"
+	@echo "- fuse:    Set defined fuses on chip"
+	@echo "- dude:    Upload hex to chip"
+	@echo "- restart: Restart the chip"
+	@echo "Using bootloadHID:"
+	@echo "- load:    Upload hex to chip"
+	@echo "- start:   (Re)start the chip"
+
 # Clean environment
 clean:
 	rm -f $(ELF) $(HEX) $(LSS) $(OBJECTS)
