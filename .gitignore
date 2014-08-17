@@ -1,5 +1,4 @@
 # Project
-Debug
 doxygen
 docs
 
@@ -46,3 +45,7 @@ xcuserdata
 *.exe
 *.out
 *.app
+
+# Directories
+obj
+build
