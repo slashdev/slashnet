@@ -112,11 +112,11 @@ $(ELF): $(OBJECTS)
 $(HEX): $(ELF)
 	@echo
 	@$(COL_INFO)
-	@echo Clean old hex and lss
+	@echo Create new hex and lss files
 	@rm -f $(HEX) $(LSS)
 	@$(COL_BUILD)
-	avr-objcopy -j .text -j .data -O ihex $(ELF) $(HEX)
-	avr-objdump -f -d -S -t -j .text -w $(ELF) > $(LSS)
+	avr-objcopy --only-section .text --only-section .data --output-target ihex $(ELF) $(HEX)
+	avr-objdump --file-headers --disassemble --source --syms --section=.text --wide $(ELF) > $(LSS)
 	@$(COL_RESET)
 
 avr-size:
