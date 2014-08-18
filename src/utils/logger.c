@@ -17,18 +17,18 @@ void logger_init(void) {
     // Get default usart config
     usart_config_t config;
     usart_get_default_config(&config);
-    
+
     // Enable double speed
     config.doublespeed = 1;
     // Disable receive
     config.enable_rx = 0;
-    
+
     // Initialize usart with config
     usart_init(&config);
-    
+
     // Send debug message
     info_string_p(PSTR("\r\nUSART logger started\r\n"));
-    info_string_p(PSTR("EthShield version: "));
+    info_string_p(PSTR("ethshield version: "));
     info_string_p(PSTR(VERSION));
     info_string_p(logger_newline);
 }
@@ -49,11 +49,11 @@ void logger_number_(uint16_t value, uint8_t base) {
     *str = '\0';
     uint16_t tmp;
     uint8_t c;
-    
+
     // Make sure we have a base larger than 1
     if (base < 2)
         base = 10;
-    
+
     // Iterate over value
     do {
         // Set temp value
@@ -64,7 +64,7 @@ void logger_number_(uint16_t value, uint8_t base) {
         c = tmp - base * value;
         *--str = c < 10 ? '0' + c : 'A' + c - 10;
     } while (value);
-    
+
     // Send string
     usart_send_string(str);
 }

@@ -1,6 +1,6 @@
 /**
  * @file config.h
- * @brief Configuration of EthShield
+ * @brief Configuration of ethshield
  *
  * \copyright Copyright 2013 /Dev. All rights reserved.
  * \license This project is released under MIT license.
@@ -15,9 +15,9 @@
 #include <inttypes.h>
 
 /**
- * @brief Version of the EthShield firmware
+ * @brief Version of the ethshield firmware
  */
-#define VERSION "0.12.7"
+#define VERSION "0.13.0"
 
 /**
  * Clock setting
