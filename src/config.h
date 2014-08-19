@@ -147,6 +147,25 @@
  */
 #define NET_UDP_SERVICES_LIST_SIZE 10
 
+//
+// Transmission Control Protocol (TCP)
+// --------------------------------------------------------------------
+
+/**
+ * @brief TCP enable
+ */
+#define NET_TCP
+
+/**
+ * @brief TCP server enable
+ */
+#define NET_TCP_SERVER
+
+/**
+ * @brief TCP services list size
+ */
+#define NET_TCP_SERVICES_LIST_SIZE 10
+
 
 /**********************************************************************
  * Utilities
