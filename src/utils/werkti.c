@@ -36,6 +36,8 @@ uint16_t werkti_icmp_in;
 uint16_t werkti_icmp_out;
 uint16_t werkti_udp_in;
 uint16_t werkti_udp_out;
+uint16_t werkti_tcp_in;
+uint16_t werkti_tcp_out;
 #endif // UTILS_WERKTI_MORE
 
 // Functions
@@ -89,6 +91,14 @@ void werkti_maybe_report(void) {
         send_report(WERKTI_TYPE_UDP, werkti_udp_in, udp_out);
         // Reset variable, werktiUdpOut already reset
         werkti_udp_in = 0;
+
+        // TCP
+        // Send report
+        send_report(WERKTI_TYPE_TCP, werkti_tcp_in, werkti_tcp_out);
+        // Reset variables
+        werkti_tcp_in = 0;
+        werkti_tcp_out = 0;
+
 #endif // UTILS_WERKTI_MORE
         
         // Debug: output bytes received and send

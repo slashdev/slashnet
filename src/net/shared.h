@@ -169,7 +169,8 @@ extern uint16_t checksum(uint8_t *buffer, uint16_t length, uint8_t type);
 #define TCP_PTR_DATA_OFFSET 0x2E
 #define TCP_PTR_FLAGS      0x2F
 #define TCP_PTR_WINDOW     0x30
-#define TCP_PTR_CHECKSUM   0x32
+#define TCP_PTR_CHECKSUM_H 0x32
+#define TCP_PTR_CHECKSUM_L 0x32
 #define TCP_PTR_URGENT_PTR 0x34
 #define TCP_PTR_OPTIONS    0x36
 #define TCP_PTR_DATA       0x3E

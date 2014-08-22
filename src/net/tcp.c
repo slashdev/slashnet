@@ -80,6 +80,35 @@ uint8_t *tcp_prepare(uint16_t src_port, uint8_t *dst_ip, uint16_t dst_port, uint
     return &buffer_out[TCP_PTR_DATA];
 }
 
+void tcp_send(uint16_t length) {
+    uint16_t tmp, len_tcp;
+
+    // TCP packet length
+    len_tcp = (buffer_out[TCP_PTR_DATA_OFFSET] * 4) + length;
+
+    // IP packet length
+    tmp = IP_LEN_HEADER + len_tcp;
+    buffer_out[IP_PTR_LENGTH_H] = tmp >> 8;
+    buffer_out[IP_PTR_LENGTH_L] = tmp & 0xFF;
+
+    // Calculate checksum IP header
+    tmp = checksum(&buffer_out[IP_PTR], IP_LEN_HEADER, CHK_IP);
+    buffer_out[IP_PTR_CHECKSUM_H] = tmp >> 8;
+    buffer_out[IP_PTR_CHECKSUM_L] = tmp & 0xFF;
+
+    // Calculate checksum TCP header
+    tmp = checksum(&buffer_out[IP_PTR_SRC], len_tcp, CHK_TCP);
+    buffer_out[TCP_PTR_CHECKSUM_H] = tmp >> 8;
+    buffer_out[TCP_PTR_CHECKSUM_L] = tmp & 0xFF;
+
+#ifdef UTILS_WERKTI_MORE
+    werkti_tcp_out += ETH_LEN_HEADER + IP_LEN_HEADER + len_tcp;
+#endif // UTILS_WERKTI_MORE
+
+    // Send packet to chip
+    network_send(ETH_LEN_HEADER + IP_LEN_HEADER + len_tcp);
+}
+
 // Port services list
 #ifdef NET_TCP_SERVER
 // Check if port list size is defined
