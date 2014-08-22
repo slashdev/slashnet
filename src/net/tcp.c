@@ -25,56 +25,57 @@ uint8_t *tcp_prepare(uint16_t src_port, uint8_t *dst_ip, uint16_t dst_port, uint
     // Create IP protocol header
     ip_prepare(IP_VAL_PROTO_TCP, dst_ip, dst_mac);
 
-    // Construct UDP protocol header
+    // Construct TCP protocol header
     // -----------------------------
     // See RFC 793, p. 15
-    // Source port
-    buffer_out[TCP_PTR_PORT_SRC_H] = src_port >> 8;
-    buffer_out[TCP_PTR_PORT_SRC_L] = src_port & 0xFF;
-    // Destination port
-    buffer_out[TCP_PTR_PORT_DST_H] = dst_port >> 8;
-    buffer_out[TCP_PTR_PORT_DST_L] = dst_port & 0xFF;
-    // Sequence number
-    buffer_out[TCP_PTR_SEQ_NR+0] = 1;
-    buffer_out[TCP_PTR_SEQ_NR+1] = 0;
-    buffer_out[TCP_PTR_SEQ_NR+2] = 0;
-    buffer_out[TCP_PTR_SEQ_NR+3] = sequence_nr++;
-    // Acknowledgement number
-    buffer_out[TCP_PTR_ACK_NR+0] = 0;
-    buffer_out[TCP_PTR_ACK_NR+1] = 0;
-    buffer_out[TCP_PTR_ACK_NR+2] = 0;
-    buffer_out[TCP_PTR_ACK_NR+3] = 0;
-    // Header length (includes options)
+    uint8_t *buff = &buffer_out[TCP_PTR_PORT_SRC_H];
+    // Source port [TCP_PTR_PORT_SRC_H]
+    *buff++ = src_port >> 8;
+    *buff++ = src_port & 0xFF;
+    // Destination port [TCP_PTR_PORT_DST_H]
+    *buff++ = dst_port >> 8;
+    *buff++ = dst_port & 0xFF;
+    // Sequence number [TCP_PTR_SEQ_NR]
+    *buff++ = 1;
+    *buff++ = 0;
+    *buff++ = 0;
+    *buff++ = sequence_nr++;
+    // Acknowledgement number [TCP_PTR_ACK_NR]
+    *buff++ = 0;
+    *buff++ = 0;
+    *buff++ = 0;
+    *buff++ = 0;
+    // Header length [TCP_PTR_DATA_OFFSET]
     // Pre options: 5 x 32 bits
     // Options:     2 x 32 bits
-    buffer_out[TCP_PTR_DATA_OFFSET] = 0x07 << 4;
-    // Flags: Only set SYN
-    buffer_out[TCP_PTR_FLAGS] = TCP_FLAG_SYN;
-    // Window: 1024 bytes max (0x400)
-    buffer_out[TCP_PTR_WINDOW+0] = 0;
-    buffer_out[TCP_PTR_WINDOW+1] = 0;
-    buffer_out[TCP_PTR_WINDOW+2] = 0x04;
-    buffer_out[TCP_PTR_WINDOW+3] = 0;
-    // Checksum: set to 0
-    buffer_out[TCP_PTR_CHECKSUM+0] = 0;
-    buffer_out[TCP_PTR_CHECKSUM+1] = 0;
-    // Urgent pointer: set to 0
-    buffer_out[TCP_PTR_URGENT_PTR+0] = 0;
-    buffer_out[TCP_PTR_URGENT_PTR+1] = 0;
-    // Options:
+    *buff++ = 0x07 << 4;
+    // Flags: Only set SYN [TCP_PTR_FLAGS]
+    *buff++ = TCP_FLAG_SYN;
+    // Window: 1024 bytes max (0x400) [TCP_PTR_WINDOW]
+    *buff++ = 0;
+    *buff++ = 0;
+    *buff++ = 0x04;
+    *buff++ = 0;
+    // Checksum: set to 0 [TCP_PTR_CHECKSUM_H]
+    *buff++ = 0;
+    *buff++ = 0;
+    // Urgent pointer: set to 0 [TCP_PTR_URGENT_H]
+    *buff++ = 0;
+    *buff++ = 0;
+    // Options: [TCP_PTR_OPTIONS]
     // Maximum segment size: 1024 (0x400)
-    buffer_out[TCP_PTR_OPTIONS+0] = 0x02;
-    buffer_out[TCP_PTR_OPTIONS+1] = 0x04;
-    buffer_out[TCP_PTR_OPTIONS+2] = 0x04;
-    buffer_out[TCP_PTR_OPTIONS+3] = 0x00;
+    *buff++ = 0x02;
+    *buff++ = 0x04;
+    *buff++ = 0x04;
+    *buff++ = 0x00;
     // Nop to fill for next option
     //buffer_out[TCP_PTR_OPTIONS+4] = 0x01;
     // Window scale: 0 (no multiplication)
-    buffer_out[TCP_PTR_OPTIONS+4] = 0x03;
-    buffer_out[TCP_PTR_OPTIONS+5] = 0x03;
-    buffer_out[TCP_PTR_OPTIONS+6] = 0x00;
+    *buff++ = 0x03;
+    *buff++ = 0x03;
+    *buff++ = 0x00;
     // End of option list
-    buffer_out[TCP_PTR_OPTIONS+7] = 0x00;
+    *buff++ = 0x00;
 
     return &buffer_out[TCP_PTR_DATA];
 }
