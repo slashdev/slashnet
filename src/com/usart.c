@@ -36,26 +36,26 @@ ringbuffer_t com_usart_tx_buffer_ring = { { 0 }, 0, 0 };
 void usart_init(usart_config_t *config) {
     // Disable transmit and receive
     UCSR0B &= ~((1 << RXEN0) | (1 << TXEN0));
-    
+
     // Set UCSR0A register
     // Set double speed and calculate brr divider
     if (config->doublespeed) {
         UCSR0A |= (1 << U2X0);
-		// Calculate baudrate divider
-		UBRR0 = ((F_CPU / (8UL * config->baudrate)) - 1);
+        // Calculate baudrate divider
+        UBRR0 = ((F_CPU / (8UL * config->baudrate)) - 1);
     } else {
         UCSR0A &= ~(1 << U2X0);
-		// Calculate baudrate divider
-		UBRR0 = ((F_CPU / (16UL * config->baudrate)) - 1);
+        // Calculate baudrate divider
+        UBRR0 = ((F_CPU / (16UL * config->baudrate)) - 1);
     }
-    
+
     // Set multi-processor mode
     if (config->multiprocessormode) {
         UCSR0A |= (1 << MPCM0);
     } else {
         UCSR0A &= ~(1 << MPCM0);
     }
-    
+
     // Set UCSR0B register
     // Receive enable/disable
     if (config->enable_rx) {
@@ -63,7 +63,7 @@ void usart_init(usart_config_t *config) {
     } else {
         UCSR0B &= ~(1 << RXEN0);
     }
-    
+
     // Transmit enable/disable
     // Set interrupt accordingly
     if (config->enable_tx) {
@@ -71,14 +71,14 @@ void usart_init(usart_config_t *config) {
     } else {
         UCSR0B &= ~((1 << TXEN0) | (1 << UDRIE0));
     }
-    
+
 }
 
 void usart_get_default_config(usart_config_t *config) {
     // Make sure we have a valid pointer
     if (!config)
         return;
-    
+
     config->baudrate = 9600;
     config->doublespeed = 0;
     config->multiprocessormode = 0;
@@ -103,17 +103,17 @@ ISR(USART0_UDRE_vect) {
 void usart_send(uint8_t data) {
     // Get index + 1 of buffer head
     uint8_t index = (com_usart_tx_buffer_ring.head + 1) % COM_USART_BUFFER_RING_SIZE;
-    
+
     // If the tx buffer is full, wait until interrupt handler empties
     // a slot in the buffer to write to.
     while (index == com_usart_tx_buffer_ring.tail) {
         continue;
     }
-    
+
     // Write the byte
     com_usart_tx_buffer_ring.buffer[com_usart_tx_buffer_ring.head] = data;
     com_usart_tx_buffer_ring.head = index;
-    
+
     // Set data registry empty bit
     UCSR0B |= (1 << UDRIE0);
     // Clear the transmit complete bit

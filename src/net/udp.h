@@ -32,7 +32,7 @@
 /**
  * @brief Prepare the headers (ethernet, ip, udp) for a packet.
  *
- * Add data at the returned pointer and send the packet by using 
+ * Add data at the returned pointer and send the packet by using
  * udp_send(length).
  *
  * @param port_source Port which the packet is send from

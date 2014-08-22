@@ -21,25 +21,25 @@ volatile uint8_t id_nr = 0x05;
 
 void ip_prepare(uint8_t protocol, uint8_t *dst_ip, uint8_t *dst_mac) {
     uint8_t i = 0;
-    
+
     // Construct ethernet frame
     // ------------------------
     // See The Ethernet, p. 26, chap. 6.2
     // 6b  mac address destination
     // 6b  mac address source
     // 2b  protocol (here IP, so 0x800)
-    
+
     // Copy mac source and destination address into buffer
     while (i < 6) {
         buffer_out[ETH_PTR_MAC_DST + i] = dst_mac[i];
         buffer_out[ETH_PTR_MAC_SRC + i] = my_mac[i];
         i++;
     }
-    
+
     // Set packet type to IP
     buffer_out[ETH_PTR_TYPE_H] = ETH_VAL_TYPE_IP_H;
     buffer_out[ETH_PTR_TYPE_L] = ETH_VAL_TYPE_IP_L;
-    
+
     // Construct IP protocol header
     // ----------------------------
     // See RFC 791, p. 11, chap. 3.1
@@ -77,7 +77,7 @@ void ip_prepare(uint8_t protocol, uint8_t *dst_ip, uint8_t *dst_mac) {
 // Set the checksum fields to 0 before running the checksum
 uint16_t checksum(uint8_t *buffer, uint16_t length, uint8_t type) {
     uint32_t sum = 0;
-    
+
     // Add protocol value and length
     switch (type) {
         case CHK_IP:
@@ -95,25 +95,25 @@ uint16_t checksum(uint8_t *buffer, uint16_t length, uint8_t type) {
             sum += length - 8;
             break;
     }
-    
+
     // Process the buffer for length in 16 bits words
     while (length > 1) {
         sum += 0xFFFF & ((((uint32_t)*buffer) << 8) | *(buffer + 1));
         buffer += 2;
         length -= 2;
     }
-    
+
     // If there is a byte left, add it with padding
     if (length) {
         sum += ((uint32_t)(0xFF & *buffer)) << 8;
     }
-    
+
     // If the sum is over 16 bits, calculate the sum over the bytes until the
     // result is a 16 bits word
     while (sum >> 16) {
         sum = (sum & 0xFFFF) + (sum >> 16);
     }
-    
+
     // Return 1's complement
     return ((uint16_t)sum ^ 0xFFFF);
 }

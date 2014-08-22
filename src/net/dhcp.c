@@ -79,13 +79,13 @@ void    parse_options(void);
 uint8_t  dhcp_request_ip(void) {
     if (!network_is_link_up())
         return (0);
-    
+
     // No packet received
     if (buffer_in_length == 0) {
         // Delay the startup for 3 seconds
         if (dhcp_seconds < 3)
             return (0);
-        
+
         // Send DHCP discover
         if (!discover_sent) {
             discover_sent = 1;
@@ -98,7 +98,7 @@ uint8_t  dhcp_request_ip(void) {
             debug_string_p(PSTR("sent\r\n"));
             return (0);
         }
-        
+
         // After 30 seconds, no IP address received
         // Resend discover, now with different unique id
         if (my_ip[0] == 0 && dhcp_seconds > 33) {
@@ -112,23 +112,23 @@ uint8_t  dhcp_request_ip(void) {
             return (0);
         }
     }
-    
+
     // Check if the packet is for me
     if (is_packet_for_me()) {
 #ifdef UTILS_WERKTI_MORE
         // Update werkti udp in
         werkti_udp_in += buffer_in_length;
 #endif // UTILS_WERKTI_MORE
-        
+
         debug_string_p(PSTR("DHCP: Received DHCP packet\r\n"));
         // When the device is power cycled during DHCP request,
         // this case could happen
         if (is_transaction_id())
             return (0); // Should have been initial transaction id, return
-        
+
         // Get the packet type
         uint8_t type = get_packet_type();
-        
+
         // DHCP_OFFER packet
         if (type == DHCP_OFFER) {
             debug_string_p(PSTR("DHCP: Type: Offer\r\n"));
@@ -141,7 +141,7 @@ uint8_t  dhcp_request_ip(void) {
             debug_string_p(PSTR("sent\r\n"));
             return (0);
         }
-        
+
         // DHCP_ACK packet
         if (type == DHCP_ACK) {
             debug_string_p(PSTR("DHCP: Type: Ack\r\n"));
@@ -153,7 +153,7 @@ uint8_t  dhcp_request_ip(void) {
             return (1);
         }
     }
-    
+
     // No luck
     return (0);
 }
@@ -162,13 +162,13 @@ uint8_t  dhcp_request_ip(void) {
 void send_discover(void) {
     // Create DHCP packet template
     prepare();
-    
+
     // Packet type
     // See RFC 1533, p. 24, chap. 9.4
     buffer_out[UDP_PTR_DATA + DHCP_PTR_OPTIONS]     = DHCP_OPT_TYPE;
     buffer_out[UDP_PTR_DATA + DHCP_PTR_OPTIONS + 1] = 1;
     buffer_out[UDP_PTR_DATA + DHCP_PTR_OPTIONS + 2] = DHCP_DISCOVER;
-    
+
     // Parameter request list
     // See RFC 1533, p. 25, chap. 9.6
     // We want: Subnet mask (1), Router address (gateway address, 3)
@@ -176,7 +176,7 @@ void send_discover(void) {
     buffer_out[UDP_PTR_DATA + DHCP_PTR_OPTIONS + 4] = 2;
     buffer_out[UDP_PTR_DATA + DHCP_PTR_OPTIONS + 5] = DHCP_OPT_SUBNET;
     buffer_out[UDP_PTR_DATA + DHCP_PTR_OPTIONS + 6] = DHCP_OPT_ROUTER;
-    
+
     // Do we need to send a hostname?
     uint8_t i = 0;
 #ifdef NET_DHCP_HOSTNAME
@@ -191,11 +191,11 @@ void send_discover(void) {
     buffer_out[UDP_PTR_DATA + DHCP_PTR_OPTIONS + 8] = i;
     i += 2;
 #endif
-    
+
     // End of options
     buffer_out[UDP_PTR_DATA + DHCP_PTR_OPTIONS + 7 + i] = 0xFF;
     buffer_out[UDP_PTR_DATA + DHCP_PTR_OPTIONS + 8 + i] = 0;
-    
+
     // Send buffer by UDP
     // Length of UDP data: DHCP_PTR_OPTIONS + 8 + i
     udp_send(DHCP_PTR_OPTIONS + 8 + i);
@@ -205,17 +205,17 @@ void send_discover(void) {
 void send_request(void) {
     uint8_t i = 0;
     uint8_t j = 0;
-    
+
     // Create DHCP packet template
     prepare();
-    
+
     // Packet type
     // See RFC 1533, p. 24, chap. 9.4
     buffer_out[UDP_PTR_DATA + DHCP_PTR_OPTIONS]     = DHCP_OPT_TYPE;
     buffer_out[UDP_PTR_DATA + DHCP_PTR_OPTIONS + 1] = 1;
     buffer_out[UDP_PTR_DATA + DHCP_PTR_OPTIONS + 2] = DHCP_REQUEST;
     i = 3;
-    
+
     // Server identifier
     // See RFC 1533, p. 24, chap. 9.5
     if (server_identifier[0] != 0) {
@@ -228,7 +228,7 @@ void send_request(void) {
         }
         i += 6;
     }
-    
+
     // Requested IP address
     // See RFC 1533, p. 23, chap. 9.1
     if (my_ip[0] != 0) {
@@ -241,7 +241,7 @@ void send_request(void) {
         }
         i += 6;
     }
-    
+
     // Parameter request list
     // See RFC 1533, p. 25, chap. 9.6
     // We want: Subnet mask (1), Router address (gateway address, 3)
@@ -249,7 +249,7 @@ void send_request(void) {
     buffer_out[UDP_PTR_DATA + DHCP_PTR_OPTIONS + i + 1] = 2;
     buffer_out[UDP_PTR_DATA + DHCP_PTR_OPTIONS + i + 2] = DHCP_OPT_SUBNET;
     buffer_out[UDP_PTR_DATA + DHCP_PTR_OPTIONS + i + 3] = DHCP_OPT_ROUTER;
-    
+
 #ifdef NET_DHCP_HOSTNAME
     // Hostname
     // See RFC 1533, p. 8, chap 3.14
@@ -263,11 +263,11 @@ void send_request(void) {
     buffer_out[UDP_PTR_DATA + DHCP_PTR_OPTIONS + i + 5] = j;
     i += j + 2;
 #endif // NET_DHCP_HOSTNAME
-    
+
     // End of options
     buffer_out[UDP_PTR_DATA + DHCP_PTR_OPTIONS + i + 4] = 0xFF;
     buffer_out[UDP_PTR_DATA + DHCP_PTR_OPTIONS + i + 5] = 0;
-    
+
     // Send buffer by UDP
     // Length of UDP data: DHCP_PTR_OPTIONS + i + 5
     udp_send( DHCP_PTR_OPTIONS + i + 5);
@@ -279,19 +279,19 @@ void send_request(void) {
 // See RFC 2131, p. 9
 void prepare(void) {
     uint8_t i = 0;
-    
+
     // Broadcast mac, used for IP as well
     uint8_t all_FF[6] = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF };
-    
+
     // Let UDP client create a template for the packet
     udp_prepare(DHCP_PORT_DST, all_FF, DHCP_PORT_SRC, all_FF);
-    
+
     // Source IP is 0.0.0.0
     while (i<4) {
         buffer_out[IP_PTR_SRC + i] = 0;
         i++;
     }
-    
+
     // Fill the bootstrap protocol starting at UDP_PTR_DATA
     // Message type = boot request
     buffer_out[UDP_PTR_DATA] = 1;
@@ -381,12 +381,12 @@ uint8_t is_transaction_id(void) {
 uint8_t get_packet_type(void) {
     uint16_t index = 0;
     uint8_t length = 0;
-    
+
     // Smallest option is 3 bytes, so length has to be at least
     // UDP_PTR_DATA + DHCP_PTR_OPTIONS + 3
     if (buffer_in_length < (UDP_PTR_DATA + DHCP_PTR_OPTIONS + 3))
         return (0);
-    
+
     // Options are all coded in the form:
     // Type (1b), length (1b), value (length b)
     index = UDP_PTR_DATA + DHCP_PTR_OPTIONS;
@@ -424,12 +424,12 @@ void parse_options(void) {
     uint16_t index;
     uint8_t length;
     uint8_t i;
-    
+
     // Smallest option is 3 bytes, so length has to be at least
     // UDP_PTR_DATA + DHCP_PTR_OPTIONS + 3
     if (buffer_in_length < (UDP_PTR_DATA + DHCP_PTR_OPTIONS + 3))
         return;
-    
+
     // Options are all coded in the form:
     // Type (1b), length (1b), value (length b)
     index = UDP_PTR_DATA + DHCP_PTR_OPTIONS;
@@ -438,13 +438,13 @@ void parse_options(void) {
         if ((length < 1) || ((index + length + 1) > buffer_in_length))
             break;
         switch (buffer_in[index]) {
-                
+
                 // Padding, we should not read those
                 // Stop the loop
             case 0:
                 index = buffer_in_length;
                 break;
-                
+
                 // Subnet mask
                 // See RFC 1533, p. 4, chap. 3.3
             case DHCP_OPT_SUBNET:
@@ -456,7 +456,7 @@ void parse_options(void) {
                     }
                 }
                 break;
-                
+
                 // Router, we call it gateway
                 // See RFC 1533, p. 5, chap. 3.5
             case DHCP_OPT_ROUTER:
@@ -468,7 +468,7 @@ void parse_options(void) {
                     }
                 }
                 break;
-                
+
                 // Lease time
                 // See RFC 1533, p. 23, chap. 9.2
                 // The lease time is an 32 bit value telling you how many seconds
@@ -481,24 +481,24 @@ void parse_options(void) {
                     lease_time = 480;
                     break;
                 }
-                
+
                 i = 0;
                 uint32_t lease = 0;
                 while (i < 4) {
                     lease = (lease << 8) | buffer_in[index + 2 + i];
                     i++;
                 }
-                
+
                 // Is the lease infinite?
                 if (lease == 0xFFFFFFFF) {
                     lease_time = 0xFFFF;
                     break;
                 }
-                
+
                 // Right shift by 6 to divide by 64. This is almost like
                 // dividing by 60, so a decent approach to minutes.
                 lease = lease >> 6;
-                
+
                 // Is the lease time larger than our representation of
                 // infinity? If so, make it 0xFFFD so we release it.
                 if (lease > 0xFFFD) {
@@ -506,17 +506,17 @@ void parse_options(void) {
                 } else {
                     lease_time = lease & 0xFFFF;
                 }
-                
+
                 // Output new lease time
                 debug_string_p(PSTR("DHCP: New lease time: "));
                 debug_number(lease_time);
                 debug_newline();
-                
+
                 // We need at least 5 minutes
                 if (lease_time < 5)
                     lease_time = 5;
                 break;
-                
+
                 // RFC 2131: A DHCP server always returns it own address in the
                 // server identifier option
             case DHCP_OPT_SERVERIDENTIFIER:
@@ -550,7 +550,7 @@ uint16_t dhcp_renew(void) {
             lease_time--;
         }
     }
-    
+
     // Check if we need to send a renew packet
     if (buffer_in_length == 0 && lease_time < 3) {
         // Do we have a link?
@@ -568,14 +568,14 @@ uint16_t dhcp_renew(void) {
         lease_time = 5;
         return (0);
     }
-    
+
     // Is the packet for me?
     if (buffer_in_length && is_packet_for_me()) {
 #ifdef UTILS_WERKTI_MORE
         // Update werkti udp in
         werkti_udp_in += buffer_in_length;
 #endif // UTILS_WERKTI_MORE
-        
+
         debug_string_p(PSTR("DHCP: Received renew packet\r\n"));
         // Is it an DHCP_ACK packet?
         if (get_packet_type() == DHCP_ACK) {
@@ -592,7 +592,7 @@ uint16_t dhcp_renew(void) {
         }
         return (0);
     }
-    
+
     // Hand the packet over as is
     return (buffer_in_length);
 }
@@ -608,18 +608,18 @@ void send_renew(void) {
     uint8_t i = 0;
     // Create DHCP packet template
     prepare();
-    
+
     // First byte of transaction id is set to 2, this identifies a renew
     // request. This makes processing an DHCP_ACK easier.
     buffer_out[UDP_PTR_DATA + 4] = 2;
-    
+
     // Set the source IP address in the IP header
     i = 0;
     while (i < 4) {
         buffer_out[IP_PTR_SRC + i] = my_ip[i];
         i++;
     }
-    
+
     // RFC 2131, p. 33, chap. 4.3.6
     // Server identifier and requested IP address should be zeros.
     // The templates zeros these by default.
@@ -629,17 +629,17 @@ void send_renew(void) {
         buffer_out[UDP_PTR_DATA + 12 + i] = my_ip[i];
         i++;
     }
-    
+
     // Packet type
     // See RFC 1533, p. 24, chap. 9.4
     buffer_out[UDP_PTR_DATA + DHCP_PTR_OPTIONS]     = DHCP_OPT_TYPE;
     buffer_out[UDP_PTR_DATA + DHCP_PTR_OPTIONS + 1] = 1;
     buffer_out[UDP_PTR_DATA + DHCP_PTR_OPTIONS + 2] = DHCP_REQUEST;
-    
+
     // End of options
     buffer_out[UDP_PTR_DATA + DHCP_PTR_OPTIONS + 3] = 0xFF;
     buffer_out[UDP_PTR_DATA + DHCP_PTR_OPTIONS + 4] = 0;
-    
+
     // Send buffer by UDP
     // Length of UDP data: DHCP_PTR_OPTIONS + 4
     udp_send(DHCP_PTR_OPTIONS + 4);

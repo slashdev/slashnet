@@ -10,17 +10,17 @@
  * - With renewal of lease
  * - Without renewal of lease
  *
- * By default, the network_init and network_backbone handle DHCP. Initial IP 
- * lookup is done in network_init and renewal is handlded by network_backbone. 
- * network_init should be called before your main loop and network_backbone 
+ * By default, the network_init and network_backbone handle DHCP. Initial IP
+ * lookup is done in network_init and renewal is handlded by network_backbone.
+ * network_init should be called before your main loop and network_backbone
  * inside your main loop.
  *
  * <h4>With renewal of lease</h4>
- * In config.h a counter needs to be enabled, which gets activated by 
+ * In config.h a counter needs to be enabled, which gets activated by
  * counter_init(). <br />
  * Every second it updates the values of dhcp_seconds. <br />
  * To get the initial IP address you need to call dhcp_request_ip and feed it
- * the packets you receive, while it returns 0, no valid IP address could be 
+ * the packets you receive, while it returns 0, no valid IP address could be
  * obtained and you should wait until it receives one.
  * In the main loop of your program you need to call dhcp_renew to ensure
  * periodic renewal of addresses (lease time). When the lease time is expired,

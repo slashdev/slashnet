@@ -21,7 +21,7 @@
 void spi_init(spi_config_t *config) {
     // Disable spi to set config
     SPCR &= ~(1 << SPE);
-    
+
     SPSR = 0
     | (((config->clock_rate & 0x04) >> 2) << SPI2X) // Clock rate (SPI2X)
     | 0;

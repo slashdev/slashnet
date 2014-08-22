@@ -31,7 +31,7 @@ port_service_t port_services[NET_UDP_SERVICES_LIST_SIZE];
 uint8_t *udp_prepare(uint16_t src_port, uint8_t *dst_ip, uint16_t dst_port, uint8_t *dst_mac) {
     // Create IP protocol header
     ip_prepare(IP_VAL_PROTO_UDP, dst_ip, dst_mac);
-    
+
     // Construct UDP protocol header
     // -----------------------------
     // See RFC 768, p. 1
@@ -50,34 +50,34 @@ uint8_t *udp_prepare(uint16_t src_port, uint8_t *dst_ip, uint16_t dst_port, uint
 }
 
 void udp_send(uint16_t length) {
-    
+
     uint16_t tmp;
-    
+
     // IP protocol packet length
     tmp = IP_LEN_HEADER + UDP_LEN_HEADER + length;
     buffer_out[IP_PTR_LENGTH_H] = tmp >> 8;
     buffer_out[IP_PTR_LENGTH_L] = tmp & 0xFF;
-    
+
     // UDP protocol packet length
     tmp = UDP_LEN_HEADER + length;
     buffer_out[UDP_PTR_LENGTH_H] = tmp >> 8;
     buffer_out[UDP_PTR_LENGTH_L] = tmp & 0xFF;
-    
+
     // Calculate checksum IP header
     tmp = checksum(&buffer_out[IP_PTR], IP_LEN_HEADER, CHK_IP);
     buffer_out[IP_PTR_CHECKSUM_H] = tmp >> 8;
     buffer_out[IP_PTR_CHECKSUM_L] = tmp & 0xFF;
-    
+
     // Calculate checksum UDP data
     tmp = checksum(&buffer_out[IP_PTR_SRC], 16 + length, CHK_UDP);
     buffer_out[UDP_PTR_CHECKSUM_H] = tmp >> 8;
     buffer_out[UDP_PTR_CHECKSUM_L] = tmp & 0xFF;
-    
+
 #ifdef UTILS_WERKTI_MORE
     // Update werkti udp out
     werkti_udp_out += ETH_LEN_HEADER + IP_LEN_HEADER + UDP_LEN_HEADER + length;
 #endif // UTILS_WERKTI_MORE
-    
+
     // Send packet to chip
     network_send(ETH_LEN_HEADER + IP_LEN_HEADER + UDP_LEN_HEADER + length);
 }
@@ -90,24 +90,24 @@ void udp_server_init(void) {
 }
 
 void udp_receive(void) {
-    
+
 #ifdef UTILS_WERKTI_MORE
     // Update werkti udp in
     werkti_udp_in += buffer_in_length;
 #endif // UTILS_WERKTI_MORE
-    
+
     debug_string_p(PSTR("UDP: received\r\n"));
-    
+
     uint16_t port;
     void (*callback)(uint8_t *data, uint16_t length);
-    
+
     // Get the port
     port  = ((uint16_t)buffer_in[UDP_PTR_PORT_DST_H]) << 8;
     port |= buffer_in[UDP_PTR_PORT_DST_L];
     debug_string_p(PSTR("UDP: Port: "));
     debug_number(port);
     debug_newline();
-    
+
     // Check if a listener is registered for this port
     debug_string_p(PSTR("UDP: Search service..."));
     callback = port_service_get(port_services, NET_UDP_SERVICES_LIST_SIZE, port);
@@ -136,7 +136,7 @@ uint8_t *udp_prepare_reply(void) {
     // Create IP header
     // Create IP protocol header
     ip_prepare(IP_VAL_PROTO_UDP, &buffer_in[IP_PTR_SRC], &buffer_in[ETH_PTR_MAC_SRC]);
-    
+
     // Construct UDP protocol header
     // -----------------------------
     // See RFC 768, p. 1
@@ -150,7 +150,7 @@ uint8_t *udp_prepare_reply(void) {
     // Checksum: 0, set correctly in udpClientSend
     buffer_out[UDP_PTR_CHECKSUM_H] = 0;
     buffer_out[UDP_PTR_CHECKSUM_L] = 0;
-    
+
     // Return the pointer to the starting point of the data of the UDP packet
     return &buffer_out[UDP_PTR_DATA];
 }
