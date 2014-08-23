@@ -117,9 +117,59 @@ void tcp_send(uint16_t length) {
 #endif // NET_TCP_SERVICES_LIST_SIZE
 // Create port service list
 port_service_t port_services[NET_TCP_SERVICES_LIST_SIZE];
-#endif // NET_TCP_SERVER
 
+void tcp_server_init(void) {
+    // Prepare port list
+    port_service_init(port_services, NET_TCP_SERVICES_LIST_SIZE);
+}
 
-#ifdef NET_TCP_SERVER
+void tcp_receive(void) {
+    #ifdef UTILS_WERKTI_MORE
+    // Update werkti udp in
+    werkti_tcp_in += buffer_in_length;
+    #endif // UTILS_WERKTI_MORE
+
+    debug_string_p(PSTR("TCP: received\r\n"));
+
+    uint16_t port;
+    void (*callback)(uint8_t *data, uint16_t length);
+
+    // Get the port
+    port  = ((uint16_t)buffer_in[TCP_PTR_PORT_DST_H]) << 8;
+    port |= buffer_in[TCP_PTR_PORT_DST_L];
+    debug_string_p(PSTR("TCP: Port: "));
+    debug_number(port);
+    debug_newline();
+
+    // Check if a listener is registered for this port
+    debug_string_p(PSTR("TCP: Search service..."));
+    callback = port_service_get(port_services, NET_TCP_SERVICES_LIST_SIZE, port);
+    debug_string_p(PSTR("done\r\n"));
+    if (callback) {
+        debug_string_p(PSTR("TCP: Found callback function\r\n"));
+
+        // Length of packet
+        uint16_t pkt_length = ((uint16_t)buffer_in[IP_PTR_LENGTH_H]) << 8;
+        pkt_length |= buffer_in[IP_PTR_LENGTH_L];
+        // Substract IP header length
+        pkt_length -= IP_LEN_HEADER;
+        // Substract TCP header length
+        pkt_length -= (buffer_in[TCP_PTR_DATA_OFFSET] >> 4) * 4;
+
+        debug_string_p(PSTR("TCP: Calling callback function\r\n"));
+        callback(&buffer_in[UDP_PTR_DATA], pkt_length); // Execute callback
+        debug_string_p(PSTR("TCP: Callback function returned\r\n"));
+    }
+    debug_string_p(PSTR("TCP: handled\r\n"));
+}
+
+void tcp_port_register(uint16_t port, void (*callback)(uint8_t *data, uint16_t length)) {
+    port_service_set(port_services, NET_TCP_SERVICES_LIST_SIZE, port, callback);
+}
+
+void tcp_port_unregister(uint16_t port) {
+    port_service_remove(port_services, NET_TCP_SERVICES_LIST_SIZE, port);
+}
+
 #endif // NET_TCP_SERVER
 #endif // NET_TCP
