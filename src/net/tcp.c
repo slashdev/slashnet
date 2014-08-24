@@ -21,7 +21,30 @@
 
 uint8_t sequence_nr = 1;
 
-uint8_t *tcp_prepare(uint16_t src_port, uint8_t *dst_ip, uint16_t dst_port, uint8_t *dst_mac) {
+uint8_t *add_syn_options() {
+    // Get starting index
+    uint8_t *buff = &buffer_out[TCP_PTR_OPTIONS];
+    // Options:
+    // Maximum segment size: 1024 (0x400)
+    *buff++ = 0x02;
+    *buff++ = 0x04;
+    *buff++ = 0x04;
+    *buff++ = 0x00;
+    // Nop to fill for next option
+    //buffer_out[TCP_PTR_OPTIONS+4] = 0x01;
+    // Window scale: 0 (no multiplication)
+    *buff++ = 0x03;
+    *buff++ = 0x03;
+    *buff++ = 0x00;
+    // End of option list
+    *buff++ = 0x00;
+    // Update header length (+ 0x02, 2x 4 bytes)
+    buffer_out[TCP_PTR_DATA_OFFSET] += 0x02 << 4;
+    // Return new data start location
+    return &buffer_out[TCP_PTR_DATA_OPTS];
+}
+
+uint8_t *construct(uint16_t src_port, uint8_t *dst_ip, uint16_t dst_port, uint8_t *dst_mac) {
     // Create IP protocol header
     ip_prepare(IP_VAL_PROTO_TCP, dst_ip, dst_mac);
 
@@ -47,8 +70,7 @@ uint8_t *tcp_prepare(uint16_t src_port, uint8_t *dst_ip, uint16_t dst_port, uint
     *buff++ = 0;
     // Header length [TCP_PTR_DATA_OFFSET]
     // Pre options: 5 x 32 bits
-    // Options:     2 x 32 bits
-    *buff++ = 0x07 << 4;
+    *buff++ = 0x05 << 4;
     // Flags: Only set SYN [TCP_PTR_FLAGS]
     *buff++ = TCP_FLAG_SYN;
     // Window: 1024 bytes max (0x400) [TCP_PTR_WINDOW]
@@ -62,22 +84,13 @@ uint8_t *tcp_prepare(uint16_t src_port, uint8_t *dst_ip, uint16_t dst_port, uint
     // Urgent pointer: set to 0 [TCP_PTR_URGENT_H]
     *buff++ = 0;
     *buff++ = 0;
-    // Options: [TCP_PTR_OPTIONS]
-    // Maximum segment size: 1024 (0x400)
-    *buff++ = 0x02;
-    *buff++ = 0x04;
-    *buff++ = 0x04;
-    *buff++ = 0x00;
-    // Nop to fill for next option
-    //buffer_out[TCP_PTR_OPTIONS+4] = 0x01;
-    // Window scale: 0 (no multiplication)
-    *buff++ = 0x03;
-    *buff++ = 0x03;
-    *buff++ = 0x00;
-    // End of option list
-    *buff++ = 0x00;
 
     return &buffer_out[TCP_PTR_DATA];
+}
+
+uint8_t *tcp_prepare(uint16_t src_port, uint8_t *dst_ip, uint16_t dst_port, uint8_t *dst_mac) {
+    construct(src_port, dst_ip, dst_port, dst_mac);
+    return add_syn_options();
 }
 
 void tcp_send(uint16_t length) {
