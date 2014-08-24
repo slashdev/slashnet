@@ -84,10 +84,10 @@ void tcp_send(uint16_t length) {
     uint16_t tmp, len_tcp;
 
     // TCP packet length
-    len_tcp = (buffer_out[TCP_PTR_DATA_OFFSET] * 4) + length;
+    len_tcp = buffer_out[TCP_PTR_DATA_OFFSET] * 4;
 
     // IP packet length
-    tmp = IP_LEN_HEADER + len_tcp;
+    tmp = IP_LEN_HEADER + len_tcp + length;
     buffer_out[IP_PTR_LENGTH_H] = tmp >> 8;
     buffer_out[IP_PTR_LENGTH_L] = tmp & 0xFF;
 
@@ -101,12 +101,13 @@ void tcp_send(uint16_t length) {
     buffer_out[TCP_PTR_CHECKSUM_H] = tmp >> 8;
     buffer_out[TCP_PTR_CHECKSUM_L] = tmp & 0xFF;
 
+    tmp = ETH_LEN_HEADER + IP_LEN_HEADER + len_tcp + length;
 #ifdef UTILS_WERKTI_MORE
-    werkti_tcp_out += ETH_LEN_HEADER + IP_LEN_HEADER + len_tcp;
+    werkti_tcp_out += tmp;
 #endif // UTILS_WERKTI_MORE
 
     // Send packet to chip
-    network_send(ETH_LEN_HEADER + IP_LEN_HEADER + len_tcp);
+    network_send(tmp);
 }
 
 // Port services list
