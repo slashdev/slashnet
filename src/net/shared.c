@@ -118,4 +118,19 @@ uint16_t checksum(uint8_t *buffer, uint16_t length, uint8_t type) {
     return ((uint16_t)sum ^ 0xFFFF);
 }
 
+// Add a value to a number in a buffer
+void add_value_to_buffer(uint16_t value, uint8_t *buff, uint8_t size) {
+    buff += size;
+    // While there is a value and we have size left
+    while(value > 0 && size-- > 0) {
+        // Add value of current buffer spot
+        value += *buff;
+        // Place lower byte back in buffer
+        *buff = value & 0xFF;
+        // Move buffer and value
+        value = value >> 8;
+        buff--;
+    }
+}
+
 #endif // NET_NETWORK

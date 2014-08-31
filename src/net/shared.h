@@ -46,6 +46,15 @@ extern void ip_prepare(uint8_t protocol, uint8_t *dst_ip, uint8_t *dst_mac);
  */
 extern uint16_t checksum(uint8_t *buffer, uint16_t length, uint8_t type);
 
+/**
+ * @brief Add value to a number in buffer
+ *
+ * @param value Value to add
+ * @param buffer Pointer to the highest byte of the number in the buffer
+ * @param size Number of bytes that make up the number
+ */
+extern void add_value_to_buffer(uint16_t value, uint8_t *buff, uint8_t size);
+
 // Checksum
 // --------------------
 #define CHK_IP   0
