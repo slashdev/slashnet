@@ -138,46 +138,6 @@ void tcp_server_init(void) {
     port_service_init(port_services, NET_TCP_SERVICES_LIST_SIZE);
 }
 
-uint8_t has_reset_flag() {
-    return (buffer_in[TCP_PTR_FLAGS] & TCP_FLAG_RESET) == TCP_FLAG_RESET;
-}
-
-uint8_t has_syn_flag() {
-    return (buffer_in[TCP_PTR_FLAGS] & TCP_FLAG_SYN) == TCP_FLAG_SYN;
-}
-
-uint8_t has_fin_flag() {
-    return (buffer_in[TCP_PTR_FLAGS] & TCP_FLAG_FIN) == TCP_FLAG_FIN;
-}
-
-void reply_reset_request() {
-    debug_string_p(PSTR("TODO: Implement reply_reset_request"));
-}
-
-void reply_syn_request() {
-    // Prepare reply
-    tcp_prepare_reply();
-    // Add options
-    add_syn_options();
-    // Increase ack with 1
-    add_value_to_buffer(1, &buffer_out[TCP_PTR_ACK_NR], 4);
-    // Set syn and ack flag
-    add_flags(TCP_FLAG_SYN | TCP_FLAG_ACK);
-    // Send packet
-    tcp_send(0);
-}
-
-void reply_fin_request() {
-    // Prepare reply
-    tcp_prepare_reply();
-    // Increase ack with 1
-    add_value_to_buffer(1, &buffer_out[TCP_PTR_ACK_NR], 4);
-    // Set fin and ack flag
-    add_flags(TCP_FLAG_FIN | TCP_FLAG_ACK);
-    // Send packet
-    tcp_send(0);
-}
-
 void tcp_receive(void) {
     #ifdef UTILS_WERKTI_MORE
     // Update werkti udp in
@@ -186,27 +146,44 @@ void tcp_receive(void) {
 
     // Notify TCP type
     debug_string_p(PSTR("TCP: "));
-    if (has_reset_flag()) {
+    // Check if it is a reset request
+    if ((buffer_in[TCP_PTR_FLAGS] & TCP_FLAG_RESET) == TCP_FLAG_RESET) {
         // Notify type
         debug_string_p(PSTR("RST "));
         // Reply request
-        reply_reset_request();
+        debug_string_p(PSTR("TODO: Implement reply_reset_request"));
         // Notify finish
         debug_string_p(PSTR("replied\r\n"));
         // Do not process request further
         return;
     }
     // Check if it is a syn request
-    else if (has_syn_flag()) {
+    else if ((buffer_in[TCP_PTR_FLAGS] & TCP_FLAG_SYN) == TCP_FLAG_SYN) {
         debug_string_p(PSTR("SYN "));
-        reply_syn_request();
+        // Prepare reply
+        tcp_prepare_reply();
+        // Add options
+        add_syn_options();
+        // Increase ack with 1
+        add_value_to_buffer(1, &buffer_out[TCP_PTR_ACK_NR], 4);
+        // Set syn and ack flag
+        add_flags(TCP_FLAG_SYN | TCP_FLAG_ACK);
+        // Send packet
+        tcp_send(0);
         debug_string_p(PSTR("replied\r\n"));
         return;
     }
     // Check if it is a fin request
-    else if (has_fin_flag()) {
+    else if ((buffer_in[TCP_PTR_FLAGS] & TCP_FLAG_FIN) == TCP_FLAG_FIN) {
         debug_string_p(PSTR("FIN "));
-        reply_fin_request();
+        // Prepare reply
+        tcp_prepare_reply();
+        // Increase ack with 1
+        add_value_to_buffer(1, &buffer_out[TCP_PTR_ACK_NR], 4);
+        // Set fin and ack flag
+        add_flags(TCP_FLAG_FIN | TCP_FLAG_ACK);
+        // Send packet
+        tcp_send(0);
         debug_string_p(PSTR("replied\r\n"));
         return;
     }
