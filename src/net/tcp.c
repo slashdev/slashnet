@@ -155,7 +155,16 @@ void reply_reset_request() {
 }
 
 void reply_syn_request() {
-    debug_string_p(PSTR("TODO: Implement reply_syn_request"));
+    // Prepare reply
+    tcp_prepare_reply();
+    // Add options
+    add_syn_options();
+    // Increase ack with 1
+    add_value_to_buffer(1, &buffer_out[TCP_PTR_ACK_NR], 4);
+    // Set syn and ack flag
+    add_flags(TCP_FLAG_SYN | TCP_FLAG_ACK);
+    // Send packet
+    tcp_send(0);
 }
 
 void reply_fin_request() {
