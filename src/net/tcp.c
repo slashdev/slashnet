@@ -74,8 +74,6 @@ uint8_t *construct(uint16_t src_port, uint8_t *dst_ip, uint16_t dst_port, uint8_
     // Flags: Only set SYN [TCP_PTR_FLAGS]
     *buff++ = TCP_FLAG_SYN;
     // Window: 1024 bytes max (0x400) [TCP_PTR_WINDOW]
-    *buff++ = 0;
-    *buff++ = 0;
     *buff++ = 0x04;
     *buff++ = 0;
     // Checksum: set to 0 [TCP_PTR_CHECKSUM_H]
