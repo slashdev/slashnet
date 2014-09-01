@@ -537,6 +537,11 @@ void network_backbone(void) {
             udp_receive();
         }
 #endif // NET_UDP_SERVER
+#ifdef NET_TCP_SERVER
+        else if (buffer_in_length && buffer_in[IP_PTR_PROTOCOL] == IP_VAL_PROTO_TCP) {
+            tcp_receive();
+        }
+#endif // NET_TCP_SERVER
     }
 }
 

@@ -38,6 +38,7 @@
 #include "network_defines.h"
 #include "arp.h"
 #include "icmp.h"
+#include "tcp.h"
 #include "udp.h"
 #include "../com/spi.h"
 #include "../utils/counter.h"
