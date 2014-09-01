@@ -19,6 +19,8 @@
 #error TCP cannot work without NET_NETWORK
 #endif // NET_NETWORK
 
+#define add_flags(x) buffer_out[TCP_PTR_FLAGS] = x
+
 uint8_t sequence_nr = 1;
 
 uint8_t *add_syn_options() {
@@ -71,8 +73,8 @@ uint8_t *construct(uint16_t src_port, uint8_t *dst_ip, uint16_t dst_port, uint8_
     // Header length [TCP_PTR_DATA_OFFSET]
     // Pre options: 5 x 32 bits
     *buff++ = 0x05 << 4;
-    // Flags: Only set SYN [TCP_PTR_FLAGS]
-    *buff++ = TCP_FLAG_SYN;
+    // Flags: no flags [TCP_PTR_FLAGS]
+    *buff++ = 0;
     // Window: 1024 bytes max (0x400) [TCP_PTR_WINDOW]
     *buff++ = 0x04;
     *buff++ = 0;
@@ -88,6 +90,7 @@ uint8_t *construct(uint16_t src_port, uint8_t *dst_ip, uint16_t dst_port, uint8_
 
 uint8_t *tcp_prepare(uint16_t src_port, uint8_t *dst_ip, uint16_t dst_port, uint8_t *dst_mac) {
     construct(src_port, dst_ip, dst_port, dst_mac);
+    add_flags(TCP_FLAG_SYN);
     return add_syn_options();
 }
 
