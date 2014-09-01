@@ -234,5 +234,30 @@ void tcp_port_unregister(uint16_t port) {
     port_service_remove(port_services, NET_TCP_SERVICES_LIST_SIZE, port);
 }
 
+uint8_t *tcp_prepare_reply(void) {
+    // Prepare using construct method
+    construct(
+      // Source port
+      (buffer_in[TCP_PTR_PORT_DST_H] << 8) | buffer_in[TCP_PTR_PORT_DST_L],
+      // Destination ip
+      &buffer_in[IP_PTR_SRC],
+      // Destination port
+      (buffer_in[TCP_PTR_PORT_SRC_H] << 8) | buffer_in[TCP_PTR_PORT_SRC_L],
+      // Destination mac
+      &buffer_in[ETH_PTR_MAC_SRC]
+    );
+
+    // Switch seq and ack
+    uint8_t i;
+    for(i = 0; i < 4; i++) {
+        buffer_out[TCP_PTR_SEQ_NR+i] = buffer_in[TCP_PTR_ACK_NR+i];
+    }
+    for(i=0; i<4; i++) {
+        buffer_out[TCP_PTR_ACK_NR+i] = buffer_in[TCP_PTR_SEQ_NR+i];
+    }
+
+    return &buffer_out[TCP_PTR_DATA];
+}
+
 #endif // NET_TCP_SERVER
 #endif // NET_TCP
