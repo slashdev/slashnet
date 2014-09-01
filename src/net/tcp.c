@@ -153,7 +153,7 @@ void tcp_receive(void) {
         // Reply request
         debug_string_p(PSTR("TODO: Implement reply_reset_request"));
         // Notify finish
-        debug_string_p(PSTR("replied\r\n"));
+        debug_ok();
         // Do not process request further
         return;
     }
@@ -170,7 +170,7 @@ void tcp_receive(void) {
         add_flags(TCP_FLAG_SYN | TCP_FLAG_ACK);
         // Send packet
         tcp_send(0);
-        debug_string_p(PSTR("replied\r\n"));
+        debug_ok();
         return;
     }
     // Check if it is a fin request
@@ -184,7 +184,7 @@ void tcp_receive(void) {
         add_flags(TCP_FLAG_FIN | TCP_FLAG_ACK);
         // Send packet
         tcp_send(0);
-        debug_string_p(PSTR("replied\r\n"));
+        debug_ok();
         return;
     }
     // No special packet

@@ -37,6 +37,7 @@ extern void logger_ip(uint8_t *addr);
 extern void logger_mac(uint8_t *addr);
 extern const char logger_newline[] PROGMEM;
 extern const char logger_dot[] PROGMEM;
+extern const char logger_ok[] PROGMEM;
 
 #if defined(UTILS_LOGGER_DEBUG)
 
@@ -49,6 +50,7 @@ extern const char logger_dot[] PROGMEM;
 #define info_ip(ip) logger_ip(ip)
 #define info_mac(mac) logger_mac(mac)
 #define info_newline() logger_string_p(logger_newline)
+#define info_ok() logger_string_p(logger_ok)
 // Debug level disabled
 #define debug_string(s) logger_string(s)
 #define debug_string_p(s) logger_string_p(s)
@@ -59,6 +61,7 @@ extern const char logger_dot[] PROGMEM;
 #define debug_mac(mac) logger_mac(mac)
 #define debug_newline() logger_string_p(logger_newline)
 #define debug_dot() logger_string_p(logger_dot)
+#define debug_ok() logger_string_p(logger_ok)
 
 #elif defined(UTILS_LOGGER_INFO)
 
@@ -71,6 +74,7 @@ extern const char logger_dot[] PROGMEM;
 #define info_ip(ip) logger_ip(ip)
 #define info_mac(mac) logger_mac(mac)
 #define info_newline() logger_string_p(logger_newline)
+#define info_ok() logger_string_p(logger_ok)
 // Debug level disabled
 #define debug_string(...) do {} while (0)
 #define debug_string_p(...) do {} while (0)
@@ -81,6 +85,7 @@ extern const char logger_dot[] PROGMEM;
 #define debug_mac(mac) do {} while (0)
 #define debug_newline() do {} while (0)
 #define debug_dot() do {} while(0)
+#define debug_ok() do {} while(0)
 
 #endif // UTILS_LOGGER_INFO
 
@@ -98,6 +103,7 @@ extern const char logger_dot[] PROGMEM;
 #define info_ip(ip) do {} while (0)
 #define info_mac(mac) do {} while (0)
 #define info_newline() do {} while (0)
+#define info_ok() do {} while (0)
 // Debug level disabled
 #define debug_string(...) do {} while (0)
 #define debug_string_p(...) do {} while (0)
@@ -108,6 +114,7 @@ extern const char logger_dot[] PROGMEM;
 #define debug_mac(mac) do {} while (0)
 #define debug_newline() do {} while(0)
 #define debug_dot() do {} while (0)
+#define debug_ok() do {} while (0)
 
 #endif // UTILS_LOGGER_INFO || UTILS_LOGGER_DEBUG
 #endif // UTILS_LOGGER_H

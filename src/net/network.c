@@ -466,7 +466,7 @@ void network_init(void) {
     // Wait ~60 us
     _delay_us(60);
 
-    info_string_p(PSTR(" [ok]\r\n"));
+    info_ok();
 
 #ifdef NET_ARP
     // Init arp
