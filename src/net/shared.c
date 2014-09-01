@@ -120,7 +120,7 @@ uint16_t checksum(uint8_t *buffer, uint16_t length, uint8_t type) {
 
 // Add a value to a number in a buffer
 void add_value_to_buffer(uint16_t value, uint8_t *buff, uint8_t size) {
-    buff += size;
+    buff += size - 1;
     // While there is a value and we have size left
     while(value > 0 && size-- > 0) {
         // Add value of current buffer spot
