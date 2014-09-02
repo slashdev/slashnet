@@ -16,6 +16,7 @@
 
 #include <inttypes.h>
 #include <avr/interrupt.h>
+#include "ext/www_server.h"
 #include "net/network.h"
 #include "utils/logger.h"
 #include "utils/uptime.h"
@@ -33,6 +34,9 @@ int main(void) {
 
     // Initialize network chip
     network_init();
+
+    // Initialize www server
+    www_server_init();
 
     // Infinite loop
     while (1) {
