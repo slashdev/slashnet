@@ -19,8 +19,6 @@
 #error TCP cannot work without NET_NETWORK
 #endif // NET_NETWORK
 
-#define add_flags(x) buffer_out[TCP_PTR_FLAGS] = x
-
 uint8_t sequence_nr = 1;
 
 uint8_t *add_syn_options() {
@@ -90,7 +88,7 @@ uint8_t *construct(uint16_t src_port, uint8_t *dst_ip, uint16_t dst_port, uint8_
 
 uint8_t *tcp_prepare(uint16_t src_port, uint8_t *dst_ip, uint16_t dst_port, uint8_t *dst_mac) {
     construct(src_port, dst_ip, dst_port, dst_mac);
-    add_flags(TCP_FLAG_SYN);
+    tcp_add_flags(TCP_FLAG_SYN);
     return add_syn_options();
 }
 
@@ -170,7 +168,7 @@ void tcp_receive(void) {
         // Increase ack with 1
         add_value_to_buffer(1, &buffer_out[TCP_PTR_ACK_NR], 4);
         // Set syn and ack flag
-        add_flags(TCP_FLAG_SYN | TCP_FLAG_ACK);
+        tcp_add_flags(TCP_FLAG_SYN | TCP_FLAG_ACK);
         // Send packet
         tcp_send(0);
         // Notify finish
@@ -184,7 +182,7 @@ void tcp_receive(void) {
         // Increase ack with 1
         add_value_to_buffer(1, &buffer_out[TCP_PTR_ACK_NR], 4);
         // Set fin and ack flag
-        add_flags(TCP_FLAG_FIN | TCP_FLAG_ACK);
+        tcp_add_flags(TCP_FLAG_FIN | TCP_FLAG_ACK);
         // Send packet
         tcp_send(0);
         // Notify finish
@@ -223,7 +221,7 @@ void tcp_receive(void) {
         // Increase ack with length
         add_value_to_buffer(pkt_length, &buffer_out[TCP_PTR_ACK_NR], 4);
         // Set ACK flag
-        add_flags(TCP_FLAG_ACK);
+        tcp_add_flags(TCP_FLAG_ACK);
         // Send packet
         tcp_send(0);
         debug_string_p(PSTR(" ack "));

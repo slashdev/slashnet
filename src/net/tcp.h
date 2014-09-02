@@ -29,6 +29,7 @@
 #include "../utils/port_service.h"
 #include "../utils/werkti.h"
 
+#define tcp_add_flags(x) buffer_out[TCP_PTR_FLAGS] = x
 
 /**
  * @brief Prepare the headers (ethernet, ip, tcp) for a packet.
