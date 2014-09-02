@@ -111,7 +111,7 @@ void tcp_send(uint16_t length) {
     buffer_out[IP_PTR_CHECKSUM_L] = tmp & 0xFF;
 
     // Calculate checksum TCP header
-    tmp = checksum(&buffer_out[IP_PTR_SRC], len_tcp, CHK_TCP);
+    tmp = checksum(&buffer_out[IP_PTR_SRC], 8+len_tcp+length, CHK_TCP);
     buffer_out[TCP_PTR_CHECKSUM_H] = tmp >> 8;
     buffer_out[TCP_PTR_CHECKSUM_L] = tmp & 0xFF;
 

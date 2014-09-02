@@ -179,7 +179,7 @@ extern void add_value_to_buffer(uint16_t value, uint8_t *buff, uint8_t size);
 #define TCP_PTR_FLAGS      0x2F
 #define TCP_PTR_WINDOW     0x30
 #define TCP_PTR_CHECKSUM_H 0x32
-#define TCP_PTR_CHECKSUM_L 0x32
+#define TCP_PTR_CHECKSUM_L 0x33
 #define TCP_PTR_URGENT_PTR 0x34
 #define TCP_PTR_OPTIONS    0x36
 #define TCP_PTR_DATA       0x36
