@@ -476,6 +476,10 @@ void network_init(void) {
     // Init udp
     udp_server_init();
 #endif // NET_UDP_SERVER
+#ifdef NET_TCP_SERVER
+    // Init tcp
+    tcp_server_init();
+#endif // NET_TCP_SERVER
 #ifdef UTILS_COUNTER
     // Init counter
     counter_init();
