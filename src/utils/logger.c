@@ -111,5 +111,6 @@ void logger_mac(uint8_t *addr) {
 const char logger_newline[] PROGMEM = "\r\n";
 const char logger_dot[] PROGMEM = ".";
 const char logger_ok[] PROGMEM = " [ok]\r\n";
+const char logger_error[] PROGMEM = " [error]\r\n";
 
 #endif // UTILS_LOGGER_INFO || UTILS_LOGGER_DEBUG
