@@ -146,35 +146,38 @@ void tcp_receive(void) {
 
     // Notify TCP type
     debug_string_p(PSTR("TCP: "));
+    // Get type
+    uint8_t type = buffer_in[TCP_PTR_FLAGS];
     // Check if it is a reset request
-    if ((buffer_in[TCP_PTR_FLAGS] & TCP_FLAG_RESET) == TCP_FLAG_RESET) {
-        // Notify type
+    if (type & TCP_FLAG_RESET) {
         debug_string_p(PSTR("RST "));
         // Reply request
-        debug_string_p(PSTR("TODO: Implement reply_reset_request"));
+        debug_string_p(PSTR("TODO"));
+        debug_newline();
         // Notify finish
-        debug_ok();
+        //debug_ok();
         // Do not process request further
-        return;
     }
     // Check if it is a syn request
-    else if ((buffer_in[TCP_PTR_FLAGS] & TCP_FLAG_SYN) == TCP_FLAG_SYN) {
+    else if (type & TCP_FLAG_SYN) {
         debug_string_p(PSTR("SYN "));
         // Prepare reply
         tcp_prepare_reply();
         // Add options
         add_syn_options();
+        // Increase seq with sequence_nr
+        add_value_to_buffer(sequence_nr++, &buffer_out[TCP_PTR_SEQ_NR], 4);
         // Increase ack with 1
         add_value_to_buffer(1, &buffer_out[TCP_PTR_ACK_NR], 4);
         // Set syn and ack flag
         add_flags(TCP_FLAG_SYN | TCP_FLAG_ACK);
         // Send packet
         tcp_send(0);
+        // Notify finish
         debug_ok();
-        return;
     }
     // Check if it is a fin request
-    else if ((buffer_in[TCP_PTR_FLAGS] & TCP_FLAG_FIN) == TCP_FLAG_FIN) {
+    else if (type & TCP_FLAG_FIN) {
         debug_string_p(PSTR("FIN "));
         // Prepare reply
         tcp_prepare_reply();
@@ -184,42 +187,61 @@ void tcp_receive(void) {
         add_flags(TCP_FLAG_FIN | TCP_FLAG_ACK);
         // Send packet
         tcp_send(0);
+        // Notify finish
         debug_ok();
-        return;
     }
-    // No special packet
-    debug_string_p(PSTR("General\r\n"));
-
-    uint16_t port;
-    void (*callback)(uint8_t *data, uint16_t length);
-
-    // Get the port
-    port  = ((uint16_t)buffer_in[TCP_PTR_PORT_DST_H]) << 8;
-    port |= buffer_in[TCP_PTR_PORT_DST_L];
-    debug_string_p(PSTR("TCP: Port: "));
-    debug_number(port);
-    debug_newline();
-
-    // Check if a listener is registered for this port
-    debug_string_p(PSTR("TCP: Search service..."));
-    callback = port_service_get(port_services, NET_TCP_SERVICES_LIST_SIZE, port);
-    debug_string_p(PSTR("done\r\n"));
-    if (callback) {
-        debug_string_p(PSTR("TCP: Found callback function\r\n"));
-
-        // Length of packet
+    // Check if it a single ack, we do not have to process it
+    else if (type == TCP_FLAG_ACK) {
+        debug_string_p(PSTR("ACK"));
+        debug_ok();
+    }
+    // Check if it is a push request
+    else if (type & TCP_FLAG_PUSH) {
+        debug_string_p(PSTR("PSH "));
+        // Prepare variables
+        uint16_t port;
+        void (*callback)(uint8_t *data, uint16_t length);
+        // Retrieve port
+        port  = ((uint16_t)buffer_in[TCP_PTR_PORT_DST_H]) << 8;
+        port |= buffer_in[TCP_PTR_PORT_DST_L];
+        debug_number(port);
+        debug_string_p(PSTR(" "));
+        // Retrieve length of packet
         uint16_t pkt_length = ((uint16_t)buffer_in[IP_PTR_LENGTH_H]) << 8;
         pkt_length |= buffer_in[IP_PTR_LENGTH_L];
         // Substract IP header length
         pkt_length -= IP_LEN_HEADER;
         // Substract TCP header length
         pkt_length -= (buffer_in[TCP_PTR_DATA_OFFSET] >> 4) * 4;
-
-        debug_string_p(PSTR("TCP: Calling callback function\r\n"));
-        callback(&buffer_in[UDP_PTR_DATA], pkt_length); // Execute callback
-        debug_string_p(PSTR("TCP: Callback function returned\r\n"));
+        debug_number_as_hex(pkt_length);
+        // Check if a listener is registered for this port
+        // Add space in front because of number debug before
+        debug_string_p(PSTR(" service "));
+        callback = port_service_get(port_services, NET_TCP_SERVICES_LIST_SIZE, port);
+        if (callback) {
+            debug_ok();
+            // Call callback function
+            callback(&buffer_in[UDP_PTR_DATA], pkt_length); // Execute callback
+        } else {
+            // Return empty packet
+            tcp_prepare_reply();
+            // Increase ack with length
+            add_value_to_buffer(pkt_length, &buffer_out[TCP_PTR_ACK_NR], 4);
+            // Set ACK flag
+            add_flags(TCP_FLAG_ACK);
+            // Send packet
+            tcp_send(0);
+            // Notify error
+            debug_error();
+        }
     }
-    debug_string_p(PSTR("TCP: handled\r\n"));
+    // Other cases
+    else {
+        // Notify type
+        debug_string_p(PSTR("UNKNOWN: "));
+        debug_number_as_hex(type);
+        debug_newline();
+    }
 }
 
 void tcp_port_register(uint16_t port, void (*callback)(uint8_t *data, uint16_t length)) {
