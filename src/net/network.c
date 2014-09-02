@@ -277,7 +277,7 @@ uint8_t network_is_link_up(void) {
 void network_init(void) {
     // Notify debug
     info_string_p(PSTR("Init network"));
-    
+
     // Initialize spi
     // --------------
     // Initialize IO for SPI communication
@@ -286,15 +286,15 @@ void network_init(void) {
     | (1 << NETWORK_CTR_SI)   // SI as output
     | (1 << NETWORK_CTR_SCK); // SCK as output
     NETWORK_DDR &= ~(1 << NETWORK_CTR_SO); // Explicitly make SO input
-    
+
     // Set SPI to passive
     NETWORK_SPI_PASSIVE();
-    
+
     // Set SI and SCK to LOW
     NETWORK_PORT |=
       (1 << NETWORK_CTR_SI)
     | (1 << NETWORK_CTR_SCK);
-    
+
     // Spi config
     // - Enable
     // - Master role
@@ -303,62 +303,62 @@ void network_init(void) {
     spi_config.enable = SPI_ENABLE;
     spi_config.role = SPI_ROLE_MASTER;
     spi_init(&spi_config);
-    
+
     // Tick debug for spi init
     debug_dot();
-    
-    
+
+
     // Soft reset
     // ----------
-    
+
     // Do a soft reset of the chip
     write_op(NETWORK_SOFT_RESET, 0, NETWORK_SOFT_RESET);
     // Wait for 20ms
     _delay_ms(20);
-    
+
     // Tick debug for soft reset
     debug_dot();
-    
+
     // Initiate bank 0 settings
     // ------------------------
     // Transmit and receive buffer settings
-    
+
     // Tx start
     write(ETXSTL, TXSTART_INIT & 0xFF);
     write(ETXSTH, TXSTART_INIT >> 8);
-    
+
     // Tx stop
     write(ETXNDL, TXSTOP_INIT & 0xFF);
     write(ETXNDH, TXSTOP_INIT >> 8);
-    
+
     // Set receive buffer start address
     next_packet_ptr = RXSTART_INIT;
-    
+
     // Rx start
     write(ERXSTL, RXSTART_INIT & 0xFF);
     write(ERXSTH, RXSTART_INIT >> 8);
-    
+
     // Rx stop
     write(ERXNDL, RXSTOP_INIT & 0xFF);
     write(ERXNDH, RXSTOP_INIT >> 8);
-    
+
     // Set receive pointer
     write(ERXRDPTL, RXSTART_INIT & 0xFF);
     write(ERXRDPTH, RXSTART_INIT >> 8);
-    
+
     // Tick debug for bank 0
     debug_dot();
-    
+
     // Initiate bank 1 settings
     // ------------------------
     // Packet filters
-    
+
     // Set filters
     write(ERXFCON,
           ERXFCON_UCEN   // Unicast enabled, only accept matching local mac
         | ERXFCON_CRCEN  // Check CRC post filter
         | ERXFCON_PMEN); // Enable packet pattern match filter
-    
+
     // The packet pattern match filter allows arp broadcast packets
     // The pattern to match is:
     // Type   Eth Destination
@@ -371,52 +371,52 @@ void network_init(void) {
     write(EPMM1, 0x30);
     write(EPMCSL, 0xF9);
     write(EPMCSH, 0xF7);
-    
+
     // Tick debug for bank 1
     debug_dot();
-    
-    
+
+
     // Initiate bank 2 settings
     // ------------------------
-    
+
     // Enable mac receive
     write(MACON1,
           MACON1_MARXEN   // Mac receive enable
         | MACON1_TXPAUS   // Pause control transmit enable
         | MACON1_RXPAUS); // Pause control receive enable
-    
+
     // Bring mac out of reset
     write(MACON2, 0x00);
-    
+
     // Enable automatic padding to 60 bytes and CRC operations
     write(MACON3,
           MACON3_PADCFG0   // Short frames will be padded to 60 bytes and crc appended
         | MACON3_TXCRCEN   // Transmit CRC enable
         | MACON3_FRMLNEN); // Frame length check enable
-    
+
     // No options of macon4 should be used
     write(MACON4, 0x00);
-    
+
     // Set inter-frame gap (back-to-back)
     write(MABBIPG, 0x12); // Half-duplex value
-    
+
     // Set inter-frame gap (non back-to-back)
     write(MAIPGL, 0x12);
     write(MAIPGH, 0x0C);
-    
+
     // Set the maximum packet size which the chip will accept
     // Do not recieve packets larger than BUFFER_IN_SIZE
     write(MAMXFLL, BUFFER_IN_SIZE & 0xFF);
     write(MAMXFLH, BUFFER_IN_SIZE >> 8);
-    
+
     // Tick debug for bank 2
     debug_dot();
-    
-    
+
+
     // Initialize bank 3 settings
     // --------------------------
     // Mac adress
-    
+
     // Set mac address
     write(MAADR0, my_mac[0]);
     write(MAADR1, my_mac[1]);
@@ -424,50 +424,50 @@ void network_init(void) {
     write(MAADR3, my_mac[3]);
     write(MAADR4, my_mac[4]);
     write(MAADR5, my_mac[5]);
-    
+
     // Tick debug for bank 3
     debug_dot();
-    
-    
+
+
     // PHY bank settings
     // -----------------
-    
+
     // Disable loopback of transmitted frames
     write_phy(PHCON2, PHCON2_HDLDIS);
-    
+
     // Magjack led configuration
     // See datasheet p. 11
     // Led a = link status, led b = receive/transmit => 0x476
     write_phy(PHLCON, 0x476);
-    
+
     // Tick debug for phy
     debug_dot();
-    
+
     // General settings
     // ----------------
-    
+
     // Set bank to 0
     set_bank(ECON1);
-    
+
     // Enable interrupts
     write_op(NETWORK_BIT_FIELD_SET, EIE,
           EIE_INTIE   // Global interrupt enable
         | EIE_PKTIE); // Receive packet pending interrupt enable
-    
+
     // Enable packet reception
     write_op(NETWORK_BIT_FIELD_SET, ECON1, ECON1_RXEN); // Receive enable
-    
+
     // Disable clock output
     write(ECOCON, 0x00);
-    
+
     // Tick debug for general
     debug_dot();
-    
+
     // Wait ~60 us
     _delay_us(60);
-    
-    info_string_p(PSTR(" [ok]\r\n"));
-    
+
+    info_ok();
+
 #ifdef NET_ARP
     // Init arp
     arp_init();
@@ -508,7 +508,7 @@ void network_backbone(void) {
     }
     // Handle protocols
     // tcp
-    
+
 #ifdef NET_ARP
     // ARP packets
     else if (buffer_in_length > 41 // Minimum size of ARP packet
@@ -518,7 +518,7 @@ void network_backbone(void) {
         arp_receive();
     }
 #endif // ETH_ARP
-    
+
     // IP packets
     else if (buffer_in_length > 33 // Minimum size of IP packet
         && buffer_in[ETH_PTR_TYPE_H] == ETH_VAL_TYPE_IP_H
@@ -537,6 +537,11 @@ void network_backbone(void) {
             udp_receive();
         }
 #endif // NET_UDP_SERVER
+#ifdef NET_TCP_SERVER
+        else if (buffer_in_length && buffer_in[IP_PTR_PROTOCOL] == IP_VAL_PROTO_TCP) {
+            tcp_receive();
+        }
+#endif // NET_TCP_SERVER
     }
 }
 
@@ -550,24 +555,24 @@ void network_send(uint16_t length) {
             write_op(NETWORK_BIT_FIELD_CLR, ECON1, ECON1_TXRST);
         }
     }
-    
+
     // Set the write pointer to the start of the transmit buffer area
     write(EWRPTL, TXSTART_INIT & 0xFF);
     write(EWRPTH, TXSTART_INIT >> 8);
-    
+
     // Set the TXND pointer to correspond the packet size given
     write(ETXNDL, (TXSTART_INIT + length) & 0xFF);
     write(ETXNDH, (TXSTART_INIT + length) >> 8);
-    
+
     // Write per-packet control byte (0x00 means use MACON3 settings)
     write_op(NETWORK_WRITE_BUF_MEM, 0, 0x00);
-    
+
     // Write data to transmit buffer
     write_buffer(length, buffer_out);
-    
+
     // Send the packet onto the network
     write_op(NETWORK_BIT_FIELD_SET, ECON1, ECON1_TXRTS);
-    
+
 #ifdef UTILS_WERKTI
     // Update bytes received
     werkti_out += length;
@@ -577,40 +582,40 @@ void network_send(uint16_t length) {
 uint16_t network_receive(void) {
     uint16_t rxstatus;
     uint16_t length;
-    
+
     // Reset buffer length
     buffer_in_length = 0;
-    
+
     // Check if a packet has been received and buffered
     if (read(EPKTCNT) == 0) {
         return (0);
     }
-    
+
     // Set the read pointer to the start of the received packet
     write(ERDPTL, (next_packet_ptr & 0xFF));
     write(ERDPTH, (next_packet_ptr >> 8));
-    
+
     // Read the next packet pointer
     next_packet_ptr = read_op(NETWORK_READ_BUF_MEM, 0);
     next_packet_ptr |= ((uint16_t)read_op(NETWORK_READ_BUF_MEM, 0)) << 8;
-    
+
     // Read the packet length
     // See datasheet p. 43
     length = read_op(NETWORK_READ_BUF_MEM, 0);
     length |= ((uint16_t)read_op(NETWORK_READ_BUF_MEM, 0)) << 8;
     // Subtract CRC
     length -= 4;
-    
+
     // Read receive status
     // See datasheet p. 43
     rxstatus = read_op(NETWORK_READ_BUF_MEM, 0);
     rxstatus |= ((uint16_t)read_op(NETWORK_READ_BUF_MEM, 0)) << 8;
-    
+
     // Limit retrieve length
     if (length > BUFFER_IN_SIZE) {
         length = BUFFER_IN_SIZE;
     }
-    
+
     // Check CRC and symbol errors
     // See datasheet p 44, table 7-3
     if ((rxstatus & 0x80) == 0) {
@@ -620,7 +625,7 @@ uint16_t network_receive(void) {
         // Read packet to buffer
         read_buffer(length, buffer_in);
     }
-    
+
     // Move the RX read pointer to the start of the next new packet
     // This frees the buffer we just read
     // Errata point 13 revision B4: never write an even address!
@@ -633,19 +638,19 @@ uint16_t network_receive(void) {
         write(ERXRDPTL, (next_packet_ptr-1) & 0xFF);
         write(ERXRDPTH, (next_packet_ptr-1) >> 8);
     }
-    
+
     // Decrease the packet counter to indicate we are done with this packet
     write_op(NETWORK_BIT_FIELD_SET, ECON2, ECON2_PKTDEC);
-    
+
     // Set buffer terminator and buffer length
     buffer_in[BUFFER_IN_SIZE] = '\0';
     buffer_in_length = length;
-    
+
 #ifdef UTILS_WERKTI
     // Update bytes received
     werkti_in += length;
 #endif // UTILS_WERKTI
-    
+
     return (length);
 }
 

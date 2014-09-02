@@ -22,7 +22,7 @@
 #include "utils/werkti.h"
 
 int main(void) {
-	// Enable interrupts
+    // Enable interrupts
     sei();
 
     // Initialize debug

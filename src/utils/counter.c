@@ -52,7 +52,7 @@ void counter_init(void) {
     // 20 Mhz, prescaler 1024, compare match on 0xD9
     // Count to 11 for a second
     // In 2 minutes, it is ~4 seconds too fast
-    
+
     // CTC operation, OC0A and OC0B disconnected
     TCCR0A = (1 << WGM01);
     // Prescaler 1024
@@ -78,7 +78,7 @@ ISR(TIMER0_COMPA_vect) {
 void counter_init(void) {
     // 16 bit timer
     // 20 Mhz, prescaler 1024, compare match on 0x4C4A
-    
+
     // CTC operation, OC1A and OC1B disconnected, prescaler 1024
     TCCR1A = 0x00;
     TCCR1B = (1 << WGM12) | (1 << CS10) | (1 << CS12);
@@ -100,7 +100,7 @@ void counter_init(void) {
     // 20 Mhz, prescaler 1024, compare match on 0xD9
     // Count to 11 for a second
     // In 2 minutes, it is ~4 seconds too fast
-    
+
     // CTC operation, OC2A and OC2B disconnected
     TCCR2A = (1 << WGM21);
     // Prescaler 1024

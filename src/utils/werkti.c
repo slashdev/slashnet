@@ -36,6 +36,8 @@ uint16_t werkti_icmp_in;
 uint16_t werkti_icmp_out;
 uint16_t werkti_udp_in;
 uint16_t werkti_udp_out;
+uint16_t werkti_tcp_in;
+uint16_t werkti_tcp_out;
 #endif // UTILS_WERKTI_MORE
 
 // Functions
@@ -62,13 +64,13 @@ void werkti_maybe_report(void) {
         uint16_t udp_out = werkti_udp_out;
         werkti_udp_out = 0;
 #endif
-        
+
         // Overal
         // Send report
         send_report(WERKTI_TYPE_ALL, werkti_in, out);
         // Reset variable, werkti_out already reset
         werkti_in = 0;
-        
+
 #ifdef UTILS_WERKTI_MORE
         // ARP
         // Send report
@@ -76,21 +78,29 @@ void werkti_maybe_report(void) {
         // Reset variables
         werkti_arp_in = 0;
         werkti_arp_out = 0;
-        
+
         // ICMP
         // Send report
         send_report(WERKTI_TYPE_ICMP, werkti_icmp_in, werkti_icmp_out);
         // Reset variables
         werkti_icmp_in = 0;
         werkti_icmp_out = 0;
-        
+
         // UDP
         // Send report
         send_report(WERKTI_TYPE_UDP, werkti_udp_in, udp_out);
         // Reset variable, werktiUdpOut already reset
         werkti_udp_in = 0;
+
+        // TCP
+        // Send report
+        send_report(WERKTI_TYPE_TCP, werkti_tcp_in, werkti_tcp_out);
+        // Reset variables
+        werkti_tcp_in = 0;
+        werkti_tcp_out = 0;
+
 #endif // UTILS_WERKTI_MORE
-        
+
         // Debug: output bytes received and send
         debug_string_p(PSTR("WERKTI: report send\r\n"));
         // Update time
@@ -100,25 +110,25 @@ void werkti_maybe_report(void) {
 
 void send_report(uint8_t type, uint16_t in, uint16_t out) {
     uint8_t i = 0;
-    
+
     // Create UDP header
     uint8_t *buf = udp_prepare(0, werkti_remote_ip, WERKTI_REMOTE_PORT, werkti_remote_mac);
-    
+
     // Add MAC address
     while (i < 6) {
         buf[i] = my_mac[i];
         i++;
     }
-    
+
     // Add type of message
     buf[6] = type;
-    
+
     // Add in and out
     buf[7] = in >> 8;
     buf[8] = in & 0xFF;
     buf[9] = out >> 8;
     buf[10] = out & 0xFF;
-    
+
     udp_send(11);
 }
 

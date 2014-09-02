@@ -4,11 +4,11 @@
  * port.
  *
  * To use port services, you should follow these steps:
- * 1. Declare an array of type port_service_t (ex. 
+ * 1. Declare an array of type port_service_t (ex.
  * port_service_t my_services[10])
  * 2. Initialize array by calling port_service_init (ex.
  * port_service_init(my_services, 10);
- * 
+ *
  * Add port services by calling port_service_set and remove services by calling
  * port_service_remove. Get a service by calling port_service_get.
  *

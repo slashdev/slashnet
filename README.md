@@ -23,7 +23,7 @@ Network protocols supported
 
 
 # Planned (randomly ordered)
-- Transmission Control Protocol (TCP, transport layer, [rfc793](http://tools.ietf.org/html/rfc793))
+- Transmission Control Protocol (TCP, transport layer, [rfc793](http://tools.ietf.org/html/rfc793), [draft 1323](http://tools.ietf.org/html/draft-ietf-tcpm-1323bis-21))
 - Network Time Protocol (NTP, application layer, [rfc958](http://tools.ietf.org/html/rfc958))
 - Domain Name System (DNS, application layer, [rfc1035](http://tools.ietf.org/html/rfc1035))
 - Hypertext Transfer Protocol (HTTP, application layer, [rfc2616](http://tools.ietf.org/html/rfc2616))

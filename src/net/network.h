@@ -1,14 +1,14 @@
 /**
  * @file network.h
- * @brief Network communication using network chip ENC28J60. 
+ * @brief Network communication using network chip ENC28J60.
  * Initialization before main loop and handling during main loop.
  *
  * Two important functions are __network_init(void)__ and
- * __network_backbone(void)__. These regulate most network traffic. Before your 
- * main loop starts you should call <i>network_init(void)</i>, this initializes 
- * the network chip and sets values like MAC address (and IP address if you do 
- * not want DHCP). In your main loop you should call _network_backbone(void)_, 
- * this sends the packets to the correct protocol handlers (if they are enabled 
+ * __network_backbone(void)__. These regulate most network traffic. Before your
+ * main loop starts you should call <i>network_init(void)</i>, this initializes
+ * the network chip and sets values like MAC address (and IP address if you do
+ * not want DHCP). In your main loop you should call _network_backbone(void)_,
+ * this sends the packets to the correct protocol handlers (if they are enabled
  * in the config).
  *
  * \copyright Copyright 2013 /Dev. All rights reserved.
@@ -38,6 +38,7 @@
 #include "network_defines.h"
 #include "arp.h"
 #include "icmp.h"
+#include "tcp.h"
 #include "udp.h"
 #include "../com/spi.h"
 #include "../utils/counter.h"
@@ -121,7 +122,7 @@ extern uint8_t network_is_link_up(void);
 extern uint8_t network_status(void);
 
 /**
- * @brief Send a packet from _buffer_out_ to the network chip to the 
+ * @brief Send a packet from _buffer_out_ to the network chip to the
  * connected network
  *
  * When you have created a packet in _buffer_out_ you can send it by
