@@ -198,14 +198,17 @@ void tcp_receive(void) {
     // Check if it is a push request
     else if (type & TCP_FLAG_PUSH) {
         debug_string_p(PSTR("PSH "));
+
         // Prepare variables
         uint16_t port;
         void (*callback)(uint8_t *data, uint16_t length);
+
         // Retrieve port
         port  = ((uint16_t)buffer_in[TCP_PTR_PORT_DST_H]) << 8;
         port |= buffer_in[TCP_PTR_PORT_DST_L];
         debug_number(port);
         debug_string_p(PSTR(" "));
+
         // Retrieve length of packet
         uint16_t pkt_length = ((uint16_t)buffer_in[IP_PTR_LENGTH_H]) << 8;
         pkt_length |= buffer_in[IP_PTR_LENGTH_L];
@@ -214,23 +217,26 @@ void tcp_receive(void) {
         // Substract TCP header length
         pkt_length -= (buffer_in[TCP_PTR_DATA_OFFSET] >> 4) * 4;
         debug_number_as_hex(pkt_length);
+
+        // ACK packet
+        tcp_prepare_reply();
+        // Increase ack with length
+        add_value_to_buffer(pkt_length, &buffer_out[TCP_PTR_ACK_NR], 4);
+        // Set ACK flag
+        add_flags(TCP_FLAG_ACK);
+        // Send packet
+        tcp_send(0);
+        debug_string_p(PSTR(" ack "));
+
         // Check if a listener is registered for this port
         // Add space in front because of number debug before
-        debug_string_p(PSTR(" service "));
+        debug_string_p(PSTR("service "));
         callback = port_service_get(port_services, NET_TCP_SERVICES_LIST_SIZE, port);
         if (callback) {
             debug_ok();
             // Call callback function
             callback(&buffer_in[UDP_PTR_DATA], pkt_length); // Execute callback
         } else {
-            // Return empty packet
-            tcp_prepare_reply();
-            // Increase ack with length
-            add_value_to_buffer(pkt_length, &buffer_out[TCP_PTR_ACK_NR], 4);
-            // Set ACK flag
-            add_flags(TCP_FLAG_ACK);
-            // Send packet
-            tcp_send(0);
             // Notify error
             debug_error();
         }
