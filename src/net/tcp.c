@@ -98,7 +98,7 @@ void tcp_send(uint16_t length) {
     uint16_t tmp, len_tcp;
 
     // TCP packet length
-    len_tcp = buffer_out[TCP_PTR_DATA_OFFSET] * 4;
+    len_tcp = (buffer_out[TCP_PTR_DATA_OFFSET] >> 4) * 4;
 
     // IP packet length
     tmp = IP_LEN_HEADER + len_tcp + length;
