@@ -233,7 +233,7 @@ void tcp_receive(void) {
         if (callback) {
             debug_ok();
             // Call callback function
-            callback(&buffer_in[UDP_PTR_DATA], pkt_length); // Execute callback
+            callback(&buffer_in[buffer_in_length-pkt_length], pkt_length); // Execute callback
         } else {
             // Notify error
             debug_error();
