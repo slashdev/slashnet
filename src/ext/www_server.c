@@ -34,6 +34,7 @@ void www_server_init(void) {
 }
 
 void www_server_register_path(uint8_t type, char *path, void (*callback)(uint8_t *data, uint16_t length)) {
+  debug_string_p(PSTR("TODO"));
 }
 
 const char newline[]   PROGMEM = "\r\n";
