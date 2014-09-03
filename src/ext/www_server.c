@@ -24,6 +24,8 @@
 #endif // EXT_WWW_SERVER_PORT
 
 void handle_request(uint8_t *data, uint16_t length);
+void fill_buffer(char *data);
+void fill_buffer_n(char *data, uint16_t length);
 void fill_buffer_p(const char *pdata);
 
 void www_server_init(void) {
@@ -117,6 +119,17 @@ void www_server_reply(uint8_t status, uint8_t content_type, const char *pdata) {
 
     // Send packet
     tcp_send(rlength);
+}
+
+void fill_buffer(char *data) {
+    fill_buffer_n(data, 0xFFFF);
+}
+
+void fill_buffer_n(char *data, uint16_t length) {
+    while(*data && length--) {
+        *rbuffer++ = *data++;
+        rlength++;
+    }
 }
 
 void fill_buffer_p(const char *pdata) {
