@@ -55,12 +55,11 @@ void handle_request(uint8_t *data, uint16_t length) {
     tcp_add_flags(TCP_FLAG_ACK | TCP_FLAG_PUSH | TCP_FLAG_FIN);
 
     // Check if we can handle the request
-    if (0) {
-    }
+    if (0) {}
     else {
       // Return 404, not found
       //PSTR("HTTP/1.0 404 NOT FOUND\r\nContent-Type: text/html\r\nPragma: no-cache\r\n\r\n")
-      www_server_reply(HTTP_STATUS_404, HTTP_CONTENT_TYPE_HTML, 0);
+      www_server_reply(HTTP_STATUS_404, HTTP_CONTENT_TYPE_PLAIN, not_found);
     }
 
     debug_ok();
