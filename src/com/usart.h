@@ -78,6 +78,12 @@ extern void usart_send(uint8_t data);
  */
 extern void usart_send_string(char *data);
 /**
+ * @brief Send an array (or string) with length
+ * @param data Array (or string) to send
+ * @param length Length of array/string to send
+ */
+extern void usart_send_string_n(char *data, uint16_t length);
+/**
  * @brief Send an array (or string) from progmem
  * @param pdata Array (or string) to send
  */

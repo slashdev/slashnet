@@ -126,6 +126,12 @@ void usart_send_string(char *data) {
     }
 }
 
+void usart_send_string_n(char *data, uint16_t length) {
+    while (*data && length--) {
+        usart_send(*data++);
+    }
+}
+
 void usart_send_string_p(const char *pdata) {
     char c;
     while ((c = pgm_read_byte(pdata++))) {

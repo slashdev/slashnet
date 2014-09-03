@@ -24,11 +24,13 @@
 #endif // COM_USART
 
 #include <inttypes.h>
+#include <avr/pgmspace.h>
 #include <util/delay.h>
 #include "../com/usart.h"
 
 extern void logger_init(void);
 extern void logger_string(char *string);
+extern void logger_string_n(char *string, uint16_t length);
 extern void logger_string_p(const char *pstring);
 extern void logger_number(uint16_t value);
 extern void logger_number_as_hex(uint16_t value);
@@ -44,6 +46,7 @@ extern const char logger_error[] PROGMEM;
 
 // Info level enabled
 #define info_string(s) logger_string(s)
+#define info_string_n(s, n) logger_string_n(s, n)
 #define info_string_p(s) logger_string_p(s)
 #define info_number(x) logger_number(x)
 #define info_number_as_hex(x) logger_number_as_hex(x)
@@ -55,6 +58,7 @@ extern const char logger_error[] PROGMEM;
 #define info_error() logger_string_p(logger_error)
 // Debug level disabled
 #define debug_string(s) logger_string(s)
+#define debug_string_n(s, n) logger_string_n(s, n)
 #define debug_string_p(s) logger_string_p(s)
 #define debug_number(x) logger_number(x)
 #define debug_number_as_hex(x) logger_number_as_hex(x)
@@ -70,6 +74,7 @@ extern const char logger_error[] PROGMEM;
 
 // Info level enabled
 #define info_string(s) logger_string(s)
+#define info_string_n(s, n) logger_string_n(s, n)
 #define info_string_p(s) logger_string_p(s)
 #define info_number(x) logger_number(x)
 #define info_number_as_hex(x) logger_number_as_hex(x)
@@ -81,6 +86,7 @@ extern const char logger_error[] PROGMEM;
 #define info_error() logger_string_p(logger_error)
 // Debug level disabled
 #define debug_string(...) do {} while (0)
+#define debug_string_n(...) do {} while (0)
 #define debug_string_p(...) do {} while (0)
 #define debug_number(...) do {} while (0)
 #define debug_number_as_hex(...) do {} while (0)
@@ -101,6 +107,7 @@ extern const char logger_error[] PROGMEM;
 #define logger_init(...) do {} while (0)
 // Info level disabled
 #define info_string(...) do {} while (0)
+#define info_string_n(...) do {} while (0)
 #define info_string_p(...) do {} while (0)
 #define info_number(...) do {} while (0)
 #define info_number_as_hex(...) do {} while (0)
@@ -112,6 +119,7 @@ extern const char logger_error[] PROGMEM;
 #define info_error() do {} while (0)
 // Debug level disabled
 #define debug_string(...) do {} while (0)
+#define debug_string_n(...) do {} while (0)
 #define debug_string_p(...) do {} while (0)
 #define debug_number(...) do {} while (0)
 #define debug_number_as_hex(...) do {} while (0)
