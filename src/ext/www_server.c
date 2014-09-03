@@ -46,6 +46,37 @@ uint16_t rlength;
 void handle_request(uint8_t *data, uint16_t length) {
     debug_string_p(PSTR("HTTP: "));
 
+    // Prepare variables
+    //uint8_t i;
+
+    uint8_t type = 0;
+    uint8_t path_start = 0;
+    switch(data[0]) {
+      case 'H': type = HTTP_METHOD_HEAD;   path_start = 5; break;
+      case 'G': type = HTTP_METHOD_GET;    path_start = 4; break;
+      case 'D': type = HTTP_METHOD_DELETE; path_start = 7; break;
+      case 'P':
+        switch(data[1]) {
+          case 'O': type = HTTP_METHOD_POST; path_start = 5; break;
+          case 'U': type = HTTP_METHOD_PUT;  path_start = 4; break;
+          default:  type = 0;
+        }
+        break;
+    }
+
+    // Fetch path only if we have a type
+    if (type) {
+      uint8_t path_length = 0;
+      uint8_t *path = &data[path_start];
+      while (*path++ > 0x20) {
+        path_length++;
+      }
+      // Debug path
+      debug_string_n((char *)data, path_length);
+    }
+
+    // Get callback for type/path combination
+
     // Prepare tcp reply
     rbuffer = tcp_prepare_reply();
     rlength = 0;

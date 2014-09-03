@@ -23,6 +23,12 @@
 #include <avr/pgmspace.h>
 #include "../net/tcp.h"
 
+#define HTTP_METHOD_HEAD   0x01
+#define HTTP_METHOD_GET    0x02
+#define HTTP_METHOD_POST   0x03
+#define HTTP_METHOD_PUT    0x04
+#define HTTP_METHOD_DELETE 0x05
+
 #define HTTP_STATUS_200 0x20
 #define HTTP_STATUS_201 0x21
 #define HTTP_STATUS_202 0x22
