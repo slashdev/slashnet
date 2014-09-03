@@ -20,6 +20,7 @@
 #ifdef EXT_WWW_SERVER
 
 #include <inttypes.h>
+#include <avr/pgmspace.h>
 #include "../net/tcp.h"
 
 #define HTTP_STATUS_200 0x20
