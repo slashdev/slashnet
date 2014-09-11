@@ -34,7 +34,7 @@ void www_server_init(void) {
 }
 
 void www_server_register_path(uint8_t type, char *path, void (*callback)(uint8_t *data, uint16_t length)) {
-  debug_string_p(PSTR("TODO"));
+    debug_string_p(PSTR("TODO"));
 }
 
 const char newline[]   PROGMEM = "\r\n";
@@ -52,27 +52,27 @@ void handle_request(uint8_t *data, uint16_t length) {
     uint8_t type = 0;
     uint8_t path_start = 0;
     switch(data[0]) {
-      case 'H': type = HTTP_METHOD_HEAD;   path_start = 5; break;
-      case 'G': type = HTTP_METHOD_GET;    path_start = 4; break;
-      case 'D': type = HTTP_METHOD_DELETE; path_start = 7; break;
-      case 'P':
-        switch(data[1]) {
-          case 'O': type = HTTP_METHOD_POST; path_start = 5; break;
-          case 'U': type = HTTP_METHOD_PUT;  path_start = 4; break;
-          default:  type = 0;
-        }
-        break;
+        case 'H': type = HTTP_METHOD_HEAD;   path_start = 5; break;
+        case 'G': type = HTTP_METHOD_GET;    path_start = 4; break;
+        case 'D': type = HTTP_METHOD_DELETE; path_start = 7; break;
+        case 'P':
+            switch(data[1]) {
+                case 'O': type = HTTP_METHOD_POST; path_start = 5; break;
+                case 'U': type = HTTP_METHOD_PUT;  path_start = 4; break;
+                default:  type = 0;
+            }
+            break;
     }
 
     // Fetch path only if we have a type
     if (type) {
-      uint8_t path_length = 0;
-      uint8_t *path = &data[path_start];
-      while (*path++ > 0x20) {
-        path_length++;
-      }
-      // Debug path
-      debug_string_n((char *)data, path_length);
+        uint8_t path_length = 0;
+        uint8_t *path = &data[path_start];
+        while (*path++ > 0x20) {
+            path_length++;
+        }
+        // Debug path
+        debug_string_n((char *)data, path_length);
     }
 
     // Get callback for type/path combination
@@ -88,9 +88,9 @@ void handle_request(uint8_t *data, uint16_t length) {
     // Check if we can handle the request
     if (0) {}
     else {
-      // Return 404, not found
-      //PSTR("HTTP/1.0 404 NOT FOUND\r\nContent-Type: text/html\r\nPragma: no-cache\r\n\r\n")
-      www_server_reply(HTTP_STATUS_404, HTTP_CONTENT_TYPE_PLAIN, not_found);
+        // Return 404, not found
+        //PSTR("HTTP/1.0 404 NOT FOUND\r\nContent-Type: text/html\r\nPragma: no-cache\r\n\r\n")
+        www_server_reply(HTTP_STATUS_404, HTTP_CONTENT_TYPE_PLAIN, not_found);
     }
 
     debug_ok();
@@ -128,7 +128,7 @@ void www_server_reply(uint8_t status, uint8_t content_type, const char *pdata) {
     fill_buffer_p(http_content_type_head);
     if (0) {
     } else if (content_type == HTTP_CONTENT_TYPE_PLAIN) {
-       fill_buffer_p(http_content_type_plain);
+        fill_buffer_p(http_content_type_plain);
     } else if (content_type == HTTP_CONTENT_TYPE_HTML) {
         fill_buffer_p(http_content_type_html);
     } else if (content_type == HTTP_CONTENT_TYPE_JSON) {
@@ -166,8 +166,8 @@ void fill_buffer_n(char *data, uint16_t length) {
 void fill_buffer_p(const char *pdata) {
     char c;
     while ((c = pgm_read_byte(pdata++))) {
-      *rbuffer++ = c;
-      rlength++;
+        *rbuffer++ = c;
+        rlength++;
     }
 }
 
