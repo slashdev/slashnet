@@ -216,14 +216,10 @@ void www_server_reply_header(uint8_t status, uint8_t content_type) {
 
   // Content type
   www_server_buffer_add_p(http_content_type_head);
-  if (0) {
-  } else if (content_type == HTTP_CONTENT_TYPE_PLAIN) {
-      www_server_buffer_add_p(http_content_type_plain);
-  } else if (content_type == HTTP_CONTENT_TYPE_HTML) {
-      www_server_buffer_add_p(http_content_type_html);
-  } else if (content_type == HTTP_CONTENT_TYPE_JSON) {
-      www_server_buffer_add_p(http_content_type_json);
-  }
+  if (0) { }
+  else if (content_type == HTTP_CONTENT_TYPE_PLAIN) { www_server_buffer_add_p(http_content_type_plain); }
+  else if (content_type == HTTP_CONTENT_TYPE_HTML)  { www_server_buffer_add_p(http_content_type_html);  }
+  else if (content_type == HTTP_CONTENT_TYPE_JSON)  { www_server_buffer_add_p(http_content_type_json);  }
   www_server_buffer_add_p(newline);
 
   // End header with extra newline
