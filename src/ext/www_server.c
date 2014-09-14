@@ -176,7 +176,7 @@ void handle_request(uint8_t *data, uint16_t length) {
   } else {
     // Return 404, not found
     www_server_reply_header(HTTP_STATUS_404, HTTP_CONTENT_TYPE_PLAIN);
-    www_server_buffer_add_p(not_found);
+    www_server_reply_add_p(not_found);
     www_server_reply_send();
   }
 
@@ -198,54 +198,54 @@ const char http_content_type_json[]  PROGMEM = "application/json";
 
 void www_server_reply_header(uint8_t status, uint8_t content_type) {
   // HTTP version
-  www_server_buffer_add_p(http_version);
+  www_server_reply_add_p(http_version);
 
   // Status
   if (0) {}
-  else if (status == HTTP_STATUS_200) { www_server_buffer_add_p(http_status_200); }
-  else if (status == HTTP_STATUS_201) { www_server_buffer_add_p(http_status_201); }
-  else if (status == HTTP_STATUS_202) { www_server_buffer_add_p(http_status_202); }
-  else if (status == HTTP_STATUS_204) { www_server_buffer_add_p(http_status_204); }
-  else if (status == HTTP_STATUS_404) { www_server_buffer_add_p(http_status_404); }
+  else if (status == HTTP_STATUS_200) { www_server_reply_add_p(http_status_200); }
+  else if (status == HTTP_STATUS_201) { www_server_reply_add_p(http_status_201); }
+  else if (status == HTTP_STATUS_202) { www_server_reply_add_p(http_status_202); }
+  else if (status == HTTP_STATUS_204) { www_server_reply_add_p(http_status_204); }
+  else if (status == HTTP_STATUS_404) { www_server_reply_add_p(http_status_404); }
 
   // Newline
-  www_server_buffer_add_p(newline);
+  www_server_reply_add_p(newline);
 
   // Headers
   // --------------------------------------------------------------------
 
   // Content type
-  www_server_buffer_add_p(http_content_type_head);
+  www_server_reply_add_p(http_content_type_head);
   if (0) { }
-  else if (content_type == HTTP_CONTENT_TYPE_PLAIN) { www_server_buffer_add_p(http_content_type_plain); }
-  else if (content_type == HTTP_CONTENT_TYPE_HTML)  { www_server_buffer_add_p(http_content_type_html);  }
-  else if (content_type == HTTP_CONTENT_TYPE_JSON)  { www_server_buffer_add_p(http_content_type_json);  }
-  www_server_buffer_add_p(newline);
+  else if (content_type == HTTP_CONTENT_TYPE_PLAIN) { www_server_reply_add_p(http_content_type_plain); }
+  else if (content_type == HTTP_CONTENT_TYPE_HTML)  { www_server_reply_add_p(http_content_type_html);  }
+  else if (content_type == HTTP_CONTENT_TYPE_JSON)  { www_server_reply_add_p(http_content_type_json);  }
+  www_server_reply_add_p(newline);
 
   // End header with extra newline
-  www_server_buffer_add_p(newline);
+  www_server_reply_add_p(newline);
 }
 
 void www_server_reply_send() {
   // Make sure a packet ends with two newlines to mark end of data
-  www_server_buffer_add_p(newline);
-  www_server_buffer_add_p(newline);
+  www_server_reply_add_p(newline);
+  www_server_reply_add_p(newline);
   // Send packet
   tcp_send(rlength);
 }
 
-void www_server_buffer_add(char *data) {
-  www_server_buffer_add_n(data, 0xFFFF);
+void www_server_reply_add(char *data) {
+  www_server_reply_add_n(data, 0xFFFF);
 }
 
-void www_server_buffer_add_n(char *data, uint16_t length) {
+void www_server_reply_add_n(char *data, uint16_t length) {
   while(*data && length--) {
     *rbuffer++ = *data++;
     rlength++;
   }
 }
 
-void www_server_buffer_add_p(const char *pdata) {
+void www_server_reply_add_p(const char *pdata) {
   char c;
   while ((c = pgm_read_byte(pdata++))) {
     *rbuffer++ = c;

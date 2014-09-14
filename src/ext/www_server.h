@@ -64,9 +64,9 @@ extern void www_server_reply_header(uint8_t status, uint8_t content_type);
  */
 extern void www_server_reply_send();
 
-extern void www_server_buffer_add(char *data);
-extern void www_server_buffer_add_n(char *data, uint16_t length);
-extern void www_server_buffer_add_p(const char *pdata);
+extern void www_server_reply_add(char *data);
+extern void www_server_reply_add_n(char *data, uint16_t length);
+extern void www_server_reply_add_p(const char *pdata);
 
 #endif // EXT_WWW_SERVER
 
