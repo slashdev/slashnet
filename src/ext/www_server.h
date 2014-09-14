@@ -57,7 +57,16 @@ extern void www_server_unregister_path(const char *path);
 /**
  * @brief Reply to a http request
  */
-extern void www_server_reply(uint8_t status, uint8_t content_type, const char *data);
+extern void www_server_reply_header(uint8_t status, uint8_t content_type);
+
+/**
+ * @brief Send http request reply
+ */
+extern void www_server_reply_send();
+
+extern void www_server_buffer_add(char *data);
+extern void www_server_buffer_add_n(char *data, uint16_t length);
+extern void www_server_buffer_add_p(const char *pdata);
 
 #endif // EXT_WWW_SERVER
 
