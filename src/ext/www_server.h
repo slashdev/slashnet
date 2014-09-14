@@ -47,7 +47,7 @@ extern void www_server_init(void);
 /**
  * @brief Register callback method on a path
  */
-extern void www_server_register_path(const char *path, void (*callback)(uint8_t type, uint8_t *data, uint16_t length));
+extern void www_server_register_path(const char *path, void (*callback)(uint8_t type, uint8_t *data));
 
 /**
  * @brief Unregister callback method on a path

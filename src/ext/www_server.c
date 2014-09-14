@@ -30,7 +30,7 @@ typedef struct {
   // Path to search for
   const char *path;
   // Callback function
-  void (*callback)(uint8_t type, uint8_t *data, uint16_t length);
+  void (*callback)(uint8_t type, uint8_t *data);
 } path_service_t;
 
 path_service_t path_services[EXT_WWW_SERVER_SERVICES_LIST_SIZE];
@@ -72,7 +72,7 @@ uint8_t path_matches_p(const char *str1, const char *str2) {
 }
 
 void path_service_remove(const char *path);
-void (*path_service_get(uint8_t *path, uint8_t length))(uint8_t type, uint8_t *data, int16_t length);
+void (*path_service_get(uint8_t *path, uint8_t length))(uint8_t type, uint8_t *data);
 // Path service
 
 void www_server_init(void) {
@@ -87,7 +87,7 @@ void www_server_init(void) {
   }
 }
 
-void www_server_register_path(const char *path, void (*callback)(uint8_t type, uint8_t *data, uint16_t length)) {
+void www_server_register_path(const char *path, void (*callback)(uint8_t type, uint8_t *data)) {
   // path_service_set(path, callback);
   uint8_t i;
   for (i = 0; i < EXT_WWW_SERVER_SERVICES_LIST_SIZE; i++) {
@@ -153,7 +153,7 @@ void handle_request(uint8_t *data, uint16_t length) {
   // Get callback for type/path combination
   // path_services_get(&data[path_start]);
   uint8_t i;
-  void (*callback)(uint8_t, uint8_t *, uint16_t);
+  void (*callback)(uint8_t, uint8_t *);
 
   for (i = 0, callback = 0; i < EXT_WWW_SERVER_SERVICES_LIST_SIZE; i++) {
     if (path_services[i].path && path_matches(&data[path_start], path_services[i].path)) {
@@ -172,7 +172,7 @@ void handle_request(uint8_t *data, uint16_t length) {
 
   // Check if we can handle the request
   if (callback) {
-    callback(type, data, 0);
+    callback(type, data);
   } else {
     // Return 404, not found
     www_server_reply_header(HTTP_STATUS_404, HTTP_CONTENT_TYPE_PLAIN);
