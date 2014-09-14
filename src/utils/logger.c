@@ -37,6 +37,10 @@ void logger_string(char *string) {
     usart_send_string(string);
 }
 
+void logger_string_n(char *string, uint16_t length) {
+    usart_send_string_n(string, length);
+}
+
 void logger_string_p(const char *pstring) {
     usart_send_string_p(pstring);
 }

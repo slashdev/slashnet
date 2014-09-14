@@ -267,6 +267,24 @@
  */
 #define EXT_TLC59116
 
+//
+// Web server
+// --------------------------------------------------------------------
+
+/**
+ * @brief Enable www server
+ */
+#define EXT_WWW_SERVER
+
+/**
+ * @brief Port to listen on
+ */
+#define EXT_WWW_SERVER_PORT 80
+
+/**
+ * @brief Path services list size
+ */
+#define EXT_WWW_SERVER_SERVICES_LIST_SIZE 10
 
 /**********************************************************************
  * DO NOT CHANGE BELOW

@@ -25,7 +25,7 @@ BUILD_DIR   = build
 
 # Tune the lines below only if you know what you are doing:
 CC          = avr-gcc
-CC_FLAGS    = -Wall -Os -gdwarf-2 -DF_CPU=$(CLOCK) -mmcu=$(DEVICE)
+CC_FLAGS    = -Wall -Werror -Os -gdwarf-2 -DF_CPU=$(CLOCK) -mmcu=$(DEVICE)
 COMPILER    = avr-gcc
 
 SOURCES     = $(wildcard src/**/*.c) $(wildcard src/*.c)
@@ -34,14 +34,18 @@ DIRECTORIES = $(patsubst $(SRC_DIR)/%,$(OBJ_DIR)/%,$(sort $(dir $(wildcard $(SRC
 
 COL_INFO    = tput setaf 2
 COL_BUILD   = tput setaf 7
+COL_ERROR   = tput setaf 1
 COL_RESET   = tput sgr0
 
 ELF         = $(BUILD_DIR)/$(EXECUTABLE).elf
 HEX         = $(BUILD_DIR)/$(EXECUTABLE).hex
 LSS         = $(BUILD_DIR)/$(EXECUTABLE).lss
 
+log_info = $(COL_RESET); printf "$(1) "
+log_ok   = $(COL_RESET); printf "["; $(COL_INFO);  printf "OK";    $(COL_RESET); printf "]\n"
+
 # Build executable
-all:	dirs $(HEX) avr-size
+all:	$(HEX) avr-size
 
 # Help, explains usage
 help:
@@ -58,7 +62,9 @@ help:
 
 # Clean environment
 clean:
-	rm -f $(ELF) $(HEX) $(LSS) $(OBJECTS)
+	@$(call log_info,"Cleaning...")
+	@rm -f $(ELF) $(HEX) $(LSS) $(OBJECTS)
+	@$(call log_ok)
 
 # Use disasm for debugging
 disasm:	$(ELF)
@@ -83,41 +89,30 @@ start: all
 
 # Build specific
 dirs:
-	@$(COL_INFO)
-	@echo Create directories in 'obj/'
-	@$(COL_BUILD)
-	mkdir -p $(DIRECTORIES) $(BUILD_DIR)
-	@$(COL_RESET)
+	@$(call log_info,Create directories in 'obj/')
+	@mkdir -p $(DIRECTORIES) $(BUILD_DIR)
+	@$(call log_ok)
 
 $(OBJECTS): $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
-	@echo
-	@$(COL_INFO)
-	@echo Building file: $<
-	@$(COL_BUILD)
-	$(CC) $(CC_FLAGS) -c $< -o $@
-	@$(COL_INFO)
-	@echo Finished building: $<
-	@$(COL_RESET)
+	@$(call log_info,Compiling $<)
+	@$(COL_ERROR)
+	@$(CC) $(CC_FLAGS) -c $< -o $@
+	@$(call log_ok)
 
-$(ELF): $(OBJECTS)
+$(ELF): dirs $(OBJECTS)
 	@echo
-	@$(COL_INFO)
-	@echo Building file: $(ELF)
-	@$(COL_BUILD)
-	$(COMPILER) $(CC_FLAGS) -o $(ELF) $(OBJECTS)
-	@$(COL_INFO)
-	@echo Finished building: $(ELF)
-	@$(COL_RESET)
+	@$(call log_info,Linking $(ELF))
+	@$(COL_ERROR)
+	@$(COMPILER) $(CC_FLAGS) -o $(ELF) $(OBJECTS)
+	@$(call log_ok)
 
 $(HEX): $(ELF)
-	@echo
-	@$(COL_INFO)
-	@echo Create new hex and lss files
+	@$(call log_info,Create new hex and lss files)
+	@$(COL_ERROR)
 	@rm -f $(HEX) $(LSS)
-	@$(COL_BUILD)
-	avr-objcopy --only-section .text --only-section .data --output-target ihex $(ELF) $(HEX)
-	avr-objdump --file-headers --disassemble --source --syms --section=.text --wide $(ELF) > $(LSS)
-	@$(COL_RESET)
+	@avr-objcopy --only-section .text --only-section .data --output-target ihex $(ELF) $(HEX)
+	@avr-objdump --file-headers --disassemble --source --syms --section=.text --wide $(ELF) > $(LSS)
+	@$(call log_ok)
 
 avr-size:
 	@echo
@@ -128,17 +123,14 @@ avr-size:
 	@$(COL_RESET)
 
 .S.o:
-	$(CC) $(CC_FLAGS) -x assembler-with-cpp -c $< -o $@
+	@$(CC) $(CC_FLAGS) -x assembler-with-cpp -c $< -o $@
 # "-x assembler-with-cpp" should not be necessary since this is the default
 # file type for the .S (with capital S) extension. However, upper case
 # characters are not always preserved on Windows. To ensure WinAVR
 # compatibility define the file type manually.
 
 .c.s:
-	@$(COL_INFO)
-	@echo Building file: $<
-	@$(COL_BUILD)
-	$(CC) $(CC_FLAGS) -S $< -o $@
-	@$(COL_INFO)
-	@echo Finished building: $<
-	@$(COL_RESET)
+	@$(call log_info,Compiling $<)
+	@$(COL_ERROR)
+	@$(CC) $(CC_FLAGS) -S $< -o $@
+	@$(call log_ok)

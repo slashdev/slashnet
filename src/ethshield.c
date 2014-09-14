@@ -16,10 +16,26 @@
 
 #include <inttypes.h>
 #include <avr/interrupt.h>
+#include "ext/www_server.h"
 #include "net/network.h"
 #include "utils/logger.h"
 #include "utils/uptime.h"
 #include "utils/werkti.h"
+
+void www_root(uint8_t type, uint8_t *data) {
+    www_server_reply_header(HTTP_STATUS_200, HTTP_CONTENT_TYPE_PLAIN);
+    www_server_reply_add_p(PSTR("Version: "));
+    www_server_reply_add_p(PSTR(VERSION));
+    www_server_reply_send();
+}
+
+const char status[] PROGMEM = "Status!";
+
+void www_status(uint8_t type, uint8_t *data) {
+    www_server_reply_header(HTTP_STATUS_200, HTTP_CONTENT_TYPE_PLAIN);
+    www_server_reply_add_p(PSTR("Running"));
+    www_server_reply_send();
+}
 
 int main(void) {
     // Enable interrupts
@@ -33,6 +49,11 @@ int main(void) {
 
     // Initialize network chip
     network_init();
+
+    // Initialize www server
+    www_server_init();
+    www_server_register_path(PSTR("/"), www_root);
+    www_server_register_path(PSTR("/status"), www_status);
 
     // Infinite loop
     while (1) {
