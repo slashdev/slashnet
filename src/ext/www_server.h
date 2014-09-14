@@ -32,7 +32,7 @@
 #define HTTP_STATUS_200 0x20
 #define HTTP_STATUS_201 0x21
 #define HTTP_STATUS_202 0x22
-#define HTTP_STATUS_203 0x23
+#define HTTP_STATUS_204 0x24
 #define HTTP_STATUS_404 0x44
 
 #define HTTP_CONTENT_TYPE_PLAIN 0x01
@@ -45,9 +45,14 @@
 extern void www_server_init(void);
 
 /**
- * @brief Register callback method on a path with type
+ * @brief Register callback method on a path
  */
-extern void www_server_register_path(uint8_t type, char *path, void (*callback)(uint8_t *data, uint16_t length));
+extern void www_server_register_path(const char *path, void (*callback)(uint8_t type, uint8_t *data, uint16_t length));
+
+/**
+ * @brief Unregister callback method on a path
+ */
+extern void www_server_unregister_path(const char *path);
 
 /**
  * @brief Reply to a http request
