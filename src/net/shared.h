@@ -46,6 +46,15 @@ extern void ip_prepare(uint8_t protocol, uint8_t *dst_ip, uint8_t *dst_mac);
  */
 extern uint16_t checksum(uint8_t *buffer, uint16_t length, uint8_t type);
 
+/**
+ * @brief Add value to a number in buffer
+ *
+ * @param value Value to add
+ * @param buffer Pointer to the highest byte of the number in the buffer
+ * @param size Number of bytes that make up the number
+ */
+extern void add_value_to_buffer(uint16_t value, uint8_t *buff, uint8_t size);
+
 // Checksum
 // --------------------
 #define CHK_IP   0
@@ -155,6 +164,35 @@ extern uint16_t checksum(uint8_t *buffer, uint16_t length, uint8_t type);
 #define UDP_PTR_CHECKSUM_H 0x28
 #define UDP_PTR_CHECKSUM_L 0x29
 #define UDP_PTR_DATA       0x2A
+
+// TCP
+// --------------------
+#define TCP_LEN_HEADER 20
+
+#define TCP_PTR_PORT_SRC_H 0x22
+#define TCP_PTR_PORT_SRC_L 0x23
+#define TCP_PTR_PORT_DST_H 0x24
+#define TCP_PTR_PORT_DST_L 0x25
+#define TCP_PTR_SEQ_NR     0x26
+#define TCP_PTR_ACK_NR     0x2A
+#define TCP_PTR_DATA_OFFSET 0x2E
+#define TCP_PTR_FLAGS      0x2F
+#define TCP_PTR_WINDOW     0x30
+#define TCP_PTR_CHECKSUM_H 0x32
+#define TCP_PTR_CHECKSUM_L 0x33
+#define TCP_PTR_URGENT_PTR 0x34
+#define TCP_PTR_OPTIONS    0x36
+#define TCP_PTR_DATA       0x36
+#define TCP_PTR_DATA_OPTS  0x3E
+
+#define TCP_FLAG_CWR       0b10000000
+#define TCP_FLAG_ECN_ECHO  0b01000000
+#define TCP_FLAG_URGENT    0b00100000
+#define TCP_FLAG_ACK       0b00010000
+#define TCP_FLAG_PUSH      0b00001000
+#define TCP_FLAG_RESET     0b00000100
+#define TCP_FLAG_SYN       0b00000010
+#define TCP_FLAG_FIN       0b00000001
 
 #endif // NET_NETWORK
 #endif // NET_SHARED_H

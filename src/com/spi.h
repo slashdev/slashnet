@@ -39,7 +39,7 @@ typedef struct {
      * @brief Data order, one to send least significant bit first, zero to send
      * most significant bit first.
      * __Default: least significant bit__
-     * @note Use defines SPI_DATA_ORDER_LEAST_SIGNIFICANT_BIT, 
+     * @note Use defines SPI_DATA_ORDER_LEAST_SIGNIFICANT_BIT,
      * SPI_DATA_ORDER_MOST_SIGNIFICANT_BIT
      */
     uint8_t data_order;
@@ -61,14 +61,14 @@ typedef struct {
      * @brief Clock phase, one to sample on trailing edge, zero to sample on
      * leading edge.
      * __Default: 0, sample on leading edge__
-     * @note Use defines SPI_CLOCK_PHASE_SAMPLE_ON_TRAILING, 
+     * @note Use defines SPI_CLOCK_PHASE_SAMPLE_ON_TRAILING,
      * SPI_CLOCK_PHASE_SAMPLE_ON_LEADING
      */
     uint8_t clock_phase;
     /**
      * @brief Clock rate selector, value from 0 to 7.
      * __Default: 0, fosc/4
-     * @note Use defines SPI_CLOCK_RATE_FOSC_2, SPI_CLOCK_RATE_FOSC_4, 
+     * @note Use defines SPI_CLOCK_RATE_FOSC_2, SPI_CLOCK_RATE_FOSC_4,
      * SPI_CLOCK_RATE_FOSC_8, SPI_CLOCK_RATE_FOSC_16, SPI_CLOCK_RATE_FOSC_32,
      * SPI_CLOCK_RATE_FOSC_64, SPI_CLOCK_RATE_FOSC_128
      */

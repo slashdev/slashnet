@@ -37,6 +37,10 @@ void logger_string(char *string) {
     usart_send_string(string);
 }
 
+void logger_string_n(char *string, uint16_t length) {
+    usart_send_string_n(string, length);
+}
+
 void logger_string_p(const char *pstring) {
     usart_send_string_p(pstring);
 }
@@ -110,5 +114,7 @@ void logger_mac(uint8_t *addr) {
 
 const char logger_newline[] PROGMEM = "\r\n";
 const char logger_dot[] PROGMEM = ".";
+const char logger_ok[] PROGMEM = " [ok]\r\n";
+const char logger_error[] PROGMEM = " [error]\r\n";
 
 #endif // UTILS_LOGGER_INFO || UTILS_LOGGER_DEBUG

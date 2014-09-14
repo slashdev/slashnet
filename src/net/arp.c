@@ -52,7 +52,7 @@ uint8_t *arp_search_mac(uint8_t *ip_request);
 
 void arp_init(void) {
     uint8_t i = 0, j = 0;
-    
+
     // Initialize elements from arpItems
     while (i < NET_ARP_CACHE_SIZE) {
         j = 0;
@@ -74,9 +74,9 @@ void arp_receive(void) {
     // Update arp incoming
     werkti_arp_in += buffer_in_length;
 #endif // UTILS_WERKTI_MORE
-    
+
     uint8_t i = 0;
-    
+
     // If it is an ARP request packet, it could be requesting my MAC address
     if (buffer_in[ARP_PTR_OPER_H] == 0
         && buffer_in[ARP_PTR_OPER_L] == ARP_VAL_OPER_REQUEST) {
@@ -87,18 +87,18 @@ void arp_receive(void) {
             }
             i++;
         }
-        
+
         // It's meant for me, reply with my MAC address
         debug_string_p(PSTR("ARP: Request for me..."));
         arp_reply_to_request();
         debug_string_p(PSTR("answered\r\n"));
-        
+
         // Packet handled, reset buffer length
         buffer_in_length = 0;
         return;
     }
-    
-    
+
+
     // If it is an ARP reply packet, it could be an answer to me
     if (buffer_in[ARP_PTR_OPER_H] == 0
         && buffer_in[ARP_PTR_OPER_L] == ARP_VAL_OPER_REPLY) {
@@ -109,15 +109,15 @@ void arp_receive(void) {
             }
             i++;
         }
-        
+
         // It's meant for me, store value
         debug_string_p(PSTR("ARP: Reply for me "));
         save_to_cache();
         debug_string_p(PSTR("saved\r\n"));
-        
+
         // Reset waiting state
         waiting = 0;
-        
+
         // Packet handled, reset buffer length
         buffer_in_length = 0;
         return;
@@ -131,18 +131,18 @@ uint8_t *arp_request_mac(uint8_t *ip_request) {
     if (mac_answer != 0) {
         return mac_answer;
     }
-    
+
     // No entry existed, create a request and send it
     uint8_t i = 0,
     all_FF[] = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF };
-    
+
     // Create a new ARP packet
     arp_prepare(all_FF);
-    
+
     // Set operation type
     buffer_out[ARP_PTR_OPER_H] = 0;
     buffer_out[ARP_PTR_OPER_L] = ARP_VAL_OPER_REQUEST;
-    
+
     // Clear the target MAC address
     // Set the target IP address
     while (i < 4) {
@@ -154,82 +154,82 @@ uint8_t *arp_request_mac(uint8_t *ip_request) {
         buffer_out[ARP_PTR_TARG_HW + i] = 0;
         i++;
     }
-    
+
 #ifdef UTILS_WERKTI_MORE
     // Update werkti arp send
     werkti_arp_out += ARP_LEN;
 #endif // UTILS_WERKTI_MORE
-    
+
     network_send(ARP_LEN);
-    
+
     // Wait actively for an answer
     waiting = 1;
     while (waiting) {
         // Process packets received
         network_backbone();
     }
-    
+
     // It should exist now
     return arp_search_mac(ip_request);
 }
 
 void arp_reply_to_request(void) {
     uint8_t i = 0;
-    
+
     // Create ARP template based on request
     arp_prepare(&buffer_in[ARP_PTR_SEND_HW]);
-    
+
     // Fill the missing parts of the packet:
     // Operation, Sender hardware address, sender protocol address,
     // target hardware address, target protocol address
-    
+
     // Operation: reply
     buffer_out[ARP_PTR_OPER_H] = 0;
     buffer_out[ARP_PTR_OPER_L] = ARP_VAL_OPER_REPLY;
-    
+
     // Target hardware address
     while (i < 6) {
         buffer_out[ARP_PTR_TARG_HW + i] = buffer_in[ARP_PTR_SEND_HW + i];
         i++;
     }
-    
+
     // Target protocol address
     i = 0;
     while (i < 4) {
         buffer_out[ARP_PTR_TARG_PROTO + i] = buffer_in[ARP_PTR_SEND_PROTO + i];
         i++;
     }
-    
+
 #ifdef UTILS_WERKTI_MORE
     // Update werkti arp send
     werkti_arp_out += ARP_LEN;
 #endif // UTILS_WERKTI_MORE
-    
+
     // Send reply
     network_send(ARP_LEN);
 }
 
 void arp_prepare(uint8_t *dst_mac) {
     uint8_t i = 0;
-    
+
     // Construct ethernet frame
     // ------------------------
     // See The Ethernet, p. 26, chap. 6.2
     // 6b  mac address destination
     // 6b  mac address source
     // 2b  protocol (here IP, so 0x800)
-    
+
     // Copy mac source and destination address into buffer
     while (i < 6) {
         buffer_out[ETH_PTR_MAC_DST + i] = dst_mac[i];
         buffer_out[ETH_PTR_MAC_SRC + i] = my_mac[i];
         i++;
     }
-    
+
     // Set packet type to ARP
     buffer_out[ETH_PTR_TYPE_H] = ETH_VAL_TYPE_ARP_H;
     buffer_out[ETH_PTR_TYPE_L] = ETH_VAL_TYPE_ARP_L;
-    
+
     // Construct ARP protocol packet
     // -----------------------------
     // See RFC 826, p. 3
@@ -262,7 +262,7 @@ void save_to_cache(void) {
     *ip_cache = cache[cache_index].ip,
     *mac_cache = cache[cache_index].mac,
     i = 0;
-    
+
     // Search for MAC address to see if the combination already exists in the
     // cache. If it doesn't, write an entry at arpWriteIndex
     if (arp_search_mac(ip_reply) == 0) {
@@ -276,18 +276,18 @@ void save_to_cache(void) {
             mac_cache[i] = mac_reply[i];
             i++;
         }
-        
+
         // Update write index
         cache_index++;
         cache_index %= NET_ARP_CACHE_SIZE;
     }
-    
+
 }
 
 uint8_t *arp_search_mac(uint8_t *ip_request) {
     uint8_t i = 0;
     uint8_t *ip_cache;
-    
+
     while (i < NET_ARP_CACHE_SIZE) {
         ip_cache = cache[i].ip;
         if (ip_cache[0] == ip_request[0]
@@ -299,7 +299,7 @@ uint8_t *arp_search_mac(uint8_t *ip_request) {
         }
         i++;
     }
-    
+
     return 0;
 }
 

@@ -17,7 +17,7 @@
 /**
  * @brief Version of the ethshield firmware
  */
-#define VERSION "0.13.0"
+#define VERSION "0.14.0"
 
 /**
  * Clock setting
@@ -147,6 +147,25 @@
  */
 #define NET_UDP_SERVICES_LIST_SIZE 10
 
+//
+// Transmission Control Protocol (TCP)
+// --------------------------------------------------------------------
+
+/**
+ * @brief TCP enable
+ */
+#define NET_TCP
+
+/**
+ * @brief TCP server enable
+ */
+#define NET_TCP_SERVER
+
+/**
+ * @brief TCP services list size
+ */
+#define NET_TCP_SERVICES_LIST_SIZE 10
+
 
 /**********************************************************************
  * Utilities
@@ -248,6 +267,24 @@
  */
 #define EXT_TLC59116
 
+//
+// Web server
+// --------------------------------------------------------------------
+
+/**
+ * @brief Enable www server
+ */
+#define EXT_WWW_SERVER
+
+/**
+ * @brief Port to listen on
+ */
+#define EXT_WWW_SERVER_PORT 80
+
+/**
+ * @brief Path services list size
+ */
+#define EXT_WWW_SERVER_SERVICES_LIST_SIZE 10
 
 /**********************************************************************
  * DO NOT CHANGE BELOW
