@@ -18,14 +18,13 @@ Network protocols supported
   - Internet Control Message Protocol (ICMP [rfc792](http://tools.ietf.org/html/rfc792))
 - Transport Layer
   - User Datagram Protocol (UDP, [rfc768](http://tools.ietf.org/html/rfc768))
+  - Transmission Control Protocol (TCP, transport layer, [rfc793](http://tools.ietf.org/html/rfc793), [draft 1323](http://tools.ietf.org/html/draft-ietf-tcpm-1323bis-21))
 - Application layer
   - Dynamic Host Configuration Protocol (DHCP, [rfc2131](http://tools.ietf.org/html/rfc2131), [rfc1533](http://tools.ietf.org/html/rfc1533))
+  - Hypertext Transfer Protocol (HTTP, application layer, [rfc2616](http://tools.ietf.org/html/rfc2616))
 
 
 # Planned (randomly ordered)
-- Transmission Control Protocol (TCP, transport layer, [rfc793](http://tools.ietf.org/html/rfc793), [draft 1323](http://tools.ietf.org/html/draft-ietf-tcpm-1323bis-21))
 - Network Time Protocol (NTP, application layer, [rfc958](http://tools.ietf.org/html/rfc958))
 - Domain Name System (DNS, application layer, [rfc1035](http://tools.ietf.org/html/rfc1035))
-- Hypertext Transfer Protocol (HTTP, application layer, [rfc2616](http://tools.ietf.org/html/rfc2616))
 - Extensible Messaging and Presence Protocol (XMPP, application layer, [rfc6120](http://tools.ietf.org/html/rfc6120))
-
