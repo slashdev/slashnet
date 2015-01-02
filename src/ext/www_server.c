@@ -23,6 +23,14 @@
 #error EXT_WWW_SERVER requires EXT_WWW_SERVER_PORT to be set
 #endif // EXT_WWW_SERVER_PORT
 
+#ifndef EXT_WWW_SERVER_SERVICES_LIST_SIZE
+#warning EXT_WWW_SERVER_SERVICES_LIST_SIZE not set, defaulting to 10
+#define EXT_WWW_SERVER_SERVICES_LIST_SIZE 10
+#endif
+
+// Only build if requirements are met
+#if defined(NET_TCP) && defined(EXT_WWW_SERVER_PORT)
+
 void handle_request(uint8_t *data, uint16_t length);
 
 // Path service
@@ -253,4 +261,5 @@ void www_server_reply_add_p(const char *pdata) {
   }
 }
 
+#endif // NET_TCP && EXT_WWW_SERVER_PORT && EXT_WWW_SERVER_SERVICES_LIST_SIZE
 #endif // EXT_WWW_SERVER

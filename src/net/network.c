@@ -472,10 +472,10 @@ void network_init(void) {
     // Init arp
     arp_init();
 #endif // NET_ARP
-#ifdef NET_UDP_SERVER
+#if defined(NET_UDP) && defined(NET_UDP_SERVER)
     // Init udp
     udp_server_init();
-#endif // NET_UDP_SERVER
+#endif // NET_UDP && NET_UDP_SERVER
 #ifdef NET_TCP_SERVER
     // Init tcp
     tcp_server_init();
@@ -535,12 +535,12 @@ void network_backbone(void) {
             icmp_packet_receive();
         }
 #endif // NET_ICMP
-#ifdef NET_UDP_SERVER
+#if defined(NET_UDP) && defined(NET_UDP_SERVER)
         // Check if packet is UDP packet
         else if (buffer_in_length && buffer_in[IP_PTR_PROTOCOL] == IP_VAL_PROTO_UDP) {
             udp_receive();
         }
-#endif // NET_UDP_SERVER
+#endif // NET_UDP && NET_UDP_SERVER
 #ifdef NET_TCP_SERVER
         else if (buffer_in_length && buffer_in[IP_PTR_PROTOCOL] == IP_VAL_PROTO_TCP) {
             tcp_receive();
