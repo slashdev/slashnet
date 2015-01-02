@@ -18,6 +18,9 @@
 #error DHCP cannot work without NET_UDP
 #endif // NET_UDP
 
+// Only build if requirements are met
+#if defined(NET_UDP)
+
 // Defines
 // -------
 
@@ -646,4 +649,5 @@ void send_renew(void) {
 }
 
 #endif // NET_DHCP_NO_RENEWAL
+#endif // NET_UDP
 #endif // NET_DHCP

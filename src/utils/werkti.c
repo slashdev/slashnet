@@ -10,8 +10,20 @@
 
 #include "werkti.h"
 
+#if !defined(UTILS_WERKTI) && defined(UTILS_WERKTI_MORE)
+#error UTILS_WERKTI_MORE cannot work without UTILS_WERKTI
+#endif
+
 // Do we want werkti?
-#if defined(UTILS_WERKTI) || defined(UTILS_WERKTI_MORE)
+#if defined(UTILS_WERKTI)
+
+// Check if UDP is enabled
+#ifndef NET_UDP
+#error Werkti cannot work without NET_UDP
+#endif // NET_UDP
+
+// Only build if requirements are met
+#if defined(NET_UDP)
 
 // Defines
 // --------------------------------------------------------------------
@@ -132,4 +144,5 @@ void send_report(uint8_t type, uint16_t in, uint16_t out) {
     udp_send(11);
 }
 
-#endif // UTILS_WERKTI || UTILS_WERKTI_MORE
+#endif // NET_UDP
+#endif // UTILS_WERKTI
