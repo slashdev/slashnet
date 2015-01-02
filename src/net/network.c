@@ -476,10 +476,10 @@ void network_init(void) {
     // Init udp
     udp_server_init();
 #endif // NET_UDP && NET_UDP_SERVER
-#ifdef NET_TCP_SERVER
+#if defined(NET_TCP) && defined(NET_TCP_SERVER)
     // Init tcp
     tcp_server_init();
-#endif // NET_TCP_SERVER
+#endif // NET_TCP && NET_TCP_SERVER
 #ifdef UTILS_COUNTER
     // Init counter
     counter_init();
@@ -541,11 +541,11 @@ void network_backbone(void) {
             udp_receive();
         }
 #endif // NET_UDP && NET_UDP_SERVER
-#ifdef NET_TCP_SERVER
+#if defined(NET_TCP) && defined(NET_TCP_SERVER)
         else if (buffer_in_length && buffer_in[IP_PTR_PROTOCOL] == IP_VAL_PROTO_TCP) {
             tcp_receive();
         }
-#endif // NET_TCP_SERVER
+#endif // NET_TCP && NET_TCP_SERVER
     }
 }
 
