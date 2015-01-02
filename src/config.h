@@ -17,7 +17,7 @@
 /**
  * @brief Version of the ethshield firmware
  */
-#define VERSION "0.14.0"
+#define VERSION "0.14.2"
 
 /**
  * Clock setting
