@@ -23,6 +23,11 @@
 #error EXT_WWW_SERVER requires EXT_WWW_SERVER_PORT to be set
 #endif // EXT_WWW_SERVER_PORT
 
+#ifndef EXT_WWW_SERVER_SERVICES_LIST_SIZE
+#warning EXT_WWW_SERVER_SERVICES_LIST_SIZE not set, defaulting to 10
+#define EXT_WWW_SERVER_SERVICES_LIST_SIZE 10
+#endif
+
 void handle_request(uint8_t *data, uint16_t length);
 
 // Path service
