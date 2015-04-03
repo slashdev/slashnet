@@ -17,7 +17,7 @@
 /**
  * @brief Version of the /Net firmware
  */
-#define VERSION "0.14.2"
+#define VERSION "0.14.3"
 
 /**
  * Clock setting
