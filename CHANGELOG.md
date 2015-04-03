@@ -1,4 +1,4 @@
-EthShield changelog
+/Net changelog
 ===================
 
 0.12.7

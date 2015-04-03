@@ -1,6 +1,6 @@
 /**
  * @file config.h
- * @brief Configuration of ethshield
+ * @brief Configuration of /Net
  *
  * \copyright Copyright 2013 /Dev. All rights reserved.
  * \license This project is released under MIT license.
@@ -15,7 +15,7 @@
 #include <inttypes.h>
 
 /**
- * @brief Version of the ethshield firmware
+ * @brief Version of the /Net firmware
  */
 #define VERSION "0.14.2"
 
