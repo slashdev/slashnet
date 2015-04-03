@@ -28,7 +28,7 @@ void logger_init(void) {
 
     // Send debug message
     info_string_p(PSTR("\r\nUSART logger started\r\n"));
-    info_string_p(PSTR("ethshield version: "));
+    info_string_p(PSTR("/Net version: "));
     info_string_p(PSTR(VERSION));
     info_string_p(logger_newline);
 }

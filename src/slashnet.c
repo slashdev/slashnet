@@ -1,6 +1,6 @@
 /**
  * @file debug.h
- * @brief Initializer and main loop of ethshield
+ * @brief Initializer and main loop of /Net
  *
  * \copyright Copyright 2013 /Dev. All rights reserved.
  * \license This project is released under MIT license.

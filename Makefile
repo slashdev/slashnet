@@ -16,7 +16,7 @@ FUSE_HIGH = 0xDF
 FUSE_EXT  = 0xFF
 
 # Executable
-EXECUTABLE  = ethshield
+EXECUTABLE  = slashnet
 
 # Directories
 SRC_DIR     = src
